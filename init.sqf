@@ -1,219 +1,99 @@
 // Compiling functions and storing them in the missionNamespace
 
-missionNamespace setVariable [
-    "FN_findSafePosition", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_findSafePosition.sqf"
-];
+missionNamespace setVariable ["FN_findSafePosition", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_findSafePosition.sqf"];
+missionNamespace setVariable ["FN_createAIUnit", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_createAIUnit.sqf"];
+missionNamespace setVariable ["FN_setUnitSkills", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_setUnitSkills.sqf"];
+missionNamespace setVariable ["FN_selectFaction", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_selectFaction.sqf"];
+missionNamespace setVariable ["FN_createWaypoints", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_createWaypoints.sqf"];
+missionNamespace setVariable ["FN_spawnWanderingFaction", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_spawnWanderingFaction.sqf"];
+missionNamespace setVariable ["FN_spawnHuntingFaction", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_spawnHuntingFaction.sqf"];
+missionNamespace setVariable ["FN_getFactionSkills", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_getFactionSkills.sqf"];
+missionNamespace setVariable ["FN_createObject_Fortifications", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\campFortificationsScripts\FN_createObject_Fortifications.sqf"];
+missionNamespace setVariable ["FN_spawnAI_Fortifications", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\campFortificationsScripts\FN_spawnAI_Fortifications.sqf"];
+missionNamespace setVariable ["FN_fortificationsMain", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\campFortificationsScripts\FN_fortificationsMain.sqf"];
+missionNamespace setVariable ["FN_fortificationsAux", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\campFortificationsScripts\FN_fortificationsAux.sqf"];
+missionNamespace setVariable ["FN_arrayReturn", compile preprocessFileLineNumbers "ArrayDatabase.sqf"];
+missionNamespace setVariable ["FN_convertWeightedArray", compile preprocessFileLineNumbers "Server Ran Scripts\convertWeightedArray.sqf"];
+missionNamespace setVariable ["FN_ambientVeh", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_ambientVeh.sqf"];
+missionNamespace setVariable ["FN_factionSelector", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_factionSelector.sqf"];
+missionNamespace setVariable ["FN_ZTriggerSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\FN_ZTriggerSpawner.sqf"];
+missionNamespace setVariable ["FN_squadToRenegade", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_squadToRenegade.sqf"];
+missionNamespace setVariable ["FN_spawnAI", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_spawnAI.sqf"];
+missionNamespace setVariable ["FN_equipAI", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_equipAI.sqf"];
+missionNamespace setVariable ["FN_renegadeSpawner", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_renegadeSpawner.sqf"];
+missionNamespace setVariable ["FN_meleeChance", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_meleeChance.sqf"];
+missionNamespace setVariable ["FN_factionSpawnerMain", compile preprocessFileLineNumbers "AISpawners\FN_factionSpawnerMain.sqf"];
+missionNamespace setVariable ["FN_lootSpawner", compile preprocessFileLineNumbers "AISpawners\FN_lootSpawner.sqf"];
+missionNamespace setVariable ["FN_ExitingTrigger", compile preprocessFileLineNumbers "ExitingTrigger.sqf"];
+missionNamespace setVariable ["FN_Conversations", compile preprocessFileLineNumbers "Economy System\Conversations.sqf"];
+missionNamespace setVariable ["FN_economySystem", compile preprocessFileLineNumbers "Economy System\economySystem.sqf"];
+missionNamespace setVariable ["FN_economySystemCrate", compile preprocessFileLineNumbers "Economy System\economySystemCrate.sqf"];
+missionNamespace setVariable ["FN_spawnStaticTrader", compile preprocessFileLineNumbers "Economy System\spawnStaticTrader.sqf"];
+missionNamespace setVariable ["FN_traderTasks", compile preprocessFileLineNumbers "Economy System\traderTasks.sqf"];
+missionNamespace setVariable ["FN_specialVehicleSpawns", compile preprocessFileLineNumbers "Ambient\FN_specialVehicleSpawns.sqf"];
+missionNamespace setVariable ["FN_factionArea", compile preprocessFileLineNumbers "Ambient\FN_factionArea.sqf"];
+missionNamespace setVariable ["FN_spawnZom", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\FN_spawnZom.sqf"];
+missionNamespace setVariable ["FN_drinkWater", compile preprocessFileLineNumbers "Ambient\FN_drinkWater.sqf"];
+missionNamespace setVariable ["FN_refillCanteen", compile preprocessFileLineNumbers "Ambient\FN_refillCanteen.sqf"];
+missionNamespace setVariable ["FN_purifyWater", compile preprocessFileLineNumbers "Ambient\FN_purifyWater.sqf"];
+missionNamespace setVariable ["FN_eatFood", compile preprocessFileLineNumbers "Ambient\FN_eatFood.sqf"];
+missionNamespace setVariable ["FN_skinAnimal", compile preprocessFileLineNumbers "Ambient\FN_skinAnimal.sqf"];
+missionNamespace setVariable ["FN_cookMeat", compileFinal preprocessFileLineNumbers "Ambient\FN_cookMeat.sqf"];
+missionNamespace setVariable ["FN_createFire", compileFinal preprocessFileLineNumbers "Ambient\FN_createFire.sqf"];
+missionNamespace setVariable ["FN_sanitySystem", compileFinal preprocessFileLineNumbers "Ambient\FN_sanitySystem.sqf"];
+missionNamespace setVariable ["FN_defecate", compileFinal preprocessFileLineNumbers "Ambient\FN_defecate.sqf"];
+missionNamespace setVariable ["FN_theRuns", compileFinal preprocessFileLineNumbers "Ambient\FN_theRuns.sqf"];
+missionNamespace setVariable ["411Spawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\411Spawner.sqf"];
+missionNamespace setVariable ["AbominationSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\AbominationSpawner.sqf"];
+missionNamespace setVariable ["GoliathSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\GoliathSpawner.sqf"];
+missionNamespace setVariable ["HellspawnSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\HellspawnSpawner.sqf"];
+missionNamespace setVariable ["MindflayerSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\MindflayerSpawner.sqf"];
+missionNamespace setVariable ["RakeSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\RakeSpawner.sqf"];
+missionNamespace setVariable ["ShadowmenSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\ShadowmenSpawner.sqf"];
+missionNamespace setVariable ["SkullsSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\SkullsSpawner.sqf"];
+missionNamespace setVariable ["SnatcherSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\SnatcherSpawner.sqf"];
+missionNamespace setVariable ["StatueSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\StatueSpawner.sqf"];
+missionNamespace setVariable ["TankSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\TankSpawner.sqf"];
+missionNamespace setVariable ["VampireSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\VampireSpawner.sqf"];
+missionNamespace setVariable ["VariousMutantSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\VariousMutantSpawner.sqf"];
+missionNamespace setVariable ["WendigoSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\WendigoSpawner.sqf"];
+missionNamespace setVariable ["mutantEffects", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\mutantEffects.sqf"];
+missionNamespace setVariable ["inclimateWeather", compile preprocessFileLineNumbers "Ambient\inclimateWeather.sqf"];
+missionNamespace setVariable ["FN_PurchaseItem", compile preprocessFileLineNumbers "Economy System\functions\FN_PurchaseItem.sqf"];
+missionNamespace setVariable ["FN_PurchaseMag", compile preprocessFileLineNumbers "Economy System\functions\FN_PurchaseMag.sqf"];
+missionNamespace setVariable ["FN_SellAction", compile preprocessFileLineNumbers "Economy System\functions\FN_SellAction.sqf"];
+missionNamespace setVariable ["FN_addItemToAmmoBox", compile preprocessFileLineNumbers "Economy System\functions\FN_addItemToAmmoBox.sqf"];
+missionNamespace setVariable ["FN_ammoBoxCheck", compile preprocessFileLineNumbers "Economy System\functions\FN_ammoBoxCheck.sqf"];
+missionNamespace setVariable ["FN_BINO", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_BINO.sqf"];
+missionNamespace setVariable ["FN_EXPLOSIVE", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_EXPLOSIVE.sqf"];
+missionNamespace setVariable ["FN_GRENADES", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_GRENADES.sqf"];
+missionNamespace setVariable ["FN_MISC", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_MISC.sqf"];
+missionNamespace setVariable ["FN_NVG", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_NVG.sqf"];
+missionNamespace setVariable ["FN_ResetMenu", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_ResetMenu.sqf"];
+missionNamespace setVariable ["FN_UNDERRAIL", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_UNDERRAIL.sqf"];
+missionNamespace setVariable ["FN_backPack", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_backPack.sqf"];
+missionNamespace setVariable ["FN_chestRig", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_chestRig.sqf"];
+missionNamespace setVariable ["FN_clothing", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_clothing.sqf"];
+missionNamespace setVariable ["FN_launchers", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_launchers.sqf"];
+missionNamespace setVariable ["FN_mags", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_mags.sqf"];
+missionNamespace setVariable ["FN_muzzle", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_muzzle.sqf"];
+missionNamespace setVariable ["FN_optics", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_optics.sqf"];
+missionNamespace setVariable ["FN_primary", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_primary.sqf"];
+missionNamespace setVariable ["FN_rail", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_rail.sqf"];
+missionNamespace setVariable ["FN_sidearms", compile preprocessFileLineNumbers "Economy System\functions\actionFunctions\FN_sidearms.sqf"];
+missionNamespace setVariable ["FN_deleteCurrentTask", compile preprocessFileLineNumbers "Economy System\functions\taskFunctions\FN_deleteCurrentTask.sqf"];
+missionNamespace setVariable ["FN_killTaskGroup", compile preprocessFileLineNumbers "Economy System\functions\taskFunctions\FN_killTaskGroup.sqf"];
+missionNamespace setVariable ["FN_killTaskGroupStationary", compile preprocessFileLineNumbers "Economy System\functions\taskFunctions\FN_killTaskGroupStationary.sqf"];
+missionNamespace setVariable ["FN_killTaskLeapers", compile preprocessFileLineNumbers "Economy System\functions\taskFunctions\FN_killTaskLeapers.sqf"];
+missionNamespace setVariable ["FN_killTaskPlayer", compile preprocessFileLineNumbers "Economy System\functions\taskFunctions\FN_killTaskPlayer.sqf"];
+missionNamespace setVariable ["FN_killTaskSniper", compile preprocessFileLineNumbers "Economy System\functions\taskFunctions\FN_killTaskSniper.sqf"];
+missionNamespace setVariable ["garbageCollection", compile preprocessFileLineNumbers "Server Ran Scripts\garbageCollection.sqf"];
+missionNamespace setVariable ["sleepTime", compile preprocessFileLineNumbers "Server Ran Scripts\sleepTime.sqf"];
+missionNamespace setVariable ["onPlayerKilled", compile preprocessFileLineNumbers "onPlayerKilled.sqf"];
+missionNamespace setVariable ["onPlayerRespawn", compile preprocessFileLineNumbers "onPlayerRespawn.sqf"];
+missionNamespace setVariable ["teleporter", compile preprocessFileLineNumbers "teleporter.sqf"];
+missionNamespace setVariable ["FN_factionClothingCheck", compile preprocessFileLineNumbers "factionClothingChecker.sqf"];
 
-missionNamespace setVariable [
-    "FN_createAIUnit", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_createAIUnit.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_setUnitSkills", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_setUnitSkills.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_selectFaction", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_selectFaction.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_createWaypoints", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_createWaypoints.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_spawnWanderingFaction", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_spawnWanderingFaction.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_spawnHuntingFaction", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_spawnHuntingFaction.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_getFactionSkills", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_getFactionSkills.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_createObject_Fortifications", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\campFortificationsScripts\FN_createObject_Fortifications.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_spawnAI_Fortifications", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\campFortificationsScripts\FN_spawnAI_Fortifications.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_fortificationsMain", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\campFortificationsScripts\FN_fortificationsMain.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_fortificationsAux", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\campFortificationsScripts\FN_fortificationsAux.sqf"
-];
-
-missionNamespace setVariable [
-	"FN_arrayReturn", 
-	compile preprocessFileLineNumbers "ArrayDatabase.sqf"
-];
-
-missionNamespace setVariable [
-	"FN_convertWeightedArray", 
-	compile preprocessFileLineNumbers "Server Ran Scripts\convertWeightedArray.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_ambientVeh", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_ambientVeh.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_factionSelector", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_factionSelector.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_ZTriggerSpawner", 
-    compile preprocessFileLineNumbers "AISpawners\mutantSpawners\FN_ZTriggerSpawner.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_squadToRenegade", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_squadToRenegade.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_spawnAI", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_spawnAI.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_equipAI", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_equipAI.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_renegadeSpawner", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_renegadeSpawner.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_meleeChance", 
-    compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_meleeChance.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_factionSpawnerMain", 
-    compile preprocessFileLineNumbers "AISpawners\FN_factionSpawnerMain.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_lootSpawner", 
-    compile preprocessFileLineNumbers "AISpawners\FN_lootSpawner.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_ExitingTrigger", 
-    compile preprocessFileLineNumbers "ExitingTrigger.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_Conversations", 
-    compile preprocessFileLineNumbers "Economy System\Conversations.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_economySystem", 
-    compile preprocessFileLineNumbers "Economy System\economySystem.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_economySystemCrate", 
-    compile preprocessFileLineNumbers "Economy System\economySystemCrate.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_spawnStaticTrader", 
-    compile preprocessFileLineNumbers "Economy System\spawnStaticTrader.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_traderTasks", 
-    compile preprocessFileLineNumbers "Economy System\traderTasks.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_specialVehicleSpawns", 
-    compile preprocessFileLineNumbers "Ambient\FN_specialVehicleSpawns.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_factionArea", 
-    compile preprocessFileLineNumbers "Ambient\FN_factionArea.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_spawnZom", 
-    compile preprocessFileLineNumbers "AISpawners\mutantSpawners\FN_spawnZom.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_drinkWater", 
-    compile preprocessFileLineNumbers "Ambient\FN_drinkWater.sqf"
-];
-
-missionNamespace setVariable [
-	"FN_refillCanteen", 
-	compile preprocessFileLineNumbers "Ambient\FN_refillCanteen.sqf"
-];
-
-missionNamespace setVariable [
-	"FN_purifyWater", 
-	compile preprocessFileLineNumbers "Ambient\FN_purifyWater.sqf"
-];
-
-missionNamespace setVariable [
-	"FN_eatFood", 
-	compile preprocessFileLineNumbers "Ambient\FN_eatFood.sqf"
-];
-
-missionNamespace setVariable [
-	"FN_skinAnimal", 
-	compile preprocessFileLineNumbers "Ambient\FN_skinAnimal.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_cookMeat",
-    compileFinal preprocessFileLineNumbers "Ambient\FN_cookMeat.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_createFire",
-    compileFinal preprocessFileLineNumbers "Ambient\FN_createFire.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_sanitySystem",
-    compileFinal preprocessFileLineNumbers "Ambient\FN_sanitySystem.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_defecate",
-    compileFinal preprocessFileLineNumbers "Ambient\FN_defecate.sqf"
-];
-
-missionNamespace setVariable [
-    "FN_theRuns",
-    compileFinal preprocessFileLineNumbers "Ambient\FN_theRuns.sqf"
-];
 
 waitUntil {!isNull player};
 sleep 3;
