@@ -1,0 +1,5 @@
+params ["_container", "_caller", "_actionId"];
+[_container, ["Purchase LARGE IED (DUG-IN): $200", "Economy System\functions\FN_PurchaseItem.sqf", ["IEDLandBig_Remote_Mag",200],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase M183 DEMO CHARGE: $250", "Economy System\functions\FN_PurchaseItem.sqf", ["SatchelCharge_Remote_Mag",250],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase M26 ANTI-PERSONNEL MINE: $100", "Economy System\functions\FN_PurchaseItem.sqf", ["APERSBoundingMine_Range_Mag",100],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase M112 DEMO BLOCK: $150", "Economy System\functions\FN_PurchaseItem.sqf", ["DemoCharge_Remote_Mag",150],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];

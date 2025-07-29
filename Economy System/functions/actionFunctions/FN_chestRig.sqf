@@ -1,0 +1,6 @@
+params ["_container", "_caller", "_actionId"];
+[_container, ["Purchase Recce Rig(No Armor): $10", "Economy System\functions\FN_PurchaseItem.sqf", ["V_SmershVest_01_radio_F",10],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Tactical Vest(Level 1 Armor): $25", "Economy System\functions\FN_PurchaseItem.sqf", ["rvg_tacvest_2",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Carrier Lite (Level 3 Armor): $100", "Economy System\functions\FN_PurchaseItem.sqf", ["V_PlateCarrier1_rgr",100],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Carrier Rig (Level 4 Armor): $300", "Economy System\functions\FN_PurchaseItem.sqf", ["V_PlateCarrier2_rgr",300],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Carrier Special Rig: $500", "Economy System\functions\FN_PurchaseItem.sqf", ["V_PlateCarrierSpec_blk",500],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];

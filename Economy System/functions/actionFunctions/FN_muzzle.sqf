@@ -1,0 +1,28 @@
+params ["_container", "_caller", "_actionId"];
+[_container, ["-------VANILLA MUZZLE ATTACHMENTS-------",{},[],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase FLASH SUPPRESSOR (7.62): $75", "Economy System\functions\FN_PurchaseItem.sqf", ["ACE_muzzle_mzls_B",75],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase SOUND SUPPRESSOR (7.62): $300", "Economy System\functions\FN_PurchaseItem.sqf", ["muzzle_snds_B",300],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase FLASH SUPPRESSOR (9MM): $25", "Economy System\functions\FN_PurchaseItem.sqf", ["ACE_muzzle_mzls_smg_02",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase SOUND SUPPRESSOR (9MM): $100", "Economy System\functions\FN_PurchaseItem.sqf", ["muzzle_snds_L",100],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase FLASH SUPPRESSOR (5.56): $60", "Economy System\functions\FN_PurchaseItem.sqf", ["ACE_muzzle_mzls_L",60],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase FLASH SUPPRESSOR (9.3MM): $450", "Economy System\functions\FN_PurchaseItem.sqf", ["ACE_muzzle_mzls_93mmg",450],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase SOUND SUPPRESSOR MG: $400", "Economy System\functions\FN_PurchaseItem.sqf", ["muzzle_snds_H_MG_blk_F",400],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase FLASH SUPPRESSOR (6.5MM): $50", "Economy System\functions\FN_PurchaseItem.sqf", ["ACE_muzzle_mzls_H",50],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase SOUND SUPPRESSOR (6.5MM): $300", "Economy System\functions\FN_PurchaseItem.sqf", ["muzzle_snds_H",300],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase FLASH SUPPRESSOR (.338): $100", "Economy System\functions\FN_PurchaseItem.sqf", ["ACE_muzzle_mzls_338",100],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase SOUND SUPPRESSOR (.338): $400", "Economy System\functions\FN_PurchaseItem.sqf", ["muzzle_snds_338_black",400],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase SOUND SUPPRESSOR (5.7MM): $200", "Economy System\functions\FN_PurchaseItem.sqf", ["muzzle_snds_570",200],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase STEALTH SUPPRESSOR (5.8MM): $300", "Economy System\functions\FN_PurchaseItem.sqf", ["muzzle_snds_58_blk_F",300],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase FLASH SUPPRESSOR (.45 ACP): $30", "Economy System\functions\FN_PurchaseItem.sqf", ["ACE_muzzle_mzls_smg_01",30],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase SOUND SUPPRESSOR (.45 ACP): $125", "Economy System\functions\FN_PurchaseItem.sqf", ["muzzle_snds_acp",125],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+
+[_container, ["-------RHS MUZZLE ATTACHMENTS-------",{},[],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase PBS-4: $200", "Economy System\functions\FN_PurchaseItem.sqf", ["rhs_acc_pbs4",200],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase TGP-A: $200", "Economy System\functions\FN_PurchaseItem.sqf", ["rhs_acc_tgpa",200],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase PBS-1: $300", "Economy System\functions\FN_PurchaseItem.sqf", ["rhs_acc_pbs1",300],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase NT4 QDSS: $300", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_nt4_black",300],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase TiTaN: $400", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_M2010S",400],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase M24 15OX. FLASH HIDER: $100", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_m24_muzzlehider_black",100],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase M24 SUPPRESSOR: $400", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_m24_silencer_black",400],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase SR-25 RIFLE SUPPRESSOR: $350", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_SR25S",350],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase ROTEX-II: $125", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_rotex_mp7",125],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];

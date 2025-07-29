@@ -1,0 +1,58 @@
+briefingName = "Left Behind - Persistent Server";
+loadScreen = "pics\LB_Tanoa.paa";
+respawnOnStart=-1;
+enableDebugConsole = 1;
+
+class CfgSounds {
+    sounds[] = {};
+    class laugh_1 {
+        name = "laugh_1";
+        sound[] = {"sounds\laugh_1.ogg", 1, 1};
+        titles[] = {};
+    };
+	class laugh_2 {
+        name = "laugh_2";
+        sound[] = { "sounds\laugh_2.ogg", 1, 1 };
+        titles[] = {};
+    };
+	class laugh_3 {
+        name = "laugh_3";
+        sound[] = { "sounds\laugh_3.ogg", 1, 1 };
+        titles[] = {};
+    };
+	class laugh_4 {
+        name = "laugh_4";
+        sound[] = { "sounds\laugh_4.ogg", 1, 1 };
+        titles[] = {};
+    };
+    class laugh_5 {
+        name = "laugh_5";
+        sound[] = {"sounds\laugh_5.ogg", 1, 1};
+        titles[] = {};
+    };
+	class rvg_geiger_0 {
+        name = "rvg_geiger_0";
+        sound[] = {"sounds\rvg_geiger_0.ogg", 1, 1};
+        titles[] = {};
+    };
+	class rvg_geiger_1 {
+        name = "rvg_geiger_1";
+        sound[] = {"sounds\rvg_geiger_1.ogg", 1, 1};
+        titles[] = {};
+    };
+	class rvg_geiger_2 {
+        name = "rvg_geiger_2";
+        sound[] = {"sounds\rvg_geiger_2.ogg", 1, 1};
+        titles[] = {};
+    };
+	class rvg_geiger_3 {
+        name = "rvg_geiger_3";
+        sound[] = {"sounds\rvg_geiger_3.ogg", 1, 1};
+        titles[] = {};
+    };
+	class heartbeat {
+        name = "heartbeat";
+        sound[] = {"sounds\heartbeat.ogg", 1, 1};
+        titles[] = {};
+    };
+};

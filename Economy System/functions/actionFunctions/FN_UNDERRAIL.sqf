@@ -1,0 +1,13 @@
+params ["_container", "_caller", "_actionId"];
+[_container, ["Purchase BIPOD (Black - Vanilla): $25", "Economy System\functions\FN_PurchaseItem.sqf", ["bipod_01_F_blk",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase BIPOD (Multicam - Vanilla): $30", "Economy System\functions\FN_PurchaseItem.sqf", ["bipod_01_F_mtp",30],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase AFG GRIP: $25", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_grip2",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase GRIP POD: $25", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_grip1",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase RVG GRIP: $25", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_rvg_blk",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase TD STUBBY GRIP: $25", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_tdstubby_blk",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase TD VERTICAL GRIP: $25", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_grip3",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase HARRIS BIPOD: $25", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_harris_bipod",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase MULTIPURPOSE BIPOD: $25", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_m14_bipod",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase M203 GRIP: $25", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_grip_m203_blk",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase HARRIS BIPOD (M24): $25", "Economy System\functions\FN_PurchaseItem.sqf", ["rhs_acc_harris_swivel",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase SAW BIPOD: $25", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_saw_bipod",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];

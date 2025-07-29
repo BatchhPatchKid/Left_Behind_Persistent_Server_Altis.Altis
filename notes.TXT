@@ -1,0 +1,33 @@
+To do:
+- lower difficutly?
+- more missions at the traders
+	1) Destroy a designated vehicle
+	
+- Develop my own looting system
+- random location spawned multiple factions on each other
+- mutant effects wear off after leaving the trigger
+- trader gave an NLAW to Eli after (unable to replicate)
+- weapon holstered on back doesn't get deleted
+- possibly invisible melee AI
+- When gutting, allow for a chance to obtain a bag of 250ml's of blood
+- Talk about which meat's are which in the Survival System diary record
+- less AI in patrol area's? (2 primary amount in patrol groups)
+
+Notes:
+- Good animation for psionsics injury: _player playMove "AinvPknlMstpSnonWnonDnon_healed_1"; (or _2)
+
+Update:
+- 
+
+possible poop animation:
+With gun: Acts_AidlPercMstpSloWWrflDnon_warmup_6_loop
+Without gun: Acts_AidlPercMstpSnonWnonDnon_warmup_4_loop
+
+
+_handle = 0 spawn {
+	player playMove "AmovPercMstpSrasWrflDnon_AmovPknlMstpSlowWrflDnon";
+	sleep 1.5;
+	player switchMove "Acts_AidlPercMstpSloWWrflDnon_warmup_6_loop"; 
+	sleep 20;
+	player playMoveNow "AmovPercMstpSrasWrflDnon"; 
+};

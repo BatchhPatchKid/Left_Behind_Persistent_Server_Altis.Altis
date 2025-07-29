@@ -1,0 +1,21 @@
+params ["_container", "_caller", "_actionId"];
+[_container, ["-------VANILLA OPTICS-------",{},[],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase BURRIS FASTFIRE 2: $30", "Economy System\functions\FN_PurchaseItem.sqf", ["optic_Yorris",30],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Holosight: $50", "Economy System\functions\FN_PurchaseItem.sqf", ["optic_Holosight",50],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase IOR-Valdada Pitbull 2: $75", "Economy System\functions\FN_PurchaseItem.sqf", ["optic_MRCO",75],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase ELCAN SpecterOS: $400", "Economy System\functions\FN_PurchaseItem.sqf", ["optic_Arco",400],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Leupold Mark 4 HAMR: $400", "Economy System\functions\FN_PurchaseItem.sqf", ["optic_Hamr",400],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Burris XTR II: $500", "Economy System\functions\FN_PurchaseItem.sqf", ["optic_DMS",500],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase KAHLES Helia: $550", "Economy System\functions\FN_PurchaseItem.sqf", ["optic_KHS_blk",550],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Nightforce NXS: $650", "Economy System\functions\FN_PurchaseItem.sqf", ["optic_LRPS",650],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+
+[_container, ["-------RHS OPTICS-------",{},[],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase EKP-8-02: $50", "Economy System\functions\FN_PurchaseItem.sqf", ["rhs_acc_ekp8_02",50],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase OKP7: $50", "Economy System\functions\FN_PurchaseItem.sqf", ["rhs_acc_okp7_dovetail",50],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase 1PN93-2: $100", "Economy System\functions\FN_PurchaseItem.sqf", ["rhs_acc_1pn93_2",100],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase PSO-1M2: $150", "Economy System\functions\FN_PurchaseItem.sqf", ["rhs_acc_pso1m2",150],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase M552 CCO: $50", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_eotech_552",50],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase SU-278/PVS LT660: $50", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_T1_high",50],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase G33 + XPS3: $200", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_g33_xps3",200],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase M150 RCO(ARD): $450", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_ACOG2",450],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase MK. 4 M5 (MRDS): $800", "Economy System\functions\FN_PurchaseItem.sqf", ["rhsusf_acc_LEUPOLDMK4_2_mrds",800],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];

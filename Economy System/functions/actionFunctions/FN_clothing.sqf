@@ -1,0 +1,12 @@
+params ["_container", "_caller", "_actionId"];
+[_container, ["Purchase Moderate Weather Clothing: $10", "Economy System\functions\FN_PurchaseItem.sqf", ["U_FRITH_RUIN_sdr_fabtan",10],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase CBRN Suit: $100","Economy System\functions\FN_PurchaseItem.sqf", ["U_I_CBRN_Suit_01_AAF_F",100],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Ghille Suit: $100", "Economy System\functions\FN_PurchaseItem.sqf", ["U_B_FullGhillie_sard",100],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Cold Weather Granit Suit: $100", "Economy System\functions\FN_PurchaseItem.sqf", ["U_O_R_Gorka_01_brown_F",100],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Cold Weather Shemagh: $10", "Economy System\functions\FN_PurchaseItem.sqf", ["H_ShemagOpen_tan",10],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Light Combat Helmet: $25", "Economy System\functions\FN_PurchaseItem.sqf", ["H_HelmetB_light",25],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Combat Helmet: $50", "Economy System\functions\FN_PurchaseItem.sqf", ["H_HelmetB",50],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Enhanced Combat Helmet: $300", "Economy System\functions\FN_PurchaseItem.sqf", ["H_HelmetSpecB",300],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Special Purpose Helmet: $4,000", "Economy System\functions\FN_PurchaseItem.sqf", ["H_HelmetO_ViperSP_hex_F",4000],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Cold Weather Balaclava: $10", "Economy System\functions\FN_PurchaseItem.sqf", ["G_Balaclava_blk",10],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Gas Mask: $20", "Economy System\functions\FN_PurchaseItem.sqf", ["G_RegulatorMask_F",20],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];

@@ -1,0 +1,12 @@
+params ["_container", "_caller", "_actionId"];
+[_container, ["Purchase Messenger Bag: $3", "Economy System\functions\FN_PurchaseItem.sqf", ["B_Messenger_Black_F",3],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Leg Strap Pack: $5", "Economy System\functions\FN_PurchaseItem.sqf", ["rvg_legstrappack_1",5],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Assault Pack: $15", "Economy System\functions\FN_PurchaseItem.sqf", ["B_AssaultPack_cbr",15],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Field Pack: $20", "Economy System\functions\FN_PurchaseItem.sqf", ["B_FieldPack_cbr",20],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Tactical Backpack: $30", "Economy System\functions\FN_PurchaseItem.sqf", ["rvg_tactical",30],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Viper Harness Light: $40", "Economy System\functions\FN_PurchaseItem.sqf", ["B_ViperLightHarness_khk_F",40],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Kitbag: $50", "Economy System\functions\FN_PurchaseItem.sqf", ["B_Kitbag_cbr",50],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Viper Harness: $75", "Economy System\functions\FN_PurchaseItem.sqf", ["B_ViperHarness_khk_F",75],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Carryall: $100", "Economy System\functions\FN_PurchaseItem.sqf", ["rvg_carryall_1",100],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Radio Pack: $150", "Economy System\functions\FN_PurchaseItem.sqf", ["TFAR_rt1523g_rhs",150],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
+[_container, ["Purchase Bergen: $300", "Economy System\functions\FN_PurchaseItem.sqf", ["rvg_bergan",300],1.5,true,false,"","true",3]] remoteExec ['addAction', 0, _container];
