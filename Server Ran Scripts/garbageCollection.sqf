@@ -5,7 +5,7 @@ private _corpseThreshold = 1000;
 private _distanceThresholdVehicle = 1000;
 
 // Defining functions
-private fn_checkProximityToDesiredObject = {
+private _fn_checkProximityToDesiredObject = {
     private _withinRange = false;
     params ["_object", "_objectsCache", "_proximity"];
     {
@@ -52,6 +52,7 @@ while { true } do {
             _withinRange = (count nearestObjects [_unit, ["air"], 5]) != 0;
             if (_withinRange) then { continue };
             deleteVehicle _unit;
+            sleep 0.01; // Prevents performance issues by adding a small delay
         } forEach allUnits;
     
         // Delete dead bodies (allDead) outside player range
@@ -66,6 +67,7 @@ while { true } do {
             _withinRange = [_object, _players, _corpseThreshold] call _fn_checkProximityToPlayer;
             if (_withinRange) then { continue };
             deleteVehicle _object;
+            sleep 0.01;
         } forEach allDead;
     
         // Delete specific objects outside player range
@@ -81,6 +83,7 @@ while { true } do {
             _withinRange = [_object, _players, _distanceThresholdObjects] call _fn_checkProximityToPlayer;
             if (_withinRange) then { continue };
             deleteVehicle _object;
+            sleep 0.01;
         } forEach _objects;
     
         // Delete vehicles outside player range (excluding aircraft)
@@ -99,6 +102,7 @@ while { true } do {
             _withinRange = [_vehicle, _players, _distanceThresholdVehicle] call _fn_checkProximityToPlayer;
             if (_withinRange) then { continue };
             deleteVehicle _vehicle;
+            sleep 0.01;
         } forEach _objectsVehicle;
     };
     sleep 30;
