@@ -159,6 +159,16 @@ if (side player != civilian && (hasInterface or isDedicated)) then {
 	[player] execVM "factionClothingChecker.sqf";
 };
 
+[player] call FN_updateDrinkActions;
+player addEventHandler ["Take", {
+    private _unit = _this select 0;
+    [_unit] call FN_updateDrinkActions;
+}];
+player addEventHandler ["Put", {
+    private _unit = _this select 0;
+    [_unit] call FN_updateDrinkActions;
+}];
+
 _actionMain = ["Main","Scenario Actions","",{},{true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions"], _actionMain] call ace_interact_menu_fnc_addActionToClass;
 
@@ -198,8 +208,8 @@ _actionSanity = ["sanity", "Check Sanity", "", { call FN_checkSanity; }, {true}]
 _actionCheckDefecation = ["Check Defecation Status", "Check Defecation Status", "", { [player] call FN_checkDefecationStatus }, { true }] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Checks"], _actionCheckDefecation] call ace_interact_menu_fnc_addActionToClass;
 
-_actionDrinkWater = ["Drink Water", "Drink Water", "", { [player] call FN_drinkWater; }, {true}] call ace_interact_menu_fnc_createAction;
-[(typeOf player), 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions"], _actionDrinkWater] call ace_interact_menu_fnc_addActionToClass;
+// = ["Drink Water", "Drink Water", "", { [player] call FN_drinkWater; }, {true}] call ace_interact_menu_fnc_createAction;
+//[(typeOf player), 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions"], _actionDrinkWater] call ace_interact_menu_fnc_addActionToClass;
 
 _actionEatFood = ["eat", "Eat Food", "", { [player] call FN_eatFood; }, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionEatFood] call ace_interact_menu_fnc_addActionToClass;
