@@ -15,27 +15,44 @@
    Save this file in your mission folder and load it into missionNamespace in init.sqf.
 */
 
-params ["_player"];
+params ["_player", ["_item", ""]];
 
-// Define arrays for each group of drinkable items.
-private _sodas = ["rvg_franta","rvg_spirit","ACE_Can_Franta","ACE_Can_RedGull","ACE_Can_Spirit"];
-private _waterBottles = ["rvg_plasticBottlePurified", "ACE_WaterBottle", "ACE_WaterBottle_Half"];
-private _canteens = ["rvg_canteenPurified", "ACE_Canteen", "ACE_Canteen_Half"];
-private _dirty = ["rvg_canteen","rvg_plasticBottle"];
-private _blood = ["ACE_bloodIV_500","ACE_bloodIV_250","ACE_bloodIV"];
+// Retrieve drinkable item arrays from the array database
+private _sodas = ["drinkSodas"] call (missionNamespace getVariable "FN_arrayReturn");
+private _waterBottles = ["drinkWaterBottles"] call (missionNamespace getVariable "FN_arrayReturn");
+private _canteens = ["drinkCanteens"] call (missionNamespace getVariable "FN_arrayReturn");
+private _dirty = ["drinkDirty"] call (missionNamespace getVariable "FN_arrayReturn");
+private _blood = ["drinkBlood"] call (missionNamespace getVariable "FN_arrayReturn");
 
 private _selectedValue = 0;
 private _selectedItem = "";
 private _selectedName = "";
 
+// If a specific item was supplied, select it directly
+if (_item != "") then {
+    _selectedItem = _item;
+    switch (true) do {
+        case (_item in _sodas): { _selectedValue = 15; _selectedName = "Soda"; };
+        case (_item in _waterBottles): { _selectedValue = 25; _selectedName = "Water Bottle"; };
+        case (_item in _canteens): { _selectedValue = 40; _selectedName = "Canteen"; };
+        case (_item == "rvg_plasticBottle"): { _selectedValue = 25; _selectedName = "Water Bottle"; };
+        case (_item == "rvg_canteen"): { _selectedValue = 40; _selectedName = "Canteen"; };
+        case (_item == "ACE_bloodIV_250"): { _selectedValue = 8; _selectedName = "250ml of human blood"; };
+        case (_item == "ACE_bloodIV_500"): { _selectedValue = 16; _selectedName = "500ml of human blood"; };
+        case (_item == "ACE_bloodIV"): { _selectedValue = 32; _selectedName = "1 liter of human blood"; };
+    };
+};
+
 // Check sodas first (15 hydration).
-{
-    if (([_player, _x] call BIS_fnc_hasItem) == true) exitWith { 
-		_selectedValue = 15; 
-		_selectedItem = _x;
-		_selectedName = "Soda";
-	};
-} forEach _sodas;
+if (_selectedValue == 0) then {
+    {
+        if (([_player, _x] call BIS_fnc_hasItem) == true) exitWith {
+            _selectedValue = 15;
+            _selectedItem = _x;
+            _selectedName = "Soda";
+        };
+    } forEach _sodas;
+};
 
 // Check water bottles next (25 hydration).
 if (_selectedValue == 0) then {

@@ -270,6 +270,13 @@ switch _whichArray do {
 	case "PMCVeh": { _arrayToReturn = ["RHS_UH1Y_UNARMED", .03, "I_C_Offroad_02_LMG_F",.25,"I_C_Offroad_02_unarmed_F",.50,"I_G_Offroad_01_armed_F",.15,"B_LSV_01_armed_F",.20]; };
 	case "WOVeh": { _arrayToReturn = ["C_Offroad_01_covered_F",.50,"C_Offroad_01_comms_F",.50,"I_C_Offroad_02_LMG_F",.25]; };
 	case "ALFVeh": { _arrayToReturn = ["rhsusf_m1025_w", .75, "rhsusf_m1025_w_m2", .15, "rhsusf_m1152_usarmy_wd", .15, "rhsusf_M1078A1P2_WD_fmtv_usarmy", .45, "RHS_MELB_MH6M", .05]; };
+
+	// hydration arrays
+	case "drinkSodas": { _arrayToReturn = ["rvg_franta","rvg_spirit","ACE_Can_Franta","ACE_Can_RedGull","ACE_Can_Spirit"]; };
+	case "drinkWaterBottles": { _arrayToReturn = ["rvg_plasticBottlePurified","ACE_WaterBottle","ACE_WaterBottle_Half"]; };
+	case "drinkCanteens": { _arrayToReturn = ["rvg_canteenPurified","ACE_Canteen","ACE_Canteen_Half"]; };
+	case "drinkDirty": { _arrayToReturn = ["rvg_canteen","rvg_plasticBottle"]; };
+	case "drinkBlood": { _arrayToReturn = ["ACE_bloodIV_500","ACE_bloodIV_250","ACE_bloodIV"]; };
 };
 
 _arrayToReturn
