@@ -501,131 +501,43 @@ FN_sleep = { //player actions for the sleeping function of the game
 };
 
 FN_checkFaction = {
-	_handle = 0 spawn {
-		_relation = "";
-		_firstFaction = true;
-		if (player getVariable "BB_Relation") then {
-			if (_firstFaction) then {
-				_relation = _relation + "Boonie Boys (BB)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and Boonie Boys (BB)";
+	0 spawn {
+		private _factions = [
+			["BB_Relation",   "Boonie Boys (BB)"],
+			["SU_Relation",   "Survivors Union (SU)"],
+			["PF_Relation",   "Pigs Flesh (PF)"],
+			["ALF_Relation",  "Altis Liberation Front (ALF)"],
+			["WO_Relation",   "World Order (WO)"],
+			["RU_Relation",   "Russian Federation (RU)"],
+			["US_Relation",   "United States Army (US)"],
+			["NH_Relation",   "New Horizon (NH)"],
+			["TRB_Relation",  "The Red Bullet (TRB)"],
+			["RC_Relation",   "Ravens Cloak (RC)"],
+			["DT_Relation",   "Deadmans Trident (DT)"],
+			["ROA_Relation",  "Republic of Altis (ROA)"],
+			["PMC_Relation",  "PMC Group Alpha (PMC)"],
+			["Bandit_Relation", "Bandits"],
+			["Renegade_Relation", "Renegades"]
+		];
+
+		private _relations = [];
+
+		{
+			private _var = _x select 0;
+			private _name = _x select 1;
+
+			if (player getVariable [_var, false]) then {
+				_relations pushBack _name;
 			};
+		} forEach _factions;
+
+		private _relationString = if (_relations isEqualTo []) then {
+			"You are not friendly with any factions."
+		} else {
+			format ["You are friendly with factions: %1", _relations joinString " and "]
 		};
-		if (player getVariable "SU_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "Survivors Union (SU)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and Survivors Union (SU)";
-			};
-		};
-		if (player getVariable "PF_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "Pigs Flesh (PF)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and Pigs Flesh (PF)";
-			};
-		};
-		if (player getVariable "ALF_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "Altis Liberation Front (ALF)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and Altis Liberation Front (ALF)";
-			};
-		};
-		if (player getVariable "WO_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "World Order (WO)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and World Order (WO)";
-			};
-		};
-		if (player getVariable "RU_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "Russian Federation (RU)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and Russian Federation (RU)";
-			};
-		};
-		if (player getVariable "US_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "United States Army (US)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and United States Army (US)";
-			};
-		};	
-		if (player getVariable "NH_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "New Horizon (NH)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and New Horizon (NH)";
-			};
-		};	
-		if (player getVariable "TRB_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "The Red Bullet (TRB)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and The Red Bullet (TRB)";
-			};
-		};	
-		if (player getVariable "RC_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "Ravens Cloak (RC)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and Ravens Cloak (RC)";
-			};
-		};	
-		if (player getVariable "DT_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "Deadmans Trident (DT)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and Deadmans Trident (DT)";
-			};
-		};	
-		if (player getVariable "ROA_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "Republic of Altis (ROA)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and Republic of Altis (ROA)";
-			};
-		};	
-		if (player getVariable "PMC_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "PMC Group Alpha (PMC)";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and PMC Group Alpha (PMC)";
-			};
-		};	
-		if (player getVariable "Bandit_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "Bandits";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and Bandits";
-			};
-		};	
-		if (player getVariable "Renegade_Relation") then {
-			if (_firstFaction) then { 
-				_relation = _relation + "Renegades";
-				_firstFaction = false;
-			} else {
-				_relation = _relation + " and Renegades";
-			};
-		};	
-		
-		hint format ["You are friendly with factions: %1 ", _relation];
+
+		hint _relationString;
 		sleep 6;
 		hintSilent "";
 	};

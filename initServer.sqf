@@ -43,7 +43,7 @@
 ]] call acex_fortify_fnc_registerObjects;
 
 execVM "Server Ran Scripts\garbageCollection.sqf";
-execVM "Server Ran Scripts\factionClothingChecker.sqf";
+//execVM "Server Ran Scripts\factionClothingChecker.sqf"; //This script is now ran locally by the client when they open their inventory
 
 Civilian setFriend [WEST,0];
 WEST setFriend [Civilian ,0];

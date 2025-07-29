@@ -1,35 +1,37 @@
-// Faction clothing checker converted to event-driven handlers
-sleep 3;
-
-// Weighted arrays setup
-headgearArraySelectionBB = [["headgearBB"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionDT = [["headgearDT"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionDT = [["facewearDT"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionNH = [["headgearNH"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionPF = [["headgearPF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionPF = [["uniformPF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionRC = [["facewearRC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionRC = [["uniformRC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionTRB = [["facewearTRB"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionTRB = [["uniformTRB"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionUS = [["headgearUS"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionUS = [["facewearUS"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionUS = [["uniformUS"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionRU = [["headgearRU"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionRU = [["uniformRU"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionROA = [["uniformROA"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionROA = [["headgearROA"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionPMC = [["uniformPMC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionPMC = [["facewearPMC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionWO = [["headgearWO"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionWO = [["uniformWO"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionALF = [["uniformALF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionALF = [["facewearALF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionBandit = [["facewearBandit"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+if (!local _unit) exitWith {
+    diag_log format ["[FactionCheck] Ignored non-local unit: %1", name _unit];
+};
 
 // Function to evaluate a single player's clothing and update faction relations
 missionNamespace setVariable ["FN_factionClothingCheck", {
     params ["_unit"];
+
+	// Weighted arrays setup
+	headgearArraySelectionBB = [["headgearBB"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	headgearArraySelectionDT = [["headgearDT"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	facewearArraySelectionDT = [["facewearDT"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	headgearArraySelectionNH = [["headgearNH"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	headgearArraySelectionPF = [["headgearPF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	uniformArraySelectionPF = [["uniformPF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	facewearArraySelectionRC = [["facewearRC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	uniformArraySelectionRC = [["uniformRC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	facewearArraySelectionTRB = [["facewearTRB"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	uniformArraySelectionTRB = [["uniformTRB"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	headgearArraySelectionUS = [["headgearUS"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	facewearArraySelectionUS = [["facewearUS"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	uniformArraySelectionUS = [["uniformUS"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	headgearArraySelectionRU = [["headgearRU"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	uniformArraySelectionRU = [["uniformRU"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	uniformArraySelectionROA = [["uniformROA"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	headgearArraySelectionROA = [["headgearROA"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	uniformArraySelectionPMC = [["uniformPMC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	facewearArraySelectionPMC = [["facewearPMC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	headgearArraySelectionWO = [["headgearWO"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	uniformArraySelectionWO = [["uniformWO"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	uniformArraySelectionALF = [["uniformALF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	facewearArraySelectionALF = [["facewearALF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+	facewearArraySelectionBandit = [["facewearBandit"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+
     private _sanity = _unit getVariable ["sanityLevel", 100];
     if (!(_unit getVariable ["Renegade_Relation", false])) then {
         if (_sanity > 10) then {
@@ -293,21 +295,39 @@ missionNamespace setVariable ["FN_factionClothingCheck", {
             _unit setVariable ["Bandit_Relation",false,true];
         };
     };
+
+	sleep 3;
+	hint "hello";
 }];
 
 // Helper function to attach event handlers to a player
 LB_fnc_attachClothingEH = {
     params ["_unit"];
-    _unit addEventHandler ["Take", { (_this select 0) call (missionNamespace getVariable "FN_factionClothingCheck") }];
-    _unit addEventHandler ["Put", { (_this select 0) call (missionNamespace getVariable "FN_factionClothingCheck") }];
-    [_unit] call (missionNamespace getVariable "FN_factionClothingCheck");
+
+    _unit addEventHandler ["Take", {
+        private _unit = _this select 0;
+        [_unit] remoteExec ["FN_factionClothingCheck", _unit];
+    }];
+
+    _unit addEventHandler ["Put", {
+        private _unit = _this select 0;
+        [_unit] remoteExec ["FN_factionClothingCheck", _unit];
+    }];
+
+    // Initial call must also be local
+    [_unit] remoteExec ["FN_factionClothingCheck", _unit];
 };
 
-// Attach handlers to current players
-{ [_x] call LB_fnc_attachClothingEH; } forEach allPlayers;
+
+// Attach handlers to all current players
+{
+    [_x] call LB_fnc_attachClothingEH;
+} forEach allPlayers;
 
 // Reattach handlers when a player respawns
 addMissionEventHandler ["EntityRespawned", {
-    params ["_new","_old"];
-    if (isPlayer _new) then { [_new] call LB_fnc_attachClothingEH; };
+    params ["_new", "_old"];
+    if (isPlayer _new) then {
+        [_new] call LB_fnc_attachClothingEH;
+    };
 }];
