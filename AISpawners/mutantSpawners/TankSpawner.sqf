@@ -15,7 +15,7 @@ params ["_pos", "_triggerRadius", "_maxUnits"];
 		_hordeUnit addRating -10001;
 	};
 	
-	private _factionArray = ["Bandit", .05, "BB", .35, "SU", .05, "DT", .05, "NH", .05, "PF", .20, "ALF", .25, "WO", .35, "RC", .15, "TRB", .25, "US", .10, "RU", .10, "PMC", .20, "ROA", .20];
+	private _factionArray = ["mutantFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
 	private _factionSelected = selectRandomWeighted _factionArray;
 	[_factionSelected, (round random (10)+6), _pos, "Squad", independent, "I_Survivor_F"] call (missionNamespace getVariable "FN_spawnAI");
 };

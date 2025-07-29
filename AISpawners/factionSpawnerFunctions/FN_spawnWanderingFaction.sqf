@@ -3,7 +3,7 @@ private _posWanderingFaction = [_pos, 150, 500, 250] call FN_findSafePosition;
 private _numOfWanderingFaction = round (random [2, 4, 6]);
 
 private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
-private _factionArray = ["BB", .30, "SU", .40, "Bandit", .75, "DT", .50, "NH", .50, "PF", .35, "ALF", .10, "WO", .10, "RC", .15, "TRB", .10, "US", .03, "RU", .03];
+private _factionArray = ["wanderFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
 private _factionSelected = _factionArray call BIS_fnc_selectRandomWeighted;
 
 private _unitSkillsArray = [_factionSelected, _posWanderingFaction] call FN_getFactionSkills;

@@ -4,18 +4,7 @@ if (side player != civilian) then {
     private _banditTracker = 0;
     private _maxBanditGroups = 1;
     private _maxBandits = 1; // Bandits per group plus 1
-    private _factionArray = ["Bandit", .50,
-	"BB", .25,
-	"SU", .25,
-	"DT", .35,
-	"NH", .35,
-	"PF", .40,
-	"ALF", .10,
-	"WO", .10,
-	"RC", .15,
-	"TRB", .10,
-	"US", .02,
-	"RU", .02];
+    private _factionArray = ["taskFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
     private _trader = false;
 
     null = [_maxBanditGroups, _minDist, _maxDist, _banditTracker, _maxBandits, _factionArray, _trader] spawn {

@@ -1,8 +1,8 @@
 params ["_container", "_caller", "_actionId"];
 if (isNull (currentTask _caller)) then {
 	hintSilent format ["The following group has had a bounty put on their leader. Eliminate them for a reward, %1", (name _caller)];
-	private _factionArray = ["Bandit", .50,"BB", .25,"SU", .25,"DT", .35,"NH", .35,"PF", .40,"ALF", .10,"WO", .10,"RC", .15,"TRB", .10,"US", .02,"RU", .02];
-	private _faction = _factionArray call BIS_fnc_selectRandomWeighted;
+	private _factionArray = ["taskFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
+        private _faction = _factionArray call BIS_fnc_selectRandomWeighted;
 	private _numUnits = ceil(random 7)+6;
 	private _minDist = 700;
 	private _maxDist = 2500;

@@ -2,7 +2,7 @@ params ["_container", "_caller", "_actionId"];
 if (isNull (currentTask _caller)) then {
 	hintSilent format ["The following group has had a bounty put on their leader. Eliminate them for a reward, %1", (name _caller)];
 	
-	_factionArray = ["Bandit", .50,"BB", .25,"SU", .25,"DT", .35,"NH", .35,"PF", .40,"ALF", .10,"WO", .10,"RC", .15,"TRB", .10,"US", .02,"RU", .02];
+	_factionArray = ["taskFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
 	_faction = _factionArray call BIS_fnc_selectRandomWeighted;
 	_minDist = 750;
 	_maxDist = 1500;
@@ -29,8 +29,6 @@ if (isNull (currentTask _caller)) then {
 
 	_maxBandits = ceil(random 5)+4;
 	for "_i" from 0 to _maxBandits do {
-		if (random 1 > _meleeChance) then {
-			private _banditUnit;
 		if (random 1 > _meleeChance) then {
 			_banditUnit = _groupBandit createUnit [_unit, _pos, [], 15, "NONE"];
 			[_faction, _banditUnit, false, true, _sfOverride] call (missionNamespace getVariable "FN_equipAI");
