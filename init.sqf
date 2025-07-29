@@ -211,8 +211,11 @@ _actionCheckDefecation = ["Check Defecation Status", "Check Defecation Status", 
 // = ["Drink Water", "Drink Water", "", { [player] call FN_drinkWater; }, {true}] call ace_interact_menu_fnc_createAction;
 //[(typeOf player), 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions"], _actionDrinkWater] call ace_interact_menu_fnc_addActionToClass;
 
-_actionEatFood = ["eat", "Eat Food", "", { [player] call FN_eatFood; }, {true}] call ace_interact_menu_fnc_createAction;
-[(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionEatFood] call ace_interact_menu_fnc_addActionToClass;
+_actionDrink = ["Drink", "Drink", "", {}, {true}] call ace_interact_menu_fnc_createAction;
+[(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionDrink] call ace_interact_menu_fnc_addActionToClass;
+
+_actionEat = ["Eat", "Eat", "", {}, {true}] call ace_interact_menu_fnc_createAction;
+[(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionEat] call ace_interact_menu_fnc_addActionToClass;
 
 _actionDefecate = ["Defecate", "Defecate", "", { [player] call fn_defecate; }, { true }] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionDefecate] call ace_interact_menu_fnc_addActionToClass;
