@@ -1,11 +1,10 @@
 params ["_arrayToConvert"];
 
-_nonWeightedArray = [];
+private _nonWeightedArray = [];
 {
-	if ((typeName _x) == "STRING") then {
-		_nonWeightedArray pushBack _x;
-	};
-	sleep .01;
+    if (typeName _x isEqualTo "STRING") then {
+        _nonWeightedArray pushBack _x;
+    };
 } forEach _arrayToConvert;
 
 _nonWeightedArray;
