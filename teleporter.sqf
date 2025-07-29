@@ -52,8 +52,8 @@ if (_typeOfTeleporter) then {
 };
 
 sleep 1;
-for [{_i = 15}, {_i > 0}, {_i = _i - 1}] do {
-    if (_i <= 3) then {
+for [{_i = 5}, {_i > 0}, {_i = _i - 1}] do {
+    if (_i <= 1) then {
         [format ["<t color='#ff0000' size='.5'>Entering the zone in: %1 seconds</t>", _i], .8, 1, 1.5, .3, 0, 789] spawn BIS_fnc_dynamicText;
     } else {
         [format ["<t size='.5'>Entering the zone in: %1 seconds</t>", _i], .8, 1, 1.5, .3, 0, 789] spawn BIS_fnc_dynamicText;

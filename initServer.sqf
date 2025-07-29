@@ -54,17 +54,22 @@ EAST setFriend [Civilian ,0];
 Civilian setFriend [RESISTANCE,0];
 RESISTANCE setFriend [Civilian ,0];
 
-while {true} do {
-	// Wait until it gets dark
-	waitUntil {
-		sunOrMoon < 1;
+[] spawn {
+	private _isNight = sunOrMoon < 1;
+
+	while {true} do {
+		waitUntil {
+			sleep 1;
+			private _currentIsNight = sunOrMoon < 1;
+			_currentIsNight != _isNight
+		};
+
+		_isNight = !_isNight;
+
+		if (_isNight) then {
+			setTimeMultiplier 20; // Night speed
+		} else {
+			setTimeMultiplier 12; // Day speed
+		};
 	};
-	setTimeMultiplier 20; // Change the time multiplier
-    
-	// Wait until the sun shines again
-	waitUntil {
-		sunOrMoon isEqualTo 1;
-	};
-	setTimeMultiplier 12; // Change the time multiplier
-	uiSleep 30;
 };
