@@ -1,3 +1,5 @@
+params ["_unit"];
+
 if (!local _unit) exitWith {
     diag_log format ["[FactionCheck] Ignored non-local unit: %1", name _unit];
 };
@@ -297,7 +299,6 @@ missionNamespace setVariable ["FN_factionClothingCheck", {
     };
 
 	sleep 3;
-	hint "hello";
 }];
 
 // Helper function to attach event handlers to a player

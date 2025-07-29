@@ -276,6 +276,7 @@ if (side player != civilian && (hasInterface or isDedicated)) then {
 	player execVM "Ambient\hydrationNutritionSystem.sqf";
 	player execVM "Ambient\FN_sanitySystem.sqf";
 	player execVM "Ambient\FN_poopSystem.sqf";
+	player execVM "factionClothingChecker.sqf";
 };
 
 _actionMain = ["Main","Scenario Actions","",{},{true}] call ace_interact_menu_fnc_createAction;
