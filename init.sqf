@@ -34,7 +34,7 @@ missionNamespace setVariable ["FN_factionArea", compileFinal  preprocessFileLine
 missionNamespace setVariable ["FN_spawnZom", compileFinal  preprocessFileLineNumbers "AISpawners\mutantSpawners\FN_spawnZom.sqf"];
 missionNamespace setVariable ["FN_drinkWater", compileFinal  preprocessFileLineNumbers "Ambient\FN_drinkWater.sqf"];
 missionNamespace setVariable ["FN_refillCanteen", compileFinal  preprocessFileLineNumbers "Ambient\FN_refillCanteen.sqf"];
-missionNamespace setVariable ["FN_updateDrinkActions", compile preprocessFileLineNumbers "Ambient\FN_updateDrinkActions.sqf"];
+missionNamespace setVariable ["FN_hasDrink", compileFinal preprocessFileLineNumbers "Ambient\FN_hasDrink.sqf"];
 missionNamespace setVariable ["FN_purifyWater", compileFinal  preprocessFileLineNumbers "Ambient\FN_purifyWater.sqf"];
 missionNamespace setVariable ["FN_eatFood", compileFinal  preprocessFileLineNumbers "Ambient\FN_eatFood.sqf"];
 missionNamespace setVariable ["FN_skinAnimal", compileFinal  preprocessFileLineNumbers "Ambient\FN_skinAnimal.sqf"];
@@ -159,16 +159,6 @@ if (side player != civilian && (hasInterface or isDedicated)) then {
 	[player] execVM "factionClothingChecker.sqf";
 };
 
-[player] call FN_updateDrinkActions;
-player addEventHandler ["Take", {
-    private _unit = _this select 0;
-    [_unit] call FN_updateDrinkActions;
-}];
-player addEventHandler ["Put", {
-    private _unit = _this select 0;
-    [_unit] call FN_updateDrinkActions;
-}];
-
 _actionMain = ["Main","Scenario Actions","",{},{true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions"], _actionMain] call ace_interact_menu_fnc_addActionToClass;
 
@@ -208,10 +198,7 @@ _actionSanity = ["sanity", "Check Sanity", "", { call FN_checkSanity; }, {true}]
 _actionCheckDefecation = ["Check Defecation Status", "Check Defecation Status", "", { [player] call FN_checkDefecationStatus }, { true }] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Checks"], _actionCheckDefecation] call ace_interact_menu_fnc_addActionToClass;
 
-// = ["Drink Water", "Drink Water", "", { [player] call FN_drinkWater; }, {true}] call ace_interact_menu_fnc_createAction;
-//[(typeOf player), 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions"], _actionDrinkWater] call ace_interact_menu_fnc_addActionToClass;
-
-_actionDrink = ["Drink", "Drink", "", {}, {true}] call ace_interact_menu_fnc_createAction;
+_actionDrink = ["Drink", "Drink", "", {[player] call FN_drinkWater; }, { [player] call FN_hasDrink}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionDrink] call ace_interact_menu_fnc_addActionToClass;
 
 _actionEat = ["Eat", "Eat", "", {}, {true}] call ace_interact_menu_fnc_createAction;

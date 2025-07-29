@@ -1,0 +1,22 @@
+/*
+    FN_hasDrink.sqf
+    ----------------
+    Returns true if the given player has any drinkable item in their inventory.
+    Usage:
+        [player] call FN_hasDrink;
+*/
+params ["_player"];
+
+private _sodas        = ["drinkSodas"] call (missionNamespace getVariable "FN_arrayReturn");
+private _waterBottles = ["drinkWaterBottles"] call (missionNamespace getVariable "FN_arrayReturn");
+private _canteens     = ["drinkCanteens"] call (missionNamespace getVariable "FN_arrayReturn");
+private _dirty        = ["drinkDirty"] call (missionNamespace getVariable "FN_arrayReturn");
+private _blood        = ["drinkBlood"] call (missionNamespace getVariable "FN_arrayReturn");
+
+private _allDrinks = _sodas + _waterBottles + _canteens + _dirty + _blood;
+
+{
+    if ([_player, _x] call BIS_fnc_hasItem) exitWith {true};
+} forEach _allDrinks;
+
+false
