@@ -17,7 +17,7 @@ if (isNull (currentTask _caller)) then {
 	_sfOverride = false;
 	if (random _sfGroup < 1) then { _sfOverride = true; };
 
-	_meleeChance = [_faction] call compile preprocessFileLineNumbers "AISpawners\aiSubScripts\meleeChance.sqf";
+	_meleeChance = [_faction] call (missionNamespace getVariable "FN_meleeChance");
 
 	_groupBandit = createGroup [_side, true];
 	

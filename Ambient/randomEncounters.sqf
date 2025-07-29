@@ -239,11 +239,11 @@ while {true} do {
         private _tank = "B_MBT_01_TUSK_F" createVehicle _pos;
         private _tankGrp = createGroup independent;
         private _unit1 = _tankGrp createUnit ["I_crew_F", _tank, [], 10, "CARGO"];
-        ["US", _unit1, false, true] execVM "AISpawners\aiSubScripts\equipAI.sqf";
+        ["US", _unit1, false, true] call (missionNamespace getVariable "FN_equipAI");
         private _unit2 = _tankGrp createUnit ["I_crew_F", _tank, [], 10, "CARGO"];
-        ["US", _unit2, false, true] execVM "AISpawners\aiSubScripts\equipAI.sqf";
+        ["US", _unit2, false, true] call (missionNamespace getVariable "FN_equipAI");
         private _unit3 = _tankGrp createUnit ["I_crew_F", _tank, [], 10, "CARGO"];
-        ["US", _unit3, false, true] execVM "AISpawners\aiSubScripts\equipAI.sqf";
+        ["US", _unit3, false, true] call (missionNamespace getVariable "FN_equipAI");
         { _x moveInAny _tank } forEach units _tankGrp;
         clearWeaponCargoGlobal _tank;
         clearMagazineCargoGlobal _tank;

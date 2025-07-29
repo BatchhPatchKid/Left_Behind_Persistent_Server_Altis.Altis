@@ -26,7 +26,7 @@ if (side player != civilian) then {
                             _pos = [getPos player, _minDist, _maxDist, 3, 0, 20, 0] call BIS_fnc_findSafePos;
 							
 							_faction = _factionArray call BIS_fnc_selectRandomWeighted;;
-							_unitSkillsArray = [_faction, _pos] call compile preprocessFileLineNumbers "AISpawners\aiSubScripts\factionSideAndDifficulty.sqf";
+							_unitSkillsArray = [_faction, _pos] call (missionNamespace getVariable "FN_getFactionSkills");
 
 							_side = _unitSkillsArray select 0;
 							_unit = _unitSkillsArray select 1;
@@ -43,7 +43,7 @@ if (side player != civilian) then {
 							_sfOverride = false;
 							if (random _sfGroup < 1) then { _sfOverride = true; };
 
-							_meleeChance = [_faction] call compile preprocessFileLineNumbers "AISpawners\aiSubScripts\meleeChance.sqf";
+							_meleeChance = [_faction] call (missionNamespace getVariable "FN_meleeChance");
 
                             // Spawning bandit
                             if ({_x distance2D _pos < (_minDist * 0.75)} count allPlayers == 0) then { // 0.75 * 150 = 112.5 real minimum distance
@@ -53,8 +53,8 @@ if (side player != civilian) then {
 									private _banditUnit;
 									if (random 1 > _meleeChance) then {
 										_banditUnit = _groupBandit createUnit [_unit, _pos, [], 15, "NONE"];
-										[_faction, _banditUnit, false, false, _sfOverride] execVM "AISpawners\aiSubScripts\equipAI.sqf";
-										[_banditUnit,_aim,_aimSpeed,_spot,_courage,_aimShake,_command,_spotDist,_reload] execVM "AISpawners\aiSubScripts\FN_setSkill.sqf";
+										[_faction, _banditUnit, false, false, _sfOverride] call (missionNamespace getVariable "FN_equipAI");
+										[_banditUnit,_aim,_aimSpeed,_spot,_courage,_aimShake,_command,_spotDist,_reload] call (missionNamespace getVariable "FN_setUnitSkills");
 
 										if (_side == WEST && (random 1) > .70) then {
 											[_banditUnit] execVM "Economy System\economySystem.sqf";
@@ -62,9 +62,9 @@ if (side player != civilian) then {
                                     } else {
 										_grpTemp = createGroup east;
 										_banditUnit = _grpTemp createUnit ["O_soldier_Melee_RUSH",([_pos, 0, 10, 3, 0, 20, 0,[],[]] call BIS_fnc_findSafePos),[],1,"NONE"];
-										[_faction, _banditUnit, true, false, false] execVM "AISpawners\aiSubScripts\equipAI.sqf";
+										[_faction, _banditUnit, true, false, false] call (missionNamespace getVariable "FN_equipAI");
 										[_banditUnit] joinSilent _groupBandit;
-										[_banditUnit,_aim,_aimSpeed,_spot,_courage,_aimShake,_command,_spotDist,_reload] execVM "AISpawners\aiSubScripts\FN_setSkill.sqf";
+										[_banditUnit,_aim,_aimSpeed,_spot,_courage,_aimShake,_command,_spotDist,_reload] call (missionNamespace getVariable "FN_setUnitSkills");
 									};
                                 };
 

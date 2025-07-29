@@ -17,7 +17,6 @@ missionNamespace setVariable ["FN_convertWeightedArray", compile preprocessFileL
 missionNamespace setVariable ["FN_ambientVeh", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_ambientVeh.sqf"];
 missionNamespace setVariable ["FN_factionSelector", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_factionSelector.sqf"];
 missionNamespace setVariable ["FN_ZTriggerSpawner", compile preprocessFileLineNumbers "AISpawners\mutantSpawners\FN_ZTriggerSpawner.sqf"];
-missionNamespace setVariable ["FN_squadToRenegade", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_squadToRenegade.sqf"];
 missionNamespace setVariable ["FN_spawnAI", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_spawnAI.sqf"];
 missionNamespace setVariable ["FN_equipAI", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_equipAI.sqf"];
 missionNamespace setVariable ["FN_renegadeSpawner", compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_renegadeSpawner.sqf"];
