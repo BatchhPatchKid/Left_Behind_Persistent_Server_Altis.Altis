@@ -166,13 +166,10 @@ if (side player != civilian && (hasInterface or isDedicated)) then {
 
 // adding any food or drinks to the player's ace interact menu as they spawn;
 player addEventHandler ["InventoryClosed", {
-    params ["_unit","_container"];
-    // Refresh drink menu
-    [_unit] call FN_updateDrinkActions;
-    // Refresh eat menu
-    [_unit] call FN_updateEatActions;
-	// Refresh the faction alliance check
-	[_unit] call FN_factionClothingCheck;
+    params ["_unit"];
+	[_unit] call (missionNamespace getVariable "FN_updateDrinkActions");
+	[_unit] call (missionNamespace getVariable "FN_updateEatActions");
+	[_unit] call (missionNamespace getVariable "FN_factionClothingCheck");
 }];
 
 addMissionEventHandler ["EntityRespawned", {
@@ -180,11 +177,9 @@ addMissionEventHandler ["EntityRespawned", {
     if (isPlayer _newUnit) then {
         _newUnit addEventHandler ["InventoryClosed", {
             params ["_unit"];
-            [_unit] call FN_updateDrinkActions;
-			// Refresh eat menu
-			[_unit] call FN_updateEatActions;
-			// Refresh the faction alliance check
-			[_unit] call FN_factionClothingCheck;
+			[_unit] call (missionNamespace getVariable "FN_updateDrinkActions");
+			[_unit] call (missionNamespace getVariable "FN_updateEatActions");
+			[_unit] call (missionNamespace getVariable "FN_factionClothingCheck");
         }];
     };
 }];
@@ -195,7 +190,7 @@ _actionMain = ["Main","Scenario Actions","",{},{true}] call ace_interact_menu_fn
 _action = ["Arsenal","Open the Arsenal","",{[player, player, true] call ace_arsenal_fnc_openBox;},{true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions","Main"], _action] call ace_interact_menu_fnc_addActionToClass;
 
-_actionFaction = ["faction","Check Faction Affiliation","",{call FN_checkFaction},{true}] call ace_interact_menu_fnc_createAction;
+_actionFaction = ["faction","Check Faction Affiliation","",{(player) call (missionNamespace getVariable "FN_checkFaction");},{true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions","Main"], _actionFaction] call ace_interact_menu_fnc_addActionToClass;
 
 _actionSleep = ["sleep","Lay Down Sleeping Bag","",{call FN_sleep},{true}] call ace_interact_menu_fnc_createAction;
@@ -413,5 +408,5 @@ FN_checkFaction = {
 	};
 };
 
-[player] call FN_updateDrinkActions;
-[player] call FN_updateEatActions;
+[player] call (missionNamespace getVariable "FN_updateDrinkActions");
+[player] call (missionNamespace getVariable "FN_updateEatActions");
