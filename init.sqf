@@ -93,8 +93,12 @@ missionNamespace setVariable ["sleepTime", compileFinal  preprocessFileLineNumbe
 missionNamespace setVariable ["onPlayerKilled", compileFinal  preprocessFileLineNumbers "onPlayerKilled.sqf"];
 missionNamespace setVariable ["onPlayerRespawn", compileFinal  preprocessFileLineNumbers "onPlayerRespawn.sqf"];
 missionNamespace setVariable ["teleporter", compileFinal  preprocessFileLineNumbers "teleporter.sqf"];
-missionNamespace setVariable ["FN_factionClothingCheck", compileFinal  preprocessFileLineNumbers "factionClothingChecker.sqf"];
-
+missionNamespace setVariable ["FN_factionClothingCheck", compileFinal  preprocessFileLineNumbers "FN_factionClothingCheck.sqf"];
+missionNamespace setVariable ["temperature", compileFinal preprocessFileLineNumbers "Ambient\temperature.sqf"];
+missionNamespace setVariable ["radSystem", compileFinal preprocessFileLineNumbers "Ambient\radSystem.sqf"];
+missionNamespace setVariable ["randomEncounters", compileFinal preprocessFileLineNumbers "Ambient\randomEncounters.sqf"];
+missionNamespace setVariable ["hydrationNutritionSystem", compileFinal preprocessFileLineNumbers "Ambient\hydrationNutritionSystem.sqf"];
+missionNamespace setVariable ["FN_poopSystem", compileFinal preprocessFileLineNumbers "Ambient\FN_poopSystem.sqf"];
 
 waitUntil {!isNull player};
 sleep 0.1;
@@ -151,13 +155,13 @@ if (side player != civilian && (hasInterface or isDedicated)) then {
 	//player execVM "Ambient\ZSpawner.sqf";
 	//player execVM "Ambient\BanditSpawner.sqf";
 	//player execVM "Ambient\anomalySpawner.sqf";
-	player execVM "Ambient\temperature.sqf";
-	player execVM "Ambient\radSystem.sqf";
-	player execVM "Ambient\randomEncounters.sqf";
-	player execVM "Ambient\hydrationNutritionSystem.sqf";
-	player execVM "Ambient\FN_sanitySystem.sqf";
-	player execVM "Ambient\FN_poopSystem.sqf";
-	[player] execVM "factionClothingChecker.sqf";
+	[player] spawn (missionNamespace getVariable "temperature");
+	[player] spawn (missionNamespace getVariable "radSystem");
+	[player] spawn (missionNamespace getVariable "randomEncounters");
+	[player] spawn (missionNamespace getVariable "hydrationNutritionSystem");
+	[player] spawn (missionNamespace getVariable "FN_sanitySystem");
+	[player] spawn (missionNamespace getVariable "FN_poopSystem");
+	[player] spawn (missionNamespace getVariable "FN_factionClothingCheck");
 };
 
 // adding any food or drinks to the player's ace interact menu as they spawn;
@@ -168,7 +172,7 @@ player addEventHandler ["InventoryClosed", {
     // Refresh eat menu
     [_unit] call FN_updateEatActions;
 	// Refresh the faction alliance check
-	[_unit] remoteExec ["FN_factionClothingCheck", _unit];
+	[_unit] call FN_factionClothingCheck;
 }];
 
 addMissionEventHandler ["EntityRespawned", {
@@ -180,7 +184,7 @@ addMissionEventHandler ["EntityRespawned", {
 			// Refresh eat menu
 			[_unit] call FN_updateEatActions;
 			// Refresh the faction alliance check
-			[_unit] remoteExec ["FN_factionClothingCheck", _unit];
+			[_unit] call FN_factionClothingCheck;
         }];
     };
 }];
@@ -452,3 +456,4 @@ FN_checkFaction = {
 
 [player] call FN_updateDrinkActions;
 [player] call FN_updateEatActions;
+[player] call FN_factionClothingCheck;
