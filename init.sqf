@@ -148,16 +148,16 @@ player groupChat "Remember to check the briefing tab for a scenario information 
 player enableStamina false;
 
 if (side player != civilian && (hasInterface or isDedicated)) then {
-	player execVM "Ambient\temperature.sqf";
-	//player execVM "Ambient\ZSpawner.sqf";
-	//player execVM "Ambient\BanditSpawner.sqf";
-	player execVM "Ambient\radSystem.sqf";
-	player execVM "Ambient\randomEncounters.sqf";
-	//player execVM "Ambient\anomalySpawner.sqf";
-	player execVM "Ambient\hydrationNutritionSystem.sqf";
-	player execVM "Ambient\FN_sanitySystem.sqf";
-	player execVM "Ambient\FN_poopSystem.sqf";
-	[player] execVM "factionClothingChecker.sqf";
+	[player] call temperature;
+	//[player] call ZSpawner;
+	//[player] call BanditSpawner;
+	[player] call radSystem;
+	[player] call randomEncounters;
+	//[player] call anomalySpawner;
+	[player] call hydrationNutritionSystem;
+	[player] call FN_sanitySystem;
+	[player] call FN_poopSystem;
+	[player] call FN_factionClothingCheck;
 };
 
 // adding any food or drinks to the player's ace interact menu as they spawn;
@@ -168,7 +168,7 @@ player addEventHandler ["InventoryClosed", {
     // Refresh eat menu
     [_unit] call FN_updateEatActions;
 	// Refresh the faction alliance check
-	[_unit] remoteExec ["FN_factionClothingCheck", _unit];
+	[_unit] call FN_factionClothingCheck;
 }];
 
 addMissionEventHandler ["EntityRespawned", {
@@ -180,7 +180,7 @@ addMissionEventHandler ["EntityRespawned", {
 			// Refresh eat menu
 			[_unit] call FN_updateEatActions;
 			// Refresh the faction alliance check
-			[_unit] remoteExec ["FN_factionClothingCheck", _unit];
+			[_unit] call FN_factionClothingCheck;
         }];
     };
 }];
@@ -294,18 +294,7 @@ FN_setDownBaseCache = {
 				{
 					params ["_target", "_caller", "_actionId", "_arguments"]; // script
 					deleteVehicle _target;
-				},
-				nil,		// arguments
-				1.5,		// priority
-				true,		// showWindow
-				true,		// hideOnUse
-				"",			// shortcut
-				"true",		// condition
-				3,			// radius
-				false,		// unconscious
-				"",			// selection
-				""			// memoryPoint
-			];
+				},nil,1.5,true,true,"","true",3,false,"",""];
 		}
 	] remoteExec ["call", 0];
 };
@@ -346,18 +335,7 @@ FN_sleep = { //player actions for the sleeping function of the game
 					} else {
 						hintSilent "You are already trying to sleep";
 					};
-				},
-				nil,		// arguments
-				1.5,		// priority
-				true,		// showWindow
-				true,		// hideOnUse
-				"",			// shortcut
-				"true",		// condition
-				3,			// radius
-				false,		// unconscious
-				"",			// selection
-				""			// memoryPoint
-			];
+				},nil,1.5,true,true,"","true",3,false,"",""];
 			sleepingBagObject addAction
 			[
 				"Stop trying to sleep",	// title
@@ -373,18 +351,7 @@ FN_sleep = { //player actions for the sleeping function of the game
 						sleep 3;
 						hintSilent "";
 					};
-				},
-				nil,		// arguments
-				1.5,		// priority
-				true,		// showWindow
-				true,		// hideOnUse
-				"",			// shortcut
-				"true",		// condition
-				3,			// radius
-				false,		// unconscious
-				"",			// selection
-				""			// memoryPoint
-			];
+				},nil,1.5,true,true,"","true",3,false,"",""];
 			sleepingBagObject addAction
 			[
 				"Roll up sleeping bag",	// title
@@ -392,23 +359,15 @@ FN_sleep = { //player actions for the sleeping function of the game
 					params ["_target", "_caller", "_actionId", "_arguments"]; // script
 					_caller setVariable ["wants_to_sleep", false, true];
 					deleteVehicle _target;
-				},
-				nil,		// arguments
-				1.5,		// priority
-				true,		// showWindow
-				true,		// hideOnUse
-				"",			// shortcut
-				"true",		// condition
-				3,			// radius
-				false,		// unconscious
-				"",			// selection
-				""			// memoryPoint
-			];
+				},nil,1.5,true,true,"","true",3,false,"",""];
 	};
 };
 
 FN_checkFaction = {
 	0 spawn {
+		// Refresh the faction alliance check
+		[_unit] call FN_factionClothingCheck;
+		
 		private _factions = [
 			["BB_Relation",   "Boonie Boys (BB)"],
 			["SU_Relation",   "Survivors Union (SU)"],
