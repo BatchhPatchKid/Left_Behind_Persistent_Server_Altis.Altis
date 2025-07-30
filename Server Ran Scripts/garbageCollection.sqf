@@ -7,7 +7,6 @@
 // The script is designed to be efficient, running in a loop with a sleep interval to avoid overwhelming the server
 // It also handles specific classes of objects that need to be cleaned up, such as corpses, vehicles, and static objects
 // The script is initiated by the server and runs continuously until all players are dead or the server is stopped
-if (!isServer) exitWith {};
 
 // Defining functions
 private _fn_checkProximityToDesiredObject = {
@@ -133,6 +132,8 @@ if (_zeusAction) exitWith {
     hintSilent "Garbage collection executed.";
 };
 
+if (!isServer) exitWith {};
+
 while { true } do {
     // Wait for 5 minutes before next garbage collection
     sleep 300;
@@ -144,7 +145,9 @@ while { true } do {
     } forEach allPlayers;
 
     // If everyone is dead, stop the garbage collection
-    if (_isEveryoneDead) exitWith {};
+    if (_isEveryoneDead) then {
+        waitUntil { count (allPlayers select { alive _x }) > 0 };
+    };
     
     // Run the garbage collection process
     call FN_garbageCollector;

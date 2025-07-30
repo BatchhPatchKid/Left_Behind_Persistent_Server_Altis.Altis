@@ -98,7 +98,10 @@ missionNamespace setVariable ["temperature", compileFinal preprocessFileLineNumb
 missionNamespace setVariable ["radSystem", compileFinal preprocessFileLineNumbers "Ambient\radSystem.sqf"];
 missionNamespace setVariable ["randomEncounters", compileFinal preprocessFileLineNumbers "Ambient\randomEncounters.sqf"];
 missionNamespace setVariable ["hydrationNutritionSystem", compileFinal preprocessFileLineNumbers "Ambient\hydrationNutritionSystem.sqf"];
-missionNamespace setVariable ["FN_poopSystem", compileFinal preprocessFileLineNumbers "Ambient\FN_poopSystem.sqf"];
+missionNamespace setVariable ["FN_poopSystem", compileFinal preprocessFileLineNumbers "FN_sleep.sqf"];
+missionNamespace setVariable ["FN_sleep", compileFinal preprocessFileLineNumbers "Ambient\randomEncounters.sqf"];
+missionNamespace setVariable ["FN_setDownBaseCache", compileFinal preprocessFileLineNumbers "FN_setDownBaseCache.sqf"];
+missionNamespace setVariable ["FN_checkFaction.sqf", compileFinal preprocessFileLineNumbers "FN_checkFaction.sqf"];
 
 waitUntil {!isNull player};
 sleep 0.1;
@@ -252,6 +255,10 @@ _actionCookMeat = ["cookMeat", "Cook Meat", "", {[player] call (missionNamespace
 _actionCreateFire = ["createFire", "Make Fire", "", {[player] call (missionNamespace getVariable "FN_createFire");}, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions"], _actionCreateFire] call ace_interact_menu_fnc_addActionToClass;
 
+// Add zeus action to start garbage collection
+private _gcAction = ["StartGC","Start Garbage Collection","",{ [true] spawn (missionNamespace getVariable "garbageCollection"); },{ true }] call ace_interact_menu_fnc_createAction;
+[["ACE_ZeusActions"], _gcAction] call ace_interact_menu_fnc_addActionToZeus;
+
 player setVariable ["SU_Relation",true,true];
 player setVariable ["BB_Relation",true,true];
 player setVariable ["PF_Relation",false,true];
@@ -275,189 +282,6 @@ civilian setFriend [east, 0];
 civilian setFriend [independent, 0];  
 civilian setFriend [civilian, 1];  
 
-FN_setDownBaseCache = {
-	// Check if there's already a flag placed
-	if (!isNil "baseFlagObject") then {
-		deleteVehicle baseFlagObject; // Delete the existing sleeping bag
-	};
-
-	// Create and position the new sleeping bag
-	_flag = "Flag_Red_F" createVehicle [(getPosATL player select 0), (getPosATL player select 1), (getPosATL player select 2)];
-	_flag setPos [(getPosATL player select 0), (getPosATL player select 1), (getPosATL player select 2)];
-	_flag setDir (getDir player);
-	
-	// Assign the new sleeping bag object to a global variable for tracking
-	baseFlagObject = _flag;
-	hintSilent "Flag has been planted. Everything in a radius of a 150m is your base and will now not despawn.";
-	
-	[
-		{
-			baseFlagObject addAction
-			[
-				"Take down flag pole",	// title
-				{
-					params ["_target", "_caller", "_actionId", "_arguments"]; // script
-					deleteVehicle _target;
-				},
-				nil,		// arguments
-				1.5,		// priority
-				true,		// showWindow
-				true,		// hideOnUse
-				"",			// shortcut
-				"true",		// condition
-				3,			// radius
-				false,		// unconscious
-				"",			// selection
-				""			// memoryPoint
-			];
-		}
-	] remoteExec ["call", 0];
-};
-
-FN_sleep = { //player actions for the sleeping function of the game
-	[] spawn {
-		// Check if there's already a sleeping bag placed
-		if (!isNil "sleepingBagObject") then {
-			deleteVehicle sleepingBagObject; // Delete the existing sleeping bag
-		};
-
-		// Create and position the new sleeping bag
-		_sleepingBag = "Land_Sleeping_bag_F" createVehicle [(getPosATL player select 0), (getPosATL player select 1), (getPosATL player select 2)];
-		_sleepingBag setPos [(getPosATL player select 0), (getPosATL player select 1), (getPosATL player select 2) + 0.02];
-		_sleepingBag setDir (getDir player);
-		
-		
-		// Assign the new sleeping bag object to a global variable for tracking
-		sleepingBagObject = _sleepingBag;
-		
-		sleepingBagObject addAction
-			[
-				"Try to sleep",	// title
-				{
-					params ["_target", "_caller", "_actionId", "_arguments"]; // script
-					if (!(_caller getVariable "wants_to_sleep")) then {
-						if (daytime < 6 || daytime > 20) then {
-							_caller setVariable ["wants_to_sleep", true, true];
-							hintSilent "You are now trying to sleep.";
-							sleep 3;
-							hintSilent "";
-						} else {
-							_caller setVariable ["wants_to_sleep", false, true];
-							hintSilent "It's too early to sleep. Your bedtime is from 20:00 to 06:00.";
-							sleep 3;
-							hintSilent "";
-						};
-					} else {
-						hintSilent "You are already trying to sleep";
-					};
-				},
-				nil,		// arguments
-				1.5,		// priority
-				true,		// showWindow
-				true,		// hideOnUse
-				"",			// shortcut
-				"true",		// condition
-				3,			// radius
-				false,		// unconscious
-				"",			// selection
-				""			// memoryPoint
-			];
-			sleepingBagObject addAction
-			[
-				"Stop trying to sleep",	// title
-				{
-					params ["_target", "_caller", "_actionId", "_arguments"]; // script
-					if (_caller getVariable "wants_to_sleep") then {
-						_caller setVariable ["wants_to_sleep", false, true];
-						hintSilent "You are no longer trying to sleep.";
-						sleep 3;
-						hintSilent "";
-					} else {
-						hintSilent "You weren't trying to sleep.";
-						sleep 3;
-						hintSilent "";
-					};
-				},
-				nil,		// arguments
-				1.5,		// priority
-				true,		// showWindow
-				true,		// hideOnUse
-				"",			// shortcut
-				"true",		// condition
-				3,			// radius
-				false,		// unconscious
-				"",			// selection
-				""			// memoryPoint
-			];
-			sleepingBagObject addAction
-			[
-				"Roll up sleeping bag",	// title
-				{
-					params ["_target", "_caller", "_actionId", "_arguments"]; // script
-					_caller setVariable ["wants_to_sleep", false, true];
-					deleteVehicle _target;
-				},
-				nil,		// arguments
-				1.5,		// priority
-				true,		// showWindow
-				true,		// hideOnUse
-				"",			// shortcut
-				"true",		// condition
-				3,			// radius
-				false,		// unconscious
-				"",			// selection
-				""			// memoryPoint
-			];
-	};
-};
-
-FN_checkFaction = {
-	0 spawn {
-		private _factions = [
-			["BB_Relation",   "Boonie Boys (BB)"],
-			["SU_Relation",   "Survivors Union (SU)"],
-			["PF_Relation",   "Pigs Flesh (PF)"],
-			["ALF_Relation",  "Altis Liberation Front (ALF)"],
-			["WO_Relation",   "World Order (WO)"],
-			["RU_Relation",   "Russian Federation (RU)"],
-			["US_Relation",   "United States Army (US)"],
-			["NH_Relation",   "New Horizon (NH)"],
-			["TRB_Relation",  "The Red Bullet (TRB)"],
-			["RC_Relation",   "Ravens Cloak (RC)"],
-			["DT_Relation",   "Deadmans Trident (DT)"],
-			["ROA_Relation",  "Republic of Altis (ROA)"],
-			["PMC_Relation",  "PMC Group Alpha (PMC)"],
-			["Bandit_Relation", "Bandits"],
-			["Renegade_Relation", "Renegades"]
-		];
-
-		private _relations = [];
-
-		{
-			private _var = _x select 0;
-			private _name = _x select 1;
-
-			if (player getVariable [_var, false]) then {
-				_relations pushBack _name;
-			};
-		} forEach _factions;
-
-		private _relationString = if (_relations isEqualTo []) then {
-			"You are not friendly with any factions."
-		} else {
-			format ["You are friendly with factions: %1", _relations joinString " and "]
-		};
-
-		hint _relationString;
-		sleep 6;
-		hintSilent "";
-	};
-};
-
 [player] call FN_updateDrinkActions;
 [player] call FN_updateEatActions;
 [player] call FN_factionClothingCheck;
-
-// Add zeus action to start garbage collection
-private _gcAction = ["StartGC","Start Garbage Collection","",{ [true] spawn (missionNamespace getVariable "garbageCollection"); },{ true }] call ace_interact_menu_fnc_createAction;
-[["ACE_ZeusActions"], _gcAction] call ace_interact_menu_fnc_addActionToZeus;
