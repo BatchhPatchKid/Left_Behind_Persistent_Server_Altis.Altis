@@ -8,13 +8,7 @@
 params ["_player"];
 
 // 1. Define the parent branch path
-private _branchParent = [
-    "ACE_SelfActions",
-    "Main",
-    "Survival System",
-    "Survival Actions",
-    "Eat"
-];
+private _branchParent = ["ACE_SelfActions","Main","Survival System","Survival Actions","Eat"];
 
 // 2. Remove all old Eat actions by their full-paths
 private _oldEntries = _player getVariable ["LB_currentEatEntries", []];
@@ -23,19 +17,7 @@ private _oldEntries = _player getVariable ["LB_currentEatEntries", []];
 } forEach _oldEntries;
 
 // 3. Gather master list of all possible edibles
-private _categories = [
-    "foodTier1",
-    "foodTier2",
-    "foodTier3",
-    "foodTier4",
-    "foodTier5",
-    "foodTier6",
-    "foodTier7",
-    "foodTier8",
-    "foodTier9",
-    "foodTier10",
-    "foodTier11"
-];
+private _categories = ["foodTier1","foodTier2","foodTier3","foodTier4","foodTier5","foodTier6","foodTier7","foodTier8","foodTier9","foodTier10","foodTier11"];
 private _masterList = [];
 {
     _masterList append ([_x] call (missionNamespace getVariable "FN_arrayReturn"));
@@ -65,12 +47,7 @@ private _newEntries = [];
             [_item]
         ] call ace_interact_menu_fnc_createAction;
 
-        private _fullPath = [
-            typeOf _player,
-            1,
-            _branchParent,
-            _action
-        ] call ace_interact_menu_fnc_addActionToClass;
+        private _fullPath = [typeOf _player,1,_branchParent,_action] call ace_interact_menu_fnc_addActionToClass;
 
         _newEntries pushBack _fullPath;
     };

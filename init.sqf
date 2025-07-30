@@ -167,6 +167,22 @@ player addEventHandler ["InventoryClosed", {
     [_unit] call FN_updateDrinkActions;
     // Refresh eat menu
     [_unit] call FN_updateEatActions;
+	// Refresh the faction alliance check
+	[_unit] remoteExec ["FN_factionClothingCheck", _unit];
+}];
+
+addMissionEventHandler ["EntityRespawned", {
+    params ["_newUnit","_oldUnit"];
+    if (isPlayer _newUnit) then {
+        _newUnit addEventHandler ["InventoryClosed", {
+            params ["_unit"];
+            [_unit] call FN_updateDrinkActions;
+			// Refresh eat menu
+			[_unit] call FN_updateEatActions;
+			// Refresh the faction alliance check
+			[_unit] remoteExec ["FN_factionClothingCheck", _unit];
+        }];
+    };
 }];
 
 _actionMain = ["Main","Scenario Actions","",{},{true}] call ace_interact_menu_fnc_createAction;

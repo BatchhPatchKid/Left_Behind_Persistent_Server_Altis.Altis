@@ -297,38 +297,4 @@ missionNamespace setVariable ["FN_factionClothingCheck", {
             _unit setVariable ["Bandit_Relation",false,true];
         };
     };
-
-	sleep 3;
-}];
-
-// Helper function to attach event handlers to a player
-LB_fnc_attachClothingEH = {
-    params ["_unit"];
-
-    _unit addEventHandler ["Take", {
-        private _unit = _this select 0;
-        [_unit] remoteExec ["FN_factionClothingCheck", _unit];
-    }];
-
-    _unit addEventHandler ["Put", {
-        private _unit = _this select 0;
-        [_unit] remoteExec ["FN_factionClothingCheck", _unit];
-    }];
-
-    // Initial call must also be local
-    [_unit] remoteExec ["FN_factionClothingCheck", _unit];
-};
-
-
-// Attach handlers to all current players
-{
-    [_x] call LB_fnc_attachClothingEH;
-} forEach allPlayers;
-
-// Reattach handlers when a player respawns
-addMissionEventHandler ["EntityRespawned", {
-    params ["_new", "_old"];
-    if (isPlayer _new) then {
-        [_new] call LB_fnc_attachClothingEH;
-    };
 }];
