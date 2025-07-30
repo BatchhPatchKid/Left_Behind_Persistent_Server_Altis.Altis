@@ -464,7 +464,7 @@ if (!isNull (getAssignedCuratorLogic player)) then {
         "StartGC",
         "Start Garbage Collection",
         "",
-        { ["Server Ran Scripts\\garbageCollection.sqf"] remoteExec ["execVM", 2]; },
+        { [true] call FN_runGarbageCollection; },
         { true }
     ] call ace_interact_menu_fnc_createAction;
     [["ACE_ZeusActions"], _gcAction] call ace_interact_menu_fnc_addActionToZeus;

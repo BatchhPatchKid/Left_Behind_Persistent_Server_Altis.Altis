@@ -5,13 +5,15 @@
     Land_BluntStone_01 objects themselves are removed if farther than 1000m from all players.
     The script is intended to be run server side every 30 minutes of in‑game time.
 */
+param ["zeusAction"];
 
-if (!isServer) exitWith {};
+if (zeusAction) exitWith {
+    // If the script is run from Zeus, the garbage collection is ran once
+    hint "Garbage collection ran.";
+    call FN_runGarbageCollection;
+};
 
-if (!isNil "garbageCollection_running") exitWith {};
-garbageCollection_running = true;
-
-while {true} do {
+FN_runGarbageCollection = {
     private _gcClasses = ["gcClasses"] call (missionNamespace getVariable "FN_arrayReturn");
 
     private _players = allPlayers - entities "HeadlessClient_F";
@@ -56,6 +58,10 @@ while {true} do {
         deleteVehicle _obj;
         sleep 0.01;
     } forEach (_gcObjects + _units + _corpses);
+};
 
+while {true} do {
+    if (!isServer) exitWith {};
+    call FN_runGarbageCollection;
     sleep 1800; // 30 minutes in‑game time
 };
