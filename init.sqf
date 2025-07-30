@@ -35,7 +35,7 @@ missionNamespace setVariable ["FN_spawnZom", compileFinal  preprocessFileLineNum
 missionNamespace setVariable ["FN_drinkWater", compileFinal  preprocessFileLineNumbers "Ambient\FN_drinkWater.sqf"];
 missionNamespace setVariable ["FN_refillCanteen", compileFinal  preprocessFileLineNumbers "Ambient\FN_refillCanteen.sqf"];
 missionNamespace setVariable ["FN_updateDrinkActions", compileFinal preprocessFileLineNumbers "Ambient\FN_updateDrinkActions.sqf"];
-missionNamespace setVariable ["FN_updateEatActions", compile preprocessFileLineNumbers "Ambient\FN_updateEatActions.sqf"];
+missionNamespace setVariable ["FN_updateEatActions", compileFinal preprocessFileLineNumbers "Ambient\FN_updateEatActions.sqf"];
 missionNamespace setVariable ["FN_purifyWater", compileFinal  preprocessFileLineNumbers "Ambient\FN_purifyWater.sqf"];
 missionNamespace setVariable ["FN_eatFood", compileFinal  preprocessFileLineNumbers "Ambient\FN_eatFood.sqf"];
 missionNamespace setVariable ["FN_skinAnimal", compileFinal  preprocessFileLineNumbers "Ambient\FN_skinAnimal.sqf"];
@@ -94,6 +94,8 @@ missionNamespace setVariable ["onPlayerKilled", compileFinal  preprocessFileLine
 missionNamespace setVariable ["onPlayerRespawn", compileFinal  preprocessFileLineNumbers "onPlayerRespawn.sqf"];
 missionNamespace setVariable ["teleporter", compileFinal  preprocessFileLineNumbers "teleporter.sqf"];
 missionNamespace setVariable ["FN_factionClothingCheck", compileFinal  preprocessFileLineNumbers "factionClothingChecker.sqf"];
+missionNamespace setVariable ["temperature", compileFinal  preprocessFileLineNumbers "Ambient\temperature.sqf"];
+missionNamespace setVariable ["radSystem", compileFinal  preprocessFileLineNumbers "Ambient\radSystem.sqf"];
 
 
 waitUntil {!isNull player};
@@ -367,7 +369,7 @@ FN_checkFaction = {
 	0 spawn {
 		// Refresh the faction alliance check
 		[_unit] call FN_factionClothingCheck;
-		
+
 		private _factions = [
 			["BB_Relation",   "Boonie Boys (BB)"],
 			["SU_Relation",   "Survivors Union (SU)"],

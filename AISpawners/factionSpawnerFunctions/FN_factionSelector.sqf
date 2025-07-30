@@ -3,7 +3,7 @@ params ["_faction","_numUnits","_triggerRadius","_pos","_zombieRvg","_typeOfLoca
 _mutantSpawner = "";
 FN_mutantEffectsCaller = {
 	params[ "_faction", "_player"];
-	[_faction, _player] execVM "AISpawners\mutantSpawners\mutantEffects.sqf";
+	[_faction, _player] call (missionNamespace getVariable "mutantEffects");
 };
 
 FN_mutantEffects = {
@@ -18,97 +18,97 @@ switch (_faction) do { //Going throuigh each mutant factions as well as zombie f
 	case "411": {
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\411Spawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "411Spawner");
 		};
 	};
 	case "Abom": {
 		if (_numUnits == 0) then {_numUnits = floor(random 2)+1;};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\AbominationSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "AbominationSpawner");
 		};
 	};
 	case "Mind": {
 		if (_numUnits == 0) then {_numUnits = round(random [1, 3, 4]);};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\MindflayerSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "MindflayerSpawner");
 		};
 	};
 	case "Rake": {
 		if (_numUnits == 0) then {_numUnits = round(random [2, 4, 6]);};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\RakeSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "RakeSpawner");
 		};
 	};
 	case "Shadow": {
 		if (_numUnits == 0) then {_numUnits = round(random [1, 2, 3]);};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\ShadowmenSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "ShadowmenSpawner");
 		};
 	};
 	case "Skull": {
 		if (_numUnits == 0) then {_numUnits = round(random [4, 8, 15]);};
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\SkullsSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "SkullsSpawner");
 		};
 	};
 	case "Snatch": {
 		if (_numUnits == 0) then {_numUnits = round(random [1, 2, 3]);};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\SnatcherSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "SnatcherSpawner");
 		};
 	};
 	case "Tank": {
 		if (_numUnits == 0) then {_numUnits = selectRandom [1, 1, 1, 1, 1, 1, 1, 2];};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\TankSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "TankSpawner");
 		};
 	};
 	case "Hellspawn": {
 		if (_numUnits == 0) then {_numUnits = 1;};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\HellspawnSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "HellspawnSpawner");
 		};
 	};
 	case "Goliath": {
 		if (_numUnits == 0) then {_numUnits = 1;};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\GoliathSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "GoliathSpawner");
 		};
 	};
 	case "Vamp": {
 		if (_numUnits == 0) then {_numUnits = round(random [2, 3, 5]);};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\VampireSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "VampireSpawner");
 		};
 	};
 	case "Various": {
 		if (_numUnits == 0) then {_numUnits = round(random [4, 8, 12]);};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\VariousMutantSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "VariousMutantSpawner");
 		};
 	};
 	case "Wend": {
 		if (_numUnits == 0) then {_numUnits = round(random [2, 4, 5]);};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\WendigoSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "WendigoSpawner");
 		};
 	};
 	case "Statue": {
 		if (_numUnits == 0) then {_numUnits = 1;};
 		[_triggerRadius, _pos, _faction] call FN_mutantEffects;
 		if (isServer) then {
-			[_pos, _triggerRadius, _numUnits] execVM "AISpawners\mutantSpawners\StatueSpawner.sqf";
+			[_pos, _triggerRadius, _numUnits] call (missionNamespace getVariable "StatueSpawner");
 		};
 	};
 	case "Bloater": {

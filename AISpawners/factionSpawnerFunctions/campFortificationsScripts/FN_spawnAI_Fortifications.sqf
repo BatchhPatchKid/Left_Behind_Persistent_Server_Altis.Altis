@@ -12,7 +12,7 @@ if (random 1 > _prob) then {
     };
     _newAI disableAI "PATH";
     if (_side == WEST && (random 1) > 0.70) then {
-        [_newAI] execVM "Economy System\economySystem.sqf";
+        [_newAI] call (missionNamespace getVariable "FN_economySystem");
     };
 };
 _newAI

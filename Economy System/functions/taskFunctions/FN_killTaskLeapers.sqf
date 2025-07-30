@@ -62,7 +62,7 @@ if (isNull (currentTask _caller)) then {
 						_caller addItemToBackpack "rvg_money"; 
 						hintSilent format ["All of the amount owed to you ($%2) has been put in your backpack, %1. Good work out there.", (name _caller), 200];
 					} else {
-						[_container, _caller, _actionId, "rvg_money", 1, 1] execVM "Economy System\functions\FN_ammoBoxCheck.sqf";
+						[_container, _caller, _actionId, "rvg_money", 1, 1] call (missionNamespace getVariable "FN_ammoBoxCheck");
 						hintSilent format ["It seems your backpack was full or missing %1. The remaining or full amount has been put into a ammo box at the original assigning contractors location", (name _caller)];
 					};
 				};

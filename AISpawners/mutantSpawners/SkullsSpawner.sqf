@@ -1,6 +1,6 @@
 params ["_pos", "_triggerRadius", "_maxUnits"];
         
-[_pos, 0] execVM "AISpawners\lootSpawner.sqf";
+[_pos, 0] call (missionNamespace getVariable "FN_lootSpawner");
 
 private _horde = createGroup east;
 for "_i" from 1 to _maxUnits do {
