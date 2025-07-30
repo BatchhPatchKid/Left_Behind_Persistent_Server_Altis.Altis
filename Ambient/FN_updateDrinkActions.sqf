@@ -1,58 +1,58 @@
+/*
+    FN_updateDrinkActions.sqf
+    -------------------------
+    Creates ACE self actions for each drinkable item in the player's inventory.
+    Usage:
+        [player] call FN_updateDrinkActions;
+*/
+
 params ["_player"];
-if (isNil "LB_currentDrinkActions") then { LB_currentDrinkActions = []; };
 
-// First remove all old actions
+// Remove previously created drink actions
+if (isNil { _player getVariable "LB_currentDrinkActions" }) then {
+    _player setVariable ["LB_currentDrinkActions", []];
+};
+
 {
-    [_player, 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions", "Drink"], _x] call ace_interact_menu_fnc_removeActionFromObject;
-} forEach LB_currentDrinkActions;
-LB_currentDrinkActions = [];
+    [_player, 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _x] call ace_interact_menu_fnc_removeActionFromObject;
+} forEach (_player getVariable ["LB_currentDrinkActions", []]);
 
-private _drinkables = [];
-{
-    _drinkables append ([_x] call (missionNamespace getVariable "FN_arrayReturn"));
-} forEach ["drinkSodas", "drinkWaterBottles", "drinkCanteens", "drinkDirty", "drinkBlood"];
+_player setVariable ["LB_currentDrinkActions", []];
 
+// Retrieve drinkable item arrays
+private _sodas         = ["drinkSodas"]         call (missionNamespace getVariable "FN_arrayReturn");
+private _waterBottles  = ["drinkWaterBottles"]  call (missionNamespace getVariable "FN_arrayReturn");
+private _canteens      = ["drinkCanteens"]      call (missionNamespace getVariable "FN_arrayReturn");
+private _dirty         = ["drinkDirty"]         call (missionNamespace getVariable "FN_arrayReturn");
+private _blood         = ["drinkBlood"]         call (missionNamespace getVariable "FN_arrayReturn");
 
-private _itemsPlayer = items player;
+private _allDrinks = _sodas + _waterBottles + _canteens + _dirty + _blood;
 
+// Loop through each drink item and add ACE action if player has it
 {
     private _item = _x;
-    if (_item in _itemsPlayer) then {
-        private _displayName = getText(configFile >> "CfgWeapons" >> _item >> "displayName");
-        if (_displayName == "") then { _displayName = _item; };
+
+    if ([_player, _item] call BIS_fnc_hasItem) then {
+        private _displayName = getText (configFile >> "CfgWeapons" >> _item >> "displayName");
+        if (_displayName isEqualTo "") then { _displayName = _item };
 
         private _action = [
-            format["drink_%1", _item],
-            format["Drink %1", _displayName],
+            format ["drink_%1", _item],
+            format ["Drink %1", _displayName],
             "",
             {
-                params ["_target","_player","_params"];
-                private _item = _params select 0;
-                private _success = [_player, _item] call FN_drinkWater;
-
-                if (_success) then {
-                    // Remove action if item was consumed
-                    [_item] call {
-                        private _id = format["drink_%1", _this];
-                        {
-                            if (_x select 0 == _id) exitWith {
-                                [_player, 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions", "Drink"], _x] call ace_interact_menu_fnc_removeActionFromObject;
-                                LB_currentDrinkActions deleteAt _forEachIndex;
-                            };
-                        } forEach LB_currentDrinkActions;
-                    };
-                };
+                [_this select 1, (_this select 2) select 0] call FN_drinkWater;
             },
-            {
-                // Only show action if the player has the item still
-                params ["_target", "_player", "_params"];
-                (_params select 0) in (items _player)
-            },
+            { true },
             {},
             [_item]
         ] call ace_interact_menu_fnc_createAction;
 
-        [_player, 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions", "Drink"], _action] call ace_interact_menu_fnc_addActionToObject;
-        LB_currentDrinkActions pushBack _action;
+        [_player, 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+        // Track current drink actions per player
+        private _currentActions = _player getVariable ["LB_currentDrinkActions", []];
+        _currentActions pushBack _action;
+        _player setVariable ["LB_currentDrinkActions", _currentActions];
     };
-} forEach _drinkables;
+} forEach _allDrinks;
