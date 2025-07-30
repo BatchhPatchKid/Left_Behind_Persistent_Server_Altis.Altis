@@ -459,13 +459,5 @@ FN_checkFaction = {
 [player] call FN_factionClothingCheck;
 
 // Add zeus action to start garbage collection
-if (!isNull (getAssignedCuratorLogic player)) then {
-    private _gcAction = [
-        "StartGC",
-        "Start Garbage Collection",
-        "",
-        { [true] call FN_runGarbageCollection; },
-        { true }
-    ] call ace_interact_menu_fnc_createAction;
-    [["ACE_ZeusActions"], _gcAction] call ace_interact_menu_fnc_addActionToZeus;
-};
+private _gcAction = ["StartGC","Start Garbage Collection","",{ [true] spawn (missionNamespace getVariable "garbageCollection"); },{ true }] call ace_interact_menu_fnc_createAction;
+[["ACE_ZeusActions"], _gcAction] call ace_interact_menu_fnc_addActionToZeus;
