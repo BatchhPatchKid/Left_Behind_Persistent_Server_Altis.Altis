@@ -1,58 +1,80 @@
 /*
     FN_updateDrinkActions.sqf
     -------------------------
-    Creates ACE self actions for each drinkable item in the player's inventory.
-    Usage:
-        [player] call FN_updateDrinkActions;
+    Updates the “Drink” submenu and hooks into the new FN_drinkWater signature.
+    Usage (client‑side only): [player] call FN_updateDrinkActions;
 */
 
 params ["_player"];
 
-// Remove previously created drink actions
-if (isNil { _player getVariable "LB_currentDrinkActions" }) then {
-    _player setVariable ["LB_currentDrinkActions", []];
-};
+// 1. Define the parent branch path
+private _branchParent = [
+    "ACE_SelfActions",
+    "Main",
+    "Survival System",
+    "Survival Actions",
+    "Drink"
+];
 
+// 2. Remove all old Drink actions by their full‑paths
+private _oldEntries = _player getVariable ["LB_currentDrinkEntries", []];
 {
-    [_player, 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _x] call ace_interact_menu_fnc_removeActionFromObject;
-} forEach (_player getVariable ["LB_currentDrinkActions", []]);
+    // _x is the fullPath array returned previously by addActionToClass
+    [typeOf _player, 1, _x, false] call ace_interact_menu_fnc_removeActionFromClass;
+} forEach _oldEntries;
 
-_player setVariable ["LB_currentDrinkActions", []];
+// 3. Gather master list of all possible drinkables
+private _categories = [
+    "drinkSodas",
+    "drinkWaterBottles",
+    "drinkCanteens",
+    "drinkDirty",
+    "drinkBlood"
+];
+private _masterList = [];
+{
+    _masterList append ([_x] call (missionNamespace getVariable "FN_arrayReturn"));
+} forEach _categories;
 
-// Retrieve drinkable item arrays
-private _sodas         = ["drinkSodas"]         call (missionNamespace getVariable "FN_arrayReturn");
-private _waterBottles  = ["drinkWaterBottles"]  call (missionNamespace getVariable "FN_arrayReturn");
-private _canteens      = ["drinkCanteens"]      call (missionNamespace getVariable "FN_arrayReturn");
-private _dirty         = ["drinkDirty"]         call (missionNamespace getVariable "FN_arrayReturn");
-private _blood         = ["drinkBlood"]         call (missionNamespace getVariable "FN_arrayReturn");
-
-private _allDrinks = _sodas + _waterBottles + _canteens + _dirty + _blood;
-
-// Loop through each drink item and add ACE action if player has it
+// 4. For each drinkable the player actually has, create an ACE action
+private _newEntries = [];
 {
     private _item = _x;
-
     if ([_player, _item] call BIS_fnc_hasItem) then {
-        private _displayName = getText (configFile >> "CfgWeapons" >> _item >> "displayName");
-        if (_displayName isEqualTo "") then { _displayName = _item };
+        // a) Resolve a display name
+        private _dn = getText (configFile >> "CfgWeapons"   >> _item >> "displayName");
+        if (_dn isEqualTo "") then {
+            _dn = getText (configFile >> "CfgMagazines" >> _item >> "displayName");
+            if (_dn isEqualTo "") then { _dn = _item; };
+        };
 
+        // b) Build the action array, passing _item to FN_drinkWater
         private _action = [
-            format ["drink_%1", _item],
-            format ["Drink %1", _displayName],
-            "",
-            {
-                [_this select 1, (_this select 2) select 0] call FN_drinkWater;
+            format ["drink_%1", _item],           // internal ID
+            format ["Drink %1", _dn],             // visible text
+            "",                                   // icon (none)
+            {   params ["_t","_p","_params"];
+                // Call the new FN_drinkWater signature
+                private _success = [_p, _params select 0] call FN_drinkWater;
+                // If it returned true (consumed), re‑run the updater
+                if (_success) then { [_p] call FN_updateDrinkActions; };
             },
-            { true },
-            {},
-            [_item]
+            { true },                             // show condition (always shown if in list)
+            {},                                   // enable condition (unused)
+            [_item]                               // parameters: pass the classname
         ] call ace_interact_menu_fnc_createAction;
 
-        [_player, 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _action] call ace_interact_menu_fnc_addActionToObject;
+        // c) Add it to the player’s class and capture its fullPath
+        private _fullPath = [
+            typeOf _player,
+            1,                    // self‑action
+            _branchParent,
+            _action
+        ] call ace_interact_menu_fnc_addActionToClass;
 
-        // Track current drink actions per player
-        private _currentActions = _player getVariable ["LB_currentDrinkActions", []];
-        _currentActions pushBack _action;
-        _player setVariable ["LB_currentDrinkActions", _currentActions];
+        _newEntries pushBack _fullPath;
     };
-} forEach _allDrinks;
+} forEach _masterList;
+
+// 5. Store the fullPaths for precise removal next time
+_player setVariable ["LB_currentDrinkEntries", _newEntries, true];
