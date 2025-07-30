@@ -9,7 +9,7 @@
 if ( !isServer ) exitWith {};
 
 FN_runGarbageCollection = {
-    private _gcClasses = ["gcClasses"] call (missionNamespace getVariable "FN_arrayReturn");
+    private _gcClasses = ["_gcClasses"] call (missionNamespace getVariable "FN_arrayReturn");
 
     private _players = allPlayers - entities "HeadlessClient_F";
     if (_players isEqualTo []) exitWith {sleep 1800};
