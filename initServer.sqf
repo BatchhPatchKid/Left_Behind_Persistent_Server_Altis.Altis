@@ -42,7 +42,7 @@
 
 ]] call acex_fortify_fnc_registerObjects;
 
-call (missionNamespace getVariable "garbageCollection");
+execVM "Server Ran Scripts\garbageCollection.sqf";
 //execVM "Server Ran Scripts\factionClothingChecker.sqf"; //This script is now ran locally by the client when they open their inventory
 
 Civilian setFriend [WEST,0];

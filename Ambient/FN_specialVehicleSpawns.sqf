@@ -109,7 +109,7 @@ if (_activate and isServer) then {
 				
 				_plane setFuel (random [.01, .05, .25]);
 				
-				["Leaper", 5, 100, _pos] call (missionNamespace getVariable "FN_factionSelector");
+				["Leaper", 5, 100, _pos] execVM "AISpawners\aiSubScripts\factionSelector.sqf";
 			};
 		};			
 	};

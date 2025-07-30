@@ -86,7 +86,7 @@ for "_i" from 1 to _moneyPayedBack do {
 		_caller addItemToBackpack "rvg_money"; 
 		hintSilent format ["All of the amount owed to you ($%2) has been put in your backpack, %1. Good doing business with you.", (name _caller), _moneyPayedBack];
 	} else {
-		[_container, _caller, _actionId, "rvg_money", 1, (_moneyPayedBack-_i)+1] call (missionNamespace getVariable "FN_ammoBoxCheck");
+		[_container, _caller, _actionId, "rvg_money", 1, (_moneyPayedBack-_i)+1] execVM "Economy System\functions\FN_ammoBoxCheck.sqf";
 		break;
 	};
 };

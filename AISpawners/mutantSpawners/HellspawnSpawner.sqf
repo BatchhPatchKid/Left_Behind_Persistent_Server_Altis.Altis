@@ -14,9 +14,9 @@ private _factionSelected = selectRandomWeighted _factionArray;
 
 	params ["_pos", "_triggerRadius", "_maxUnits"];
 	
-	[_pos, 2] call (missionNamespace getVariable "FN_lootSpawner");
-	[_pos, 2] call (missionNamespace getVariable "FN_lootSpawner");
-	[_pos, 2] call (missionNamespace getVariable "FN_lootSpawner");
+	[_pos, 2] execVM "AISpawners\lootSpawner.sqf";
+	[_pos, 2] execVM "AISpawners\lootSpawner.sqf";
+	[_pos, 2] execVM "AISpawners\lootSpawner.sqf";
 	
 	private _horde = createGroup east;
 	

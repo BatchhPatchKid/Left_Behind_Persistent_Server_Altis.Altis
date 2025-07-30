@@ -57,7 +57,7 @@ if (side player != civilian) then {
 										[_banditUnit,_aim,_aimSpeed,_spot,_courage,_aimShake,_command,_spotDist,_reload] call (missionNamespace getVariable "FN_setUnitSkills");
 
 										if (_side == WEST && (random 1) > .70) then {
-											[_banditUnit] call (missionNamespace getVariable "FN_economySystem");
+											[_banditUnit] execVM "Economy System\economySystem.sqf";
 										};
                                     } else {
 										_grpTemp = createGroup east;

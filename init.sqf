@@ -35,7 +35,7 @@ missionNamespace setVariable ["FN_spawnZom", compileFinal  preprocessFileLineNum
 missionNamespace setVariable ["FN_drinkWater", compileFinal  preprocessFileLineNumbers "Ambient\FN_drinkWater.sqf"];
 missionNamespace setVariable ["FN_refillCanteen", compileFinal  preprocessFileLineNumbers "Ambient\FN_refillCanteen.sqf"];
 missionNamespace setVariable ["FN_updateDrinkActions", compileFinal preprocessFileLineNumbers "Ambient\FN_updateDrinkActions.sqf"];
-missionNamespace setVariable ["FN_updateEatActions", compileFinal preprocessFileLineNumbers "Ambient\FN_updateEatActions.sqf"];
+missionNamespace setVariable ["FN_updateEatActions", compile preprocessFileLineNumbers "Ambient\FN_updateEatActions.sqf"];
 missionNamespace setVariable ["FN_purifyWater", compileFinal  preprocessFileLineNumbers "Ambient\FN_purifyWater.sqf"];
 missionNamespace setVariable ["FN_eatFood", compileFinal  preprocessFileLineNumbers "Ambient\FN_eatFood.sqf"];
 missionNamespace setVariable ["FN_skinAnimal", compileFinal  preprocessFileLineNumbers "Ambient\FN_skinAnimal.sqf"];
@@ -94,14 +94,7 @@ missionNamespace setVariable ["onPlayerKilled", compileFinal  preprocessFileLine
 missionNamespace setVariable ["onPlayerRespawn", compileFinal  preprocessFileLineNumbers "onPlayerRespawn.sqf"];
 missionNamespace setVariable ["teleporter", compileFinal  preprocessFileLineNumbers "teleporter.sqf"];
 missionNamespace setVariable ["FN_factionClothingCheck", compileFinal  preprocessFileLineNumbers "factionClothingChecker.sqf"];
-missionNamespace setVariable ["temperature", compileFinal  preprocessFileLineNumbers "Ambient\temperature.sqf"];
-missionNamespace setVariable ["radSystem", compileFinal  preprocessFileLineNumbers "Ambient\radSystem.sqf"];
-missionNamespace setVariable ["randomEncounters", compileFinal preprocessFileLineNumbers "Ambient\randomEncounters.sqf"];
-missionNamespace setVariable ["hydrationNutritionSystem", compileFinal preprocessFileLineNumbers "Ambient\hydrationNutritionSystem.sqf"];
-missionNamespace setVariable ["FN_poopSystem", compileFinal preprocessFileLineNumbers "Ambient\FN_poopSystem.sqf"];
-missionNamespace setVariable ["FN_checkFaction", compileFinal preprocessFileLineNumbers "FN_checkFaction.sqf"];
-missionNamespace setVariable ["FN_setDownBaseCache", compileFinal preprocessFileLineNumbers "FN_setDownBaseCache.sqf"];
-missionNamespace setVariable ["FN_sleep", compileFinal preprocessFileLineNumbers "FN_sleep.sqf"];
+
 
 waitUntil {!isNull player};
 sleep 0.1;
@@ -155,24 +148,27 @@ player groupChat "Remember to check the briefing tab for a scenario information 
 player enableStamina false;
 
 if (side player != civilian && (hasInterface or isDedicated)) then {
-	//[player] call ZSpawner;
-	//[player] call BanditSpawner;
-	//[player] call anomalySpawner;
-	[player] call (missionNamespace getVariable "temperature");
-	[player] call (missionNamespace getVariable "radSystem");
-	[player] call (missionNamespace getVariable "randomEncounters");
-	[player] call (missionNamespace getVariable "hydrationNutritionSystem");
-	[player] call (missionNamespace getVariable "FN_sanitySystem");
-	[player] call (missionNamespace getVariable "FN_poopSystem");
-	[player] call (missionNamespace getVariable "FN_factionClothingCheck");
+	//player execVM "Ambient\ZSpawner.sqf";
+	//player execVM "Ambient\BanditSpawner.sqf";
+	//player execVM "Ambient\anomalySpawner.sqf";
+	player execVM "Ambient\temperature.sqf";
+	player execVM "Ambient\radSystem.sqf";
+	player execVM "Ambient\randomEncounters.sqf";
+	player execVM "Ambient\hydrationNutritionSystem.sqf";
+	player execVM "Ambient\FN_sanitySystem.sqf";
+	player execVM "Ambient\FN_poopSystem.sqf";
+	[player] execVM "factionClothingChecker.sqf";
 };
 
 // adding any food or drinks to the player's ace interact menu as they spawn;
 player addEventHandler ["InventoryClosed", {
-    params ["_unit"];
-	[_unit] call (missionNamespace getVariable "FN_updateDrinkActions");
-	[_unit] call (missionNamespace getVariable "FN_updateEatActions");
-	[_unit] call (missionNamespace getVariable "FN_factionClothingCheck");
+    params ["_unit","_container"];
+    // Refresh drink menu
+    [_unit] call FN_updateDrinkActions;
+    // Refresh eat menu
+    [_unit] call FN_updateEatActions;
+	// Refresh the faction alliance check
+	[_unit] remoteExec ["FN_factionClothingCheck", _unit];
 }];
 
 addMissionEventHandler ["EntityRespawned", {
@@ -180,9 +176,11 @@ addMissionEventHandler ["EntityRespawned", {
     if (isPlayer _newUnit) then {
         _newUnit addEventHandler ["InventoryClosed", {
             params ["_unit"];
-			[_unit] call (missionNamespace getVariable "FN_updateDrinkActions");
-			[_unit] call (missionNamespace getVariable "FN_updateEatActions");
-			[_unit] call (missionNamespace getVariable "FN_factionClothingCheck");
+            [_unit] call FN_updateDrinkActions;
+			// Refresh eat menu
+			[_unit] call FN_updateEatActions;
+			// Refresh the faction alliance check
+			[_unit] remoteExec ["FN_factionClothingCheck", _unit];
         }];
     };
 }];
@@ -193,13 +191,13 @@ _actionMain = ["Main","Scenario Actions","",{},{true}] call ace_interact_menu_fn
 _action = ["Arsenal","Open the Arsenal","",{[player, player, true] call ace_arsenal_fnc_openBox;},{true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions","Main"], _action] call ace_interact_menu_fnc_addActionToClass;
 
-_actionFaction = ["faction","Check Faction Affiliation","",{(player) call (missionNamespace getVariable "FN_checkFaction");},{true}] call ace_interact_menu_fnc_createAction;
+_actionFaction = ["faction","Check Faction Affiliation","",{call FN_checkFaction},{true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions","Main"], _actionFaction] call ace_interact_menu_fnc_addActionToClass;
 
-_actionSleep = ["sleep","Lay Down Sleeping Bag","",{call (missionNamespace getVariable "FN_sleep")},{true}] call ace_interact_menu_fnc_createAction;
+_actionSleep = ["sleep","Lay Down Sleeping Bag","",{call FN_sleep},{true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions","Main"], _actionSleep] call ace_interact_menu_fnc_addActionToClass;
 
-_actionFlag = ["base","Set Down Base Flag","",{call (missionNamespace getVariable "FN_setDownBaseCache")},{true}] call ace_interact_menu_fnc_createAction;
+_actionFlag = ["base","Set Down Base Flag","",{call FN_setDownBaseCache},{true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions","Main"], _actionFlag] call ace_interact_menu_fnc_addActionToClass;
 
 _survivalFolder = ["Survival System", "Survival System", "", {}, {true}] call ace_interact_menu_fnc_createAction;
@@ -211,19 +209,19 @@ _survivalFolderChecks = ["Survival Checks", "Survival Checks", "", {}, {true}] c
 _survivalFolderActions = ["Survival Actions", "Survival Actions", "", {}, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System"], _survivalFolderActions] call ace_interact_menu_fnc_addActionToClass;
 
-_actionTemp = ["temperature", "Check Temperature", "", {call (missionNamespace getVariable "FN_temperature");}, {true}] call ace_interact_menu_fnc_createAction;
+_actionTemp = ["temperature", "Check Temperature", "", {call FN_temperature;}, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Checks"], _actionTemp] call ace_interact_menu_fnc_addActionToClass;
 
-_actionRad = ["radiation", "Check Rad Exposure", "", {call (missionNamespace getVariable "FN_radiation");}, {true}] call ace_interact_menu_fnc_createAction;
+_actionRad = ["radiation", "Check Rad Exposure", "", {call FN_radiation;}, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Checks"], _actionRad] call ace_interact_menu_fnc_addActionToClass;
 
-_actionDisplayStats = ["status", "Check Hydration And Nutrition", "", {[player] call (missionNamespace getVariable "FN_displayHydrationNutrition");}, {true}] call ace_interact_menu_fnc_createAction;
+_actionDisplayStats = ["status", "Check Hydration And Nutrition", "", {[player] call FN_displayHydrationNutrition;}, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Checks"], _actionDisplayStats] call ace_interact_menu_fnc_addActionToClass;
 
-_actionSanity = ["sanity", "Check Sanity", "", { call  (missionNamespace getVariable "FN_checkSanity"); }, {true}] call ace_interact_menu_fnc_createAction;
+_actionSanity = ["sanity", "Check Sanity", "", { call FN_checkSanity; }, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Checks"], _actionSanity] call ace_interact_menu_fnc_addActionToClass;
 
-_actionCheckDefecation = ["Check Defecation Status", "Check Defecation Status", "", { [player] call (missionNamespace getVariable "FN_checkDefecationStatus") }, { true }] call ace_interact_menu_fnc_createAction;
+_actionCheckDefecation = ["Check Defecation Status", "Check Defecation Status", "", { [player] call FN_checkDefecationStatus }, { true }] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Checks"], _actionCheckDefecation] call ace_interact_menu_fnc_addActionToClass;
 
 _actionDrinkWater = ["Drink", "Drink", "", { }, {true}] call ace_interact_menu_fnc_createAction;
@@ -232,13 +230,13 @@ _actionDrinkWater = ["Drink", "Drink", "", { }, {true}] call ace_interact_menu_f
 _actionEatFood = ["Eat", "Eat", "", { }, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionEatFood] call ace_interact_menu_fnc_addActionToClass;
 
-_actionDefecate = ["Defecate", "Defecate", "", { [player] call (missionNamespace getVariable "FN_defecate"); }, { true }] call ace_interact_menu_fnc_createAction;
+_actionDefecate = ["Defecate", "Defecate", "", { [player] call fn_defecate; }, { true }] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionDefecate] call ace_interact_menu_fnc_addActionToClass;
 
-_actionRefillCanteen = ["refill", "Refill Canteen", "", { [player] call  (missionNamespace getVariable "FN_refillCanteen") }, {true}] call ace_interact_menu_fnc_createAction;
+_actionRefillCanteen = ["refill", "Refill Canteen", "", { [player] call FN_refillCanteen; }, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionRefillCanteen] call ace_interact_menu_fnc_addActionToClass;
 
-_actionPurifyWater = ["purify", "Purify Water", "", { [player] call  (missionNamespace getVariable "FN_purifyWater"); }, {true}] call ace_interact_menu_fnc_createAction;
+_actionPurifyWater = ["purify", "Purify Water", "", { [player] call FN_purifyWater; }, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionPurifyWater] call ace_interact_menu_fnc_addActionToClass;
 
 _actionSkinAnimal = ["skinAnimal", "Skin Animal", "", { [player] call (missionNamespace getVariable "FN_skinAnimal"); }, {true}] call ace_interact_menu_fnc_createAction;
@@ -273,5 +271,184 @@ civilian setFriend [east, 0];
 civilian setFriend [independent, 0];  
 civilian setFriend [civilian, 1];  
 
-[player] call (missionNamespace getVariable "FN_updateDrinkActions");
-[player] call (missionNamespace getVariable "FN_updateEatActions");
+FN_setDownBaseCache = {
+	// Check if there's already a flag placed
+	if (!isNil "baseFlagObject") then {
+		deleteVehicle baseFlagObject; // Delete the existing sleeping bag
+	};
+
+	// Create and position the new sleeping bag
+	_flag = "Flag_Red_F" createVehicle [(getPosATL player select 0), (getPosATL player select 1), (getPosATL player select 2)];
+	_flag setPos [(getPosATL player select 0), (getPosATL player select 1), (getPosATL player select 2)];
+	_flag setDir (getDir player);
+	
+	// Assign the new sleeping bag object to a global variable for tracking
+	baseFlagObject = _flag;
+	hintSilent "Flag has been planted. Everything in a radius of a 150m is your base and will now not despawn.";
+	
+	[
+		{
+			baseFlagObject addAction
+			[
+				"Take down flag pole",	// title
+				{
+					params ["_target", "_caller", "_actionId", "_arguments"]; // script
+					deleteVehicle _target;
+				},
+				nil,		// arguments
+				1.5,		// priority
+				true,		// showWindow
+				true,		// hideOnUse
+				"",			// shortcut
+				"true",		// condition
+				3,			// radius
+				false,		// unconscious
+				"",			// selection
+				""			// memoryPoint
+			];
+		}
+	] remoteExec ["call", 0];
+};
+
+FN_sleep = { //player actions for the sleeping function of the game
+	[] spawn {
+		// Check if there's already a sleeping bag placed
+		if (!isNil "sleepingBagObject") then {
+			deleteVehicle sleepingBagObject; // Delete the existing sleeping bag
+		};
+
+		// Create and position the new sleeping bag
+		_sleepingBag = "Land_Sleeping_bag_F" createVehicle [(getPosATL player select 0), (getPosATL player select 1), (getPosATL player select 2)];
+		_sleepingBag setPos [(getPosATL player select 0), (getPosATL player select 1), (getPosATL player select 2) + 0.02];
+		_sleepingBag setDir (getDir player);
+		
+		
+		// Assign the new sleeping bag object to a global variable for tracking
+		sleepingBagObject = _sleepingBag;
+		
+		sleepingBagObject addAction
+			[
+				"Try to sleep",	// title
+				{
+					params ["_target", "_caller", "_actionId", "_arguments"]; // script
+					if (!(_caller getVariable "wants_to_sleep")) then {
+						if (daytime < 6 || daytime > 20) then {
+							_caller setVariable ["wants_to_sleep", true, true];
+							hintSilent "You are now trying to sleep.";
+							sleep 3;
+							hintSilent "";
+						} else {
+							_caller setVariable ["wants_to_sleep", false, true];
+							hintSilent "It's too early to sleep. Your bedtime is from 20:00 to 06:00.";
+							sleep 3;
+							hintSilent "";
+						};
+					} else {
+						hintSilent "You are already trying to sleep";
+					};
+				},
+				nil,		// arguments
+				1.5,		// priority
+				true,		// showWindow
+				true,		// hideOnUse
+				"",			// shortcut
+				"true",		// condition
+				3,			// radius
+				false,		// unconscious
+				"",			// selection
+				""			// memoryPoint
+			];
+			sleepingBagObject addAction
+			[
+				"Stop trying to sleep",	// title
+				{
+					params ["_target", "_caller", "_actionId", "_arguments"]; // script
+					if (_caller getVariable "wants_to_sleep") then {
+						_caller setVariable ["wants_to_sleep", false, true];
+						hintSilent "You are no longer trying to sleep.";
+						sleep 3;
+						hintSilent "";
+					} else {
+						hintSilent "You weren't trying to sleep.";
+						sleep 3;
+						hintSilent "";
+					};
+				},
+				nil,		// arguments
+				1.5,		// priority
+				true,		// showWindow
+				true,		// hideOnUse
+				"",			// shortcut
+				"true",		// condition
+				3,			// radius
+				false,		// unconscious
+				"",			// selection
+				""			// memoryPoint
+			];
+			sleepingBagObject addAction
+			[
+				"Roll up sleeping bag",	// title
+				{
+					params ["_target", "_caller", "_actionId", "_arguments"]; // script
+					_caller setVariable ["wants_to_sleep", false, true];
+					deleteVehicle _target;
+				},
+				nil,		// arguments
+				1.5,		// priority
+				true,		// showWindow
+				true,		// hideOnUse
+				"",			// shortcut
+				"true",		// condition
+				3,			// radius
+				false,		// unconscious
+				"",			// selection
+				""			// memoryPoint
+			];
+	};
+};
+
+FN_checkFaction = {
+	0 spawn {
+		private _factions = [
+			["BB_Relation",   "Boonie Boys (BB)"],
+			["SU_Relation",   "Survivors Union (SU)"],
+			["PF_Relation",   "Pigs Flesh (PF)"],
+			["ALF_Relation",  "Altis Liberation Front (ALF)"],
+			["WO_Relation",   "World Order (WO)"],
+			["RU_Relation",   "Russian Federation (RU)"],
+			["US_Relation",   "United States Army (US)"],
+			["NH_Relation",   "New Horizon (NH)"],
+			["TRB_Relation",  "The Red Bullet (TRB)"],
+			["RC_Relation",   "Ravens Cloak (RC)"],
+			["DT_Relation",   "Deadmans Trident (DT)"],
+			["ROA_Relation",  "Republic of Altis (ROA)"],
+			["PMC_Relation",  "PMC Group Alpha (PMC)"],
+			["Bandit_Relation", "Bandits"],
+			["Renegade_Relation", "Renegades"]
+		];
+
+		private _relations = [];
+
+		{
+			private _var = _x select 0;
+			private _name = _x select 1;
+
+			if (player getVariable [_var, false]) then {
+				_relations pushBack _name;
+			};
+		} forEach _factions;
+
+		private _relationString = if (_relations isEqualTo []) then {
+			"You are not friendly with any factions."
+		} else {
+			format ["You are friendly with factions: %1", _relations joinString " and "]
+		};
+
+		hint _relationString;
+		sleep 6;
+		hintSilent "";
+	};
+};
+
+[player] call FN_updateDrinkActions;
+[player] call FN_updateEatActions;

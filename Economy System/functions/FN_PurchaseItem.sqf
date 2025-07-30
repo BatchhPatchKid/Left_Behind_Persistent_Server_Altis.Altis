@@ -24,7 +24,7 @@ if (_bankNotesCount < _arguments select 1 AND _bankNotesCount != 0) then {
 	backpackSelectionRare = ["backpackExpensive"] call (missionNamespace getVariable "FN_arrayReturn");
 	
 	if ((_arguments select 0) in backpackSelection or (_arguments select 0) in backpackSelectionRare) then {
-		[_container, _caller, _actionId, _arguments, 2, 0] call (missionNamespace getVariable "FN_ammoBoxCheck");
+		[_container, _caller, _actionId, _arguments, 2, 0] execVM "Economy System\functions\FN_ammoBoxCheck.sqf";
 	} else {
 		if (_caller canAddItemToBackpack (_arguments select 0)) then {
 			_caller addItemToBackpack (_arguments select 0);
@@ -33,7 +33,7 @@ if (_bankNotesCount < _arguments select 1 AND _bankNotesCount != 0) then {
 			sleep 3;
 			hintSilent "";
 		} else {
-			[_container, _caller, _actionId, _arguments, 0, 0] call (missionNamespace getVariable "FN_ammoBoxCheck");
+			[_container, _caller, _actionId, _arguments, 0, 0] execVM "Economy System\functions\FN_ammoBoxCheck.sqf";
 		};
 	};
 };
