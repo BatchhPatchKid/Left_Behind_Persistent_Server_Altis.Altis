@@ -7,9 +7,11 @@ if (isNil "LB_currentDrinkActions") then { LB_currentDrinkActions = []; };
 } forEach LB_currentDrinkActions;
 LB_currentDrinkActions = [];
 
-private _drinkables = (["drinkSodas", "drinkWaterBottles", "drinkCanteens", "drinkDirty", "drinkBlood"] apply {
-    [_x] call (missionNamespace getVariable "FN_arrayReturn")
-}) joinString [];
+private _drinkables = [];
+{
+    _drinkables append ([_x] call (missionNamespace getVariable "FN_arrayReturn"));
+} forEach ["drinkSodas", "drinkWaterBottles", "drinkCanteens", "drinkDirty", "drinkBlood"];
+
 
 private _itemsPlayer = items player;
 

@@ -93,6 +93,8 @@ missionNamespace setVariable ["onPlayerKilled", compileFinal  preprocessFileLine
 missionNamespace setVariable ["onPlayerRespawn", compileFinal  preprocessFileLineNumbers "onPlayerRespawn.sqf"];
 missionNamespace setVariable ["teleporter", compileFinal  preprocessFileLineNumbers "teleporter.sqf"];
 missionNamespace setVariable ["FN_factionClothingCheck", compileFinal  preprocessFileLineNumbers "factionClothingChecker.sqf"];
+missionNamespace setVariable ["FN_updateDrinkActions", compileFinal  preprocessFileLineNumbers "Ambient\FN_updateDrinkActions.sqf"];
+
 
 
 waitUntil {!isNull player};
@@ -198,7 +200,7 @@ _actionSanity = ["sanity", "Check Sanity", "", { call FN_checkSanity; }, {true}]
 _actionCheckDefecation = ["Check Defecation Status", "Check Defecation Status", "", { [player] call FN_checkDefecationStatus }, { true }] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Checks"], _actionCheckDefecation] call ace_interact_menu_fnc_addActionToClass;
 
-_actionDrink = ["Drink", "Drink", "", {[player] call FN_drinkWater; }, { [player] call FN_hasDrink}] call ace_interact_menu_fnc_createAction;
+_actionDrink = ["Drink", "Drink", "", {}, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionDrink] call ace_interact_menu_fnc_addActionToClass;
 
 _actionEat = ["Eat", "Eat", "", {}, {true}] call ace_interact_menu_fnc_createAction;
