@@ -96,7 +96,9 @@ missionNamespace setVariable ["teleporter", compileFinal  preprocessFileLineNumb
 missionNamespace setVariable ["FN_factionClothingCheck", compileFinal  preprocessFileLineNumbers "factionClothingChecker.sqf"];
 missionNamespace setVariable ["temperature", compileFinal  preprocessFileLineNumbers "Ambient\temperature.sqf"];
 missionNamespace setVariable ["radSystem", compileFinal  preprocessFileLineNumbers "Ambient\radSystem.sqf"];
-
+missionNamespace setVariable ["randomEncounters", compileFinal preprocessFileLineNumbers "Ambient\randomEncounters.sqf"];
+missionNamespace setVariable ["hydrationNutritionSystem", compileFinal preprocessFileLineNumbers "Ambient\hydrationNutritionSystem.sqf"];
+missionNamespace setVariable ["FN_poopSystem", compileFinal preprocessFileLineNumbers "Ambient\FN_poopSystem.sqf"];
 
 waitUntil {!isNull player};
 sleep 0.1;
@@ -150,16 +152,16 @@ player groupChat "Remember to check the briefing tab for a scenario information 
 player enableStamina false;
 
 if (side player != civilian && (hasInterface or isDedicated)) then {
-	[player] call temperature;
 	//[player] call ZSpawner;
 	//[player] call BanditSpawner;
-	[player] call radSystem;
-	[player] call randomEncounters;
 	//[player] call anomalySpawner;
-	[player] call hydrationNutritionSystem;
-	[player] call FN_sanitySystem;
-	[player] call FN_poopSystem;
-	[player] call FN_factionClothingCheck;
+	[player] call (missionNamespace getVariable "temperature");
+	[player] call (missionNamespace getVariable "radSystem");
+	[player] call (missionNamespace getVariable "randomEncounters");
+	[player] call (missionNamespace getVariable "hydrationNutritionSystem");
+	[player] call (missionNamespace getVariable "FN_sanitySystem");
+	[player] call (missionNamespace getVariable "FN_poopSystem");
+	[player] call (missionNamespace getVariable "FN_factionClothingCheck");
 };
 
 // adding any food or drinks to the player's ace interact menu as they spawn;
@@ -232,7 +234,7 @@ _actionDrinkWater = ["Drink", "Drink", "", { }, {true}] call ace_interact_menu_f
 _actionEatFood = ["Eat", "Eat", "", { }, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionEatFood] call ace_interact_menu_fnc_addActionToClass;
 
-_actionDefecate = ["Defecate", "Defecate", "", { [player] call fn_defecate; }, { true }] call ace_interact_menu_fnc_createAction;
+_actionDefecate = ["Defecate", "Defecate", "", { [player] call FN_defecate; }, { true }] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionDefecate] call ace_interact_menu_fnc_addActionToClass;
 
 _actionRefillCanteen = ["refill", "Refill Canteen", "", { [player] call FN_refillCanteen; }, {true}] call ace_interact_menu_fnc_createAction;
