@@ -98,7 +98,23 @@ missionNamespace setVariable ["FN_updateDrinkActions", compileFinal  preprocessF
 
 
 waitUntil {!isNull player};
-sleep 3;
+sleep 0.1; // Ensure the player is fully initialized
+
+if (isNil "LB_currentDrinkActions") then {
+    LB_currentDrinkActions = [];
+};
+
+player addEventHandler ["Take", {
+    [player] call FN_updateDrinkActions;
+}];
+
+player addEventHandler ["Put", {
+    [player] call FN_updateDrinkActions;
+}];
+
+player addEventHandler ["InventoryClosed", {
+    [player] call FN_updateDrinkActions;
+}];
 
 // Define the function to add multiple diary entries
 addDiaryEntries = {
@@ -425,3 +441,6 @@ FN_checkFaction = {
 		hintSilent "";
 	};
 };
+
+// Update drink actions for the player - this must be called last to ensure the player has been given the starting items
+[player] call FN_updateDrinkActions;

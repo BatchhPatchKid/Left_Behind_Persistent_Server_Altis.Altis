@@ -3,7 +3,7 @@ if (isNil "LB_currentDrinkActions") then { LB_currentDrinkActions = []; };
 
 // First remove all old actions
 {
-    [(typeOf _player), 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions", "Drink"], _x] call ace_interact_menu_fnc_removeActionFromClass;
+    [_player, 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions", "Drink"], _x] call ace_interact_menu_fnc_removeActionFromObject;
 } forEach LB_currentDrinkActions;
 LB_currentDrinkActions = [];
 
@@ -36,7 +36,7 @@ private _itemsPlayer = items player;
                         private _id = format["drink_%1", _this];
                         {
                             if (_x select 0 == _id) exitWith {
-                                [(typeOf _player), 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions", "Drink"], _x] call ace_interact_menu_fnc_removeActionFromClass;
+                                [_player, 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions", "Drink"], _x] call ace_interact_menu_fnc_removeActionFromObject;
                                 LB_currentDrinkActions deleteAt _forEachIndex;
                             };
                         } forEach LB_currentDrinkActions;
@@ -52,7 +52,7 @@ private _itemsPlayer = items player;
             [_item]
         ] call ace_interact_menu_fnc_createAction;
 
-        [(typeOf _player), 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions", "Drink"], _action] call ace_interact_menu_fnc_addActionToClass;
+        [_player, 1, ["ACE_SelfActions","Main","Survival System", "Survival Actions", "Drink"], _action] call ace_interact_menu_fnc_addActionToObject;
         LB_currentDrinkActions pushBack _action;
     };
 } forEach _drinkables;
