@@ -277,6 +277,19 @@ switch _whichArray do {
 	case "drinkCanteens": { _arrayToReturn = ["rvg_canteenPurified","ACE_Canteen","ACE_Canteen_Half"]; };
 	case "drinkDirty": { _arrayToReturn = ["rvg_canteen","rvg_plasticBottle"]; };
 	case "drinkBlood": { _arrayToReturn = ["ACE_bloodIV_500","ACE_bloodIV_250","ACE_bloodIV"]; };
+
+	// nutrition arrays
+	case "foodTier1":  { _arrayToReturn = ["rvg_milk","rvg_rice"]; };
+	case "foodTier2":  { _arrayToReturn = ["rvg_beans","rvg_bacon"]; };
+	case "foodTier3":  { _arrayToReturn = ["ACE_Humanitarian_Ration","ACE_MRE_BeefStew","ACE_MRE_ChickenTikkaMasala","ACE_MRE_ChickenHerbDumplings","ACE_MRE_CreamChickenSoup","ACE_MRE_CreamTomatoSoup","ACE_MRE_MeatballsPasta","ACE_MRE_SteakVegetables","ACE_MRE_LambCurry","rvg_Boar_Meat_Cooked"]; };
+	case "foodTier4":  { _arrayToReturn = ["rvg_Sheep_Meat_Cooked"]; };
+	case "foodTier5":  { _arrayToReturn = ["rvg_Boar_Meat","rvg_Chicken_Meat_Cooked"]; };
+	case "foodTier6":  { _arrayToReturn = ["rvg_Sheep_Meat"]; };
+	case "foodTier7":  { _arrayToReturn = ["rvg_Chicken_Meat"]; };
+	case "foodTier8":  { _arrayToReturn = ["rvg_Rabbit_Meat_Cooked"]; };
+	case "foodTier9":  { _arrayToReturn = ["rvg_Rabbit_Meat"]; };
+	case "foodTier10": { _arrayToReturn = ["rvg_Buffalo_Meat_Cooked"]; };
+	case "foodTier11": { _arrayToReturn = ["rvg_Buffalo_Meat"]; };
 };
 
 _arrayToReturn
