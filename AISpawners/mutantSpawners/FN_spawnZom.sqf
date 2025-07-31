@@ -15,4 +15,5 @@ private _randomStuff = ["randomCommon"] call (missionNamespace getVariable "FN_a
 			_x addItemToUniform (selectRandomWeighted _randomStuff);
 		};
 	} forEach (units _zombieGrp);
+	[_zombieGrp, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 };

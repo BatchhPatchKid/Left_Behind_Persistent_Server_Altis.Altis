@@ -10,4 +10,5 @@ params ["_pos", "_triggerRadius", "_maxUnits"];
 		private _hordeUnit = _horde createUnit ["DSA_Mindflayer", [_pos, 10, (_triggerRadius/4), 3, 0, 20, 0, [], []] call BIS_fnc_findSafePos, [], 1, "NONE"];
 		sleep 0.01;
 	};
+	[_horde, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 };

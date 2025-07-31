@@ -25,4 +25,5 @@ private _factionSelected = selectRandomWeighted _factionArray;
 		_hordeUnit addRating -10001;
 		sleep 0.5;
 	};
+	[_horde, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 };

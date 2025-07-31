@@ -34,4 +34,5 @@ private _factionSelected = selectRandomWeighted _factionArray;
 		private _hordeUnit = _horde createUnit ["WBK_Goliaph_3", [_pos, 10, 50, 3, 0, 20, 0, [], []] call BIS_fnc_findSafePos, [], 1, "NONE"];
 		_hordeUnit addRating -10001;
 	};
+	[_horde, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 };

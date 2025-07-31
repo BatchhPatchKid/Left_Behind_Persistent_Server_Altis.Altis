@@ -115,6 +115,7 @@ switch (_faction) do { //Going throuigh each zombie faction to spawn the appropr
 			[_horde, _ZedArray, _numUnits, _pos, _maxDist] call (missionNamespace getVariable "FN_spawnZom");
 		};
 		[_horde, _pos, 100] call FN_createWaypoints;
+		[_horde, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 	};
 	default { // Default is zombies
 
@@ -134,6 +135,7 @@ switch (_faction) do { //Going throuigh each zombie faction to spawn the appropr
 			[_horde, _ZedArray, (_numUnits/2), _pos, 50] call (missionNamespace getVariable "FN_spawnZom");
 			[_horde, _ZedArray, (_numUnits/2), _pos, _maxDist] call (missionNamespace getVariable "FN_spawnZom");
 			[_horde, _pos, 100] call FN_createWaypoints;
+			[_horde, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 		} else {
 			[_horde, _ZedArray, (_numUnits/2), _pos, 15] call (missionNamespace getVariable "FN_spawnZom");
 			[_horde, _ZedArray, (_numUnits/2), _pos, _maxDist] call (missionNamespace getVariable "FN_spawnZom");

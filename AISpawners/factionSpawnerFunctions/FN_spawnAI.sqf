@@ -159,7 +159,9 @@ FN_carPatrol = {
 	
 		// Create waypoints for the patrol
 		[_pos,50,150,_grpVeh] call FN_setWaypoints;
+        [_grpVeh, [_veh], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 	};
+	[_grp, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 };
 	
 FN_spawnFortifications = {
@@ -201,6 +203,7 @@ FN_spawnFortifications = {
 	[_newAIBodyguard, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");
 	_newAIBodyguard setVectorDirAndUp [[1,1,0], (vectorUp _newAIBodyguard)];  
 	_newAIBodyguard setPosATL [(_turretPos select 0)+3, (_turretPos select 1)+2.5, 0];
+	[_grpTurret, [_turretSelected], [_newAIBodyguard, _newAI_Turret]] call (missionNamespace getVariable 'FN_enableDynamicSim');
 };
 
 FN_spawnGroups = {

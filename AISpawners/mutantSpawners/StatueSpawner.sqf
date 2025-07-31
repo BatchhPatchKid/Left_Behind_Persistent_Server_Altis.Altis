@@ -12,4 +12,5 @@ playSound3D [getMissionPath "sounds\blowout_siren_2.ogg", player, false, _pos, 5
 		private _hordeUnit = _horde createUnit ["DSA_ActiveIdol", [_pos, 10, (_triggerRadius / 4), 3, 0, 20, 0, [], []] call BIS_fnc_findSafePos, [], 1, "NONE"];
 		sleep 0.01;
 	};
+	[_horde, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 };

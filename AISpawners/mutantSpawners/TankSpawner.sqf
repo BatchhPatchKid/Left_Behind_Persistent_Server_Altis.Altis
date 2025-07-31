@@ -14,6 +14,7 @@ params ["_pos", "_triggerRadius", "_maxUnits"];
 		private _hordeUnit = _horde createUnit ["WBK_SpecialZombie_Smasher_3", [_pos, 10, (_triggerRadius / 4), 3, 0, 20, 0, [], []] call BIS_fnc_findSafePos, [], 1, "NONE"];
 		_hordeUnit addRating -10001;
 	};
+	[_horde, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 	
 	private _factionArray = ["mutantFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
 	private _factionSelected = selectRandomWeighted _factionArray;
