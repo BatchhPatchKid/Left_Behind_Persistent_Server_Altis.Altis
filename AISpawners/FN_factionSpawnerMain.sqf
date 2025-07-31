@@ -17,8 +17,8 @@
 params ["_faction", "_numUnits", "_trigger", "_typeOfLocationArea"];
 
 // Trigger position and radius
-private _pos            = getPos _trigger;
-private _triggerRadius  = (triggerArea _trigger) select 0;
+private _pos = getPos _trigger;
+private _triggerRadius = (triggerArea _trigger) select 0;
 
 // Default location‐type tag if none passed
 if (isNil "_typeOfLocationArea") then {
@@ -86,13 +86,8 @@ private _spawnZombieGroup = {
 
 // Spawn a survivor group, with optional first-group hunting/wandering extras
 private _spawnSurvivorGroup = {
-    params ["_num", "_rad", "_pos", "_rvg", "_first", "_area"];
+    params ["_num", "_rad", "_pos", "_rvg", "_area"];
     private _survivorPos = _pos;
-
-    // For subsequent human groups, push them farther out
-    if (!_first) then {
-        _survivorPos = [_pos, 30, 100, 300] call (missionNamespace getVariable "FN_findSafePosition");
-    };
 
     // Weighted list of survivor sub-factions and their spawn chances
     private _survivorFactions = ["_survivorFactions"] call (missionNamespace getVariable "FN_arrayReturn");
@@ -101,13 +96,12 @@ private _spawnSurvivorGroup = {
     private _factionSelected = [_survivorFactions, ""] call (missionNamespace getVariable "FN_selectFaction");
 
     // On the very first human group, optionally spawn hunting & wandering extras
-    if (_first) then {
-        if (random 1 > 0.75) then {
-            [_survivorPos, _factionSelected] call (missionNamespace getVariable "FN_spawnHuntingFaction");
-        };
-        if (random 1 > 0.75) then {
-            [_survivorPos, _factionSelected] call (missionNamespace getVariable "FN_spawnWanderingFaction");
-        };
+    if (random 1 > 0.75) then {
+        [_survivorPos, _factionSelected] call (missionNamespace getVariable "FN_spawnHuntingFaction");
+    };
+
+    if (random 1 > 0.75) then {
+        [_survivorPos, _factionSelected] call (missionNamespace getVariable "FN_spawnWanderingFaction");
     };
 
     // Finalize survivor group spawn
@@ -128,9 +122,7 @@ private _spawnMutantGroup = {
     private _mutantPos = [_pos, 25, 75, 3] call (missionNamespace getVariable "FN_findSafePosition");
 
     // Finalize mutant group spawn
-    [_factionSelected, _num, _rad, _mutantPos, _rvg, _area] call (
-        missionNamespace getVariable "FN_factionSelector"
-    );
+    [_factionSelected, _num, _rad, _mutantPos, _rvg, _area] call (missionNamespace getVariable "FN_factionSelector");
 };
 
 // Spawn logic when a specific faction (not "Rnd") is requested
@@ -140,7 +132,7 @@ private _spawnPredetermined = {
         // Check if this faction is a mutant type
         private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
         // 25% chance to do a hunting spawn (if not mutant), else 25% chance wandering
-        if (random 1 > 0.75 && !(_fac in _mutantArray)) then {
+        if (random 100 > 0.75 && !(_fac in _mutantArray)) then {
             [_pos, _fac] call (missionNamespace getVariable "FN_spawnHuntingFaction");
         } else {
             if (random 1 > 0.75) then {
@@ -156,25 +148,24 @@ private _spawnPredetermined = {
 private _spawnRandomFactions = {
     params ["_numUnits", "_radius", "_pos", "_rvg", "_area"];
 
-    // Determine 1, 2, or 3 different factions
-    private _numFactions = 1;
-    private _dice        = random 1;
-    if (_dice > 0.8 && _dice < 0.95) then { _numFactions = 2; };
-    if (_dice >= 0.95) then { _numFactions = 3; };
+    // Determine 1, 2, or 3 zombie/mutant factions
+    private _numNonHuman = 1;
+    private _dice = random 1;
+    if (_dice > 0.8 && _dice < 0.95) then { _numNonHuman = 2; };
+    if (_dice >= 0.95) then { _numNonHuman = 3; };
 
-    private _firstHumans = true;  // track first survivor group
-    for "_i" from 1 to _numFactions do {
+    // 30% chance per potential faction to include a single survivor group
+    if (random 1 < (0.3 * _numNonHuman)) then {
+        [_numUnits, _radius, _pos, _rvg, _area] call _spawnSurvivorGroup;
+    };
+
+    for "_i" from 1 to _numNonHuman do {
         private _typeChance = random 1;
-        // 60% chance zombies, 30% survivors, 10% mutants
-        if (_typeChance < 0.6) then {
-            [_numUnits, _radius, _pos, _rvg, _area] call _spawnZombieGroup;
-        };
-        if (_typeChance >= 0.6 && {_typeChance <= 0.9}) then {
-            [_numUnits, _radius, _pos, _rvg, _firstHumans, _area] call _spawnSurvivorGroup;
-            _firstHumans = false;
-        };
+        // 90% zombies, 10% mutants for each non-human faction
         if (_typeChance > 0.9) then {
             [_numUnits, _radius, _pos, _rvg, _area] call _spawnMutantGroup;
+        } else {
+            [_numUnits, _radius, _pos, _rvg, _area] call _spawnZombieGroup;
         };
     };
 };

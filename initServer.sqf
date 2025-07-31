@@ -67,6 +67,8 @@ sideEmpty setFriend [east, 0];
 sideEmpty setFriend [resistance, 0];
 
 west setFriend [civilian, 0];
+east setFriend [civilian, 0];
+resistance setFriend [civilian, 0];
 civilian setFriend [west, 0];
 civilian setFriend [east, 0];
 civilian setFriend [independent, 0];

@@ -6,7 +6,7 @@ private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_ar
 private _factionArray = ["wanderFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
 private _factionSelected = _factionArray call BIS_fnc_selectRandomWeighted;
 
-private _unitSkillsArray = [_factionSelected, _posWanderingFaction] call FN_getFactionSkills;
+private _unitSkillsArray = [_factionSelected, _posWanderingFaction] call (missionNamespace getVariable "FN_getFactionSkills");
 private _side = _unitSkillsArray select 0;
 private _unit = _unitSkillsArray select 1;
 
@@ -16,8 +16,6 @@ if (_side != west || _side == independent && _faction != "RU" && !(_faction in _
 };
 
 _meleeChance = [_factionSelected] call (missionNamespace getVariable "FN_meleeChance");
-
-private _unitSkillsArray = [_factionSelected, _pos] call (missionNamespace getVariable "FN_getFactionSkills");
 
 _aim = _unitSkillsArray select 2;
 _aimSpeed = _unitSkillsArray select 3;
@@ -48,6 +46,6 @@ if (random 1 > _meleeChance) then {
 	};
 };
 
-[_grp] call FN_sideToCivilian;
+_grp = [_grp] call FN_sideToCivilian;
 [_grp, _pos, 200] call FN_createWaypoints;
 [_grp, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
