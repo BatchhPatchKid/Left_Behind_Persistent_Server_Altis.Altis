@@ -44,9 +44,7 @@
 
 // Set up event-driven sleep system
 sleepRequestUpdate = 0;
-"sleepRequestUpdate" addPublicVariableEventHandler ["sleepRequestUpdate", {
-    [] spawn (missionNamespace getVariable "sleepTime");
-}];
+"sleepRequestUpdate" addPublicVariableEventHandler { [] spawn (missionNamespace getVariable "sleepTime"); };
 addMissionEventHandler ["PlayerConnected", {
     [] spawn (missionNamespace getVariable "sleepTime");
 }];
