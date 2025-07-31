@@ -31,112 +31,110 @@ private _fn_checkProximityToPlayer = {
     _withinRange
 };
 
-FN_garbageCollector = {
+private _FN_garbageCollector = {
     // Cache headless clients and static object lists
-    private _headlessClients     = entities "HeadlessClient_F";
-    private _players = allPlayers - _headlessClients;
-    private _objectsCacheFlag    = nearestObjects [middleOfMap, ["Flag_Red_F"], 17500];
-    private _objectsCacheStone   = nearestObjects [middleOfMap, ["Land_BluntStone_01"], 17500];
+    private _headlessClients   = entities "HeadlessClient_F";
+    private _players           = allPlayers - _headlessClients;
+    private _objectsCacheFlag  = nearestObjects [middleOfMap, ["Flag_Red_F"], 17500];
+    private _objectsCacheStone = nearestObjects [middleOfMap, ["Land_BluntStone_01"], 17500];
 
     // Distance thresholds in meters
-    private _distanceThresholdPerson   = 1000;
-    private _distanceThresholdObjects  = 1000;
-    private _corpseThreshold           = 1000;
-    private _distanceThresholdVehicle  = 1000;
+    private _distanceThresholdStone = 500;
+    private _distanceThresholdFlag = 150;
+    private _distanceThreshold = 1000;
 
-    // 1) Delete AI units outside player range
+    //deleting location markers (Land_BluntStone_01) if there are no players near them
     {
-        private _unit = _x;
+        if ([_x, _players, _distanceThreshold] call _fn_checkProximityToPlayer) then {
+            continue;
+        } else {
+            deleteVehicle _x;
+        }
+    } forEach _objectsCacheStone;
+
+    // Delete units (AI) outside player range
+    {
         private _withinRange = false;
 
-        _withinRange = [_unit, _objectsCacheStone, 500] call _fn_checkProximityToDesiredObject;
-        if (_withinRange) exitWith {};
+        _withinRange = [_x, _objectsCacheStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
 
-        _withinRange = [_unit, _objectsCacheFlag, 150] call _fn_checkProximityToDesiredObject;
-        if (_withinRange) exitWith {};
+        _withinRange = false;
+        _withinRange = [_x, _objectsCacheFlag, _distanceThresholdFlag] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
 
-        _withinRange = [_unit, _players, _distanceThresholdPerson] call _fn_checkProximityToPlayer;
-        if (_withinRange) exitWith {};
+        _withinRange = [_x, _players, _distanceThreshold] call _fn_checkProximityToPlayer;
+        if (_withinRange) then { continue };
 
-        // Skip if near any air vehicle
-        if ((count nearestObjects [_unit, ["air"], 5]) != 0) exitWith {};
+        // If the unit is near an air vehicle, skip deletion.
+        if ((count nearestObjects [_x, ["air"], 5]) != 0) then { continue };
 
-        deleteVehicle _unit;
-        sleep 0.01;
+        deleteVehicle _x;
     } forEach allUnits;
 
-    // 2) Delete dead bodies outside player range
+    // Delete dead bodies (allDead) outside player range
     {
-        private _object = _x;
         private _withinRange = false;
 
-        _withinRange = [_object, _objectsCacheStone, 500] call _fn_checkProximityToDesiredObject;
-        if (_withinRange) exitWith {};
+        _withinRange = [_x, _objectsCacheStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
 
-        _withinRange = [_object, _objectsCacheFlag, 150] call _fn_checkProximityToDesiredObject;
-        if (_withinRange) exitWith {};
+        _withinRange = [_x, _objectsCacheFlag, _distanceThresholdFlag] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
 
-        _withinRange = [_object, _players, _corpseThreshold] call _fn_checkProximityToPlayer;
-        if (_withinRange) exitWith {};
+        _withinRange = [_x, _players, _distanceThreshold] call _fn_checkProximityToPlayer;
+        if (_withinRange) then { continue };
 
-        deleteVehicle _object;
-        sleep 0.01;
+        deleteVehicle _x;
     } forEach allDead;
 
-    // 3) Delete specific world objects outside player range
+    // Delete specific objects outside player range
     private _gcClasses = ["_gcClasses"] call (missionNamespace getVariable "FN_arrayReturn");
     private _objects = nearestObjects [middleOfMap, _gcClasses, 17500];
-
     {
-        private _object = _x;
         private _withinRange = false;
 
-        _withinRange = [_object, _objectsCacheStone, 500] call _fn_checkProximityToDesiredObject;
-        if (_withinRange) exitWith {};
+        _withinRange = [_x, _objectsCacheStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
 
-        _withinRange = [_object, _objectsCacheFlag, 150] call _fn_checkProximityToDesiredObject;
-        if (_withinRange) exitWith {};
+        _withinRange = [_x, _objectsCacheFlag, _distanceThresholdFlag] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
 
-        _withinRange = [_object, _players, _distanceThresholdObjects] call _fn_checkProximityToPlayer;
-        if (_withinRange) exitWith {};
+        _withinRange = [_x, _players, _distanceThreshold] call _fn_checkProximityToPlayer;
+        if (_withinRange) then { continue };
 
-        deleteVehicle _object;
-        sleep 0.01;
+        deleteVehicle _x;
     } forEach _objects;
 
-    // 4) Delete vehicles (except aircraft) outside player range
-    private _objectsVehicle = nearestObjects [middleOfMap, ["LandVehicle","air","ship"], 17500];
+    // Delete vehicles outside player range (excluding aircraft)
+    private _objectsVehicle = nearestObjects [middleOfMap, ["LandVehicle","ship"], 17500];
     {
-        private _vehicle = _x;
-        if (_vehicle isKindOf "Air") exitWith {};
-
         private _withinRange = false;
-        _withinRange = [_vehicle, _objectsCacheStone, 500] call _fn_checkProximityToDesiredObject;
-        if (_withinRange) exitWith {};
 
-        _withinRange = [_vehicle, _objectsCacheFlag, 150] call _fn_checkProximityToDesiredObject;
-        if (_withinRange) exitWith {};
+        _withinRange = [_x, _objectsCacheStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
 
-        _withinRange = [_vehicle, _players, _distanceThresholdVehicle] call _fn_checkProximityToPlayer;
-        if (_withinRange) exitWith {};
+        _withinRange = [_x, _objectsCacheFlag, _distanceThresholdFlag] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
 
-        deleteVehicle _vehicle;
-        sleep 0.01;
+        _withinRange = [_x, _players, _distanceThreshold] call _fn_checkProximityToPlayer;
+        if (_withinRange) then { continue };
+
+        deleteVehicle _x;
     } forEach _objectsVehicle;
 };
+
 
 params ["_zeusAction"];
 
 if (_zeusAction) exitWith {
-    call FN_garbageCollector;
+    call _FN_garbageCollector;
     hintSilent "Garbage collection executed.";
 };
 
-if (!isServer) exitWith {};
-
-while { true } do {
+while {true} do {
     // Wait for 5 minutes before next garbage collection
-    sleep 300;
+    sleep 360;
 
     // Check if all players are dead
     _isEveryoneDead = true;
@@ -150,5 +148,5 @@ while { true } do {
     };
     
     // Run the garbage collection process
-    call FN_garbageCollector;
+    call _FN_garbageCollector;
 };

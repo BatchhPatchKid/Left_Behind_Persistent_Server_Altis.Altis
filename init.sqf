@@ -167,6 +167,11 @@ if (side player != civilian && (hasInterface or isDedicated)) then {
 	[player] spawn (missionNamespace getVariable "FN_factionClothingCheck");
 };
 
+if (isServer) then {
+	// Start the garbage collection script
+	[false] spawn (missionNamespace getVariable "garbageCollection");
+};
+
 // adding any food or drinks to the player's ace interact menu as they spawn;
 player addEventHandler ["InventoryClosed", {
     params ["_unit","_container"];
