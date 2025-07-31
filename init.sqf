@@ -102,6 +102,7 @@ missionNamespace setVariable ["FN_poopSystem", compileFinal preprocessFileLineNu
 missionNamespace setVariable ["FN_sleep", compileFinal preprocessFileLineNumbers "FN_sleep.sqf"];
 missionNamespace setVariable ["FN_setDownBaseCache", compileFinal preprocessFileLineNumbers "FN_setDownBaseCache.sqf"];
 missionNamespace setVariable ["FN_checkFaction", compileFinal preprocessFileLineNumbers "FN_checkFaction.sqf"];
+missionNamespace setVariable ["FN_sideToCivilian", compileFinal preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_sideToCivilian.sqf"];
 
 waitUntil {!isNull player};
 sleep 0.1;

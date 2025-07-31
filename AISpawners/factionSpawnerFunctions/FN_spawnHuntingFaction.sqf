@@ -11,7 +11,7 @@ private _side = _unitSkillsArray select 0;
 private _unit = _unitSkillsArray select 1;
 
 if (_side != west || _side == independent && _faction != "RU" && !(_faction in _mutantArray)) then {
-	_side = opfor;
+	_side = east;
 	_unit = "O_G_Survivor_F";
 };
 
@@ -47,6 +47,6 @@ if (random 1 > _meleeChance) then {
 		[_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");		
 	};
 };
-
+[_grp] call FN_sideToCivilian;
 [_grp, _pos, 50] call FN_createWaypoints;
 [_grp, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
