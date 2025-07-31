@@ -59,22 +59,18 @@ private _spawnMarker = {
 // Spawn ambient civilian/military vehicles around the trigger
 private _spawnAmbientVeh = {
     params ["_p", "_r"];
-    if (isServer) then {
-        [_p, _r] call (missionNamespace getVariable "FN_ambientVeh");
-    };
+    [_p, _r] call (missionNamespace getVariable "FN_ambientVeh");
 };
 
 // Occasionally spawn small renegade groups near the trigger
 private _spawnRenegades = {
     params ["_p", "_r"];
-    if (isServer && { random 1 > 0.375 }) then {
-        // Decide 0–2 groups
-        for "_i" from 1 to (floor (random 3)) do {
-            // Find a safe position in the inner quarter of the radius
-            private _renegadePos = [_p, (_r / 4), (_r / 3), 3] call (missionNamespace getVariable "FN_findSafePosition");
-            // Spawn renegade units there
-            [_renegadePos, 50, _r] call (missionNamespace getVariable "FN_renegadeSpawner");
-        };
+    // Decide 0–2 groups
+    for "_i" from 1 to (floor (random 3)) do {
+        // Find a safe position in the inner quarter of the radius
+        private _renegadePos = [_p, (_r / 4), (_r / 3), 3] call (missionNamespace getVariable "FN_findSafePosition");
+        // Spawn renegade units there
+        [_renegadePos, 50, _r] call (missionNamespace getVariable "FN_renegadeSpawner");
     };
 };
 
@@ -189,7 +185,7 @@ private _spawnRandomFactions = {
 
 // Exit if any player is too close or rock marker already present
 if ([ _trigger, _triggerRadius ] call _playersTooClose) exitWith {};
-if ([ _trigger ] call _triggerUsed)       exitWith {};
+if ([ _trigger ] call _triggerUsed) exitWith {};
 
 // Ensure the rock marker is created
 [ _trigger ] call _spawnMarker;
@@ -198,8 +194,13 @@ if ([ _trigger ] call _triggerUsed)       exitWith {};
 // 4. AMBIENT & RENEGADES
 // -----------------------------------------------------------------------------
 
-[ _pos, _triggerRadius ] call _spawnAmbientVeh;   // civilian/military traffic
-[ _pos, _triggerRadius ] call _spawnRenegades;    // occasional small groups
+if (isServer) then {
+    [ _pos, _triggerRadius ] call _spawnAmbientVeh;   // civilian/military traffic
+};
+
+if (isServer && { random 1 > 0.375 }) then {
+    [ _pos, _triggerRadius ] call _spawnRenegades;    // occasional small groups
+};
 
 // -----------------------------------------------------------------------------
 // 5. DETERMINE ZOMBIE “RVG” MODE
