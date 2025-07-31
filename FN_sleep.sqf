@@ -28,11 +28,15 @@
             if (!(_caller getVariable "wants_to_sleep")) then {
                 if (daytime < 6 || daytime > 20) then {
                     _caller setVariable ["wants_to_sleep", true, true];
+                    sleepRequestUpdate = time;
+                    publicVariableServer "sleepRequestUpdate";
                     hintSilent "You are now trying to sleep.";
                     sleep 3;
                     hintSilent "";
                 } else {
                     _caller setVariable ["wants_to_sleep", false, true];
+                    sleepRequestUpdate = time;
+                    publicVariableServer "sleepRequestUpdate";
                     hintSilent "It's too early to sleep. Your bedtime is from 20:00 to 06:00.";
                     sleep 3;
                     hintSilent "";
@@ -51,6 +55,8 @@
             params ["_target", "_caller", "_actionId", "_arguments"];
             if (_caller getVariable "wants_to_sleep") then {
                 _caller setVariable ["wants_to_sleep", false, true];
+                sleepRequestUpdate = time;
+                publicVariableServer "sleepRequestUpdate";
                 hintSilent "You are no longer trying to sleep.";
                 sleep 3;
                 hintSilent "";
@@ -69,6 +75,8 @@
         {
             params ["_target", "_caller", "_actionId", "_arguments"];
             _caller setVariable ["wants_to_sleep", false, true];
+            sleepRequestUpdate = time;
+            publicVariableServer "sleepRequestUpdate";
             deleteVehicle _target;
         },
         nil, 1.5, true, true, "", "true", 3, false, "", ""

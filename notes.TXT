@@ -11,8 +11,7 @@ To do:
 - possibly invisible melee AI
 - When gutting, allow for a chance to obtain a bag of 250ml's of blood
 - less AI in patrol area's? (2 primary amount in patrol groups)
-- (PRIORITY) sniper deleted after garbage collection got them
-- continue optimization
+- Look at sleepTime optimization
 
 Notes:
 - Good animation for psionsics injury: _player playMove "AinvPknlMstpSnonWnonDnon_healed_1"; (or _2)

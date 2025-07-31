@@ -18,3 +18,5 @@ player setVariable ["PMC_Relation",false,true];
 player setVariable ["Bandit_Relation",false,true];
 player setVariable ["Renegade_Relation",false,true];
 player setVariable ["wants_to_sleep", false, true];
+sleepRequestUpdate = time;
+publicVariableServer "sleepRequestUpdate";

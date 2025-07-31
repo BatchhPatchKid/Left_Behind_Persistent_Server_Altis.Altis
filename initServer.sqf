@@ -42,7 +42,17 @@
 
 ]] call acex_fortify_fnc_registerObjects;
 
-[] spawn (missionNamespace getVariable "sleepTime");
+// Set up event-driven sleep system
+sleepRequestUpdate = 0;
+"sleepRequestUpdate" addPublicVariableEventHandler ["sleepRequestUpdate", {
+    [] spawn (missionNamespace getVariable "sleepTime");
+}];
+addMissionEventHandler ["PlayerConnected", {
+    [] spawn (missionNamespace getVariable "sleepTime");
+}];
+addMissionEventHandler ["PlayerDisconnected", {
+    [] spawn (missionNamespace getVariable "sleepTime");
+}];
 
 Civilian setFriend [WEST,0];
 WEST setFriend [Civilian ,0];
