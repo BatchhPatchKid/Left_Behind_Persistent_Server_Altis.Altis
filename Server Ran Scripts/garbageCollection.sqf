@@ -35,15 +35,16 @@ private _FN_garbageCollector = {
     // Cache headless clients and static object lists
     private _headlessClients   = entities "HeadlessClient_F";
     private _players           = allPlayers - _headlessClients;
-    private _objectsCacheFlag  = nearestObjects [middleOfMap, ["Flag_Red_F"], 17500];
-    private _objectsCacheStone = nearestObjects [middleOfMap, ["Land_BluntStone_01"], 17500];
+    private _objectsCacheFlag = allMissionObjects "Flag_Red_F";
+    private _objectsCacheStone = allMissionObjects "Land_Cliff_stone_small_F";
+    private _airVehicles = vehicles select { _x isKindOf "Air" };
 
     // Distance thresholds in meters
     private _distanceThresholdStone = 500;
     private _distanceThresholdFlag = 150;
     private _distanceThreshold = 1000;
 
-    //deleting location markers (Land_BluntStone_01) if there are no players near them
+    //deleting location markers (Land_Cliff_stone_small_F) if there are no players near them
     {
         if ([_x, _players, _distanceThreshold] call _fn_checkProximityToPlayer) then {
             continue;
@@ -67,7 +68,7 @@ private _FN_garbageCollector = {
         if (_withinRange) then { continue };
 
         // If the unit is near an air vehicle, skip deletion.
-        if ((count nearestObjects [_x, ["air"], 5]) != 0) then { continue };
+        if (_airVehicles findIf { _x distance2D _x < 5 } != -1) then { continue };
 
         deleteVehicle _x;
     } forEach allUnits;
@@ -90,7 +91,12 @@ private _FN_garbageCollector = {
 
     // Delete specific objects outside player range
     private _gcClasses = ["_gcClasses"] call (missionNamespace getVariable "FN_arrayReturn");
-    private _objects = nearestObjects [middleOfMap, _gcClasses, 17500];
+    private _objects = [];
+
+    {
+        _objects append (entities _x);
+    } forEach _gcClasses;
+
     {
         private _withinRange = false;
 
@@ -107,7 +113,7 @@ private _FN_garbageCollector = {
     } forEach _objects;
 
     // Delete vehicles outside player range (excluding aircraft)
-    private _objectsVehicle = nearestObjects [middleOfMap, ["LandVehicle","ship"], 17500];
+    private _objectsVehicle = vehicles select { _x isKindOf "LandVehicle" || _x isKindOf "Ship" };
     {
         private _withinRange = false;
 
