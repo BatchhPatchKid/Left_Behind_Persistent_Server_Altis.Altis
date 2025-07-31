@@ -52,16 +52,6 @@ addMissionEventHandler ["PlayerDisconnected", {
     [] spawn (missionNamespace getVariable "sleepTime");
 }];
 
-Civilian setFriend [WEST,0];
-WEST setFriend [Civilian ,0];
-
-Civilian setFriend [EAST,0];
-EAST setFriend [Civilian ,0];
-
-Civilian setFriend [RESISTANCE,0];
-RESISTANCE setFriend [Civilian ,0];
-
-// Make the built-in Empty side (ID “Empty”) hostile to BLUFOR, OPFOR and Independent…
 sideEmpty setFriend [west, 0];
 sideEmpty setFriend [east, 0];
 sideEmpty setFriend [resistance, 0];
