@@ -170,7 +170,6 @@ if (side player != civilian && (hasInterface or isDedicated)) then {
 if (isServer) then {
 	enableDynamicSimulationSystem true;
 	"Group" setDynamicSimulationDistance 500;
-	setDynamicSimulationViewDistance 1200;
 	// Start the garbage collection script
 	[false] spawn (missionNamespace getVariable "garbageCollection");
 };

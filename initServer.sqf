@@ -61,6 +61,18 @@ EAST setFriend [Civilian ,0];
 Civilian setFriend [RESISTANCE,0];
 RESISTANCE setFriend [Civilian ,0];
 
+// Make the built-in Empty side (ID “Empty”) hostile to BLUFOR, OPFOR and Independent…
+sideEmpty setFriend [west, 0];
+sideEmpty setFriend [east, 0];
+sideEmpty setFriend [resistance, 0];
+
+west setFriend [civilian, 0];
+civilian setFriend [west, 0];
+civilian setFriend [east, 0];
+civilian setFriend [independent, 0];
+civilian setFriend [civilian, 1];
+
+
 [] spawn {
 	private _isNight = sunOrMoon < 1;
 
