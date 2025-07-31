@@ -42,6 +42,8 @@
 
 ]] call acex_fortify_fnc_registerObjects;
 
+[] spawn (missionNamespace getVariable "sleepTime");
+
 Civilian setFriend [WEST,0];
 WEST setFriend [Civilian ,0];
 

@@ -33,15 +33,16 @@ private _fn_checkProximityToPlayer = {
 
 private _FN_garbageCollector = {
     // Cache headless clients and static object lists
-    private _headlessClients   = entities "HeadlessClient_F";
-    private _players           = allPlayers - _headlessClients;
+    private _headlessClients = entities "HeadlessClient_F";
+    private _players = allPlayers - _headlessClients;
     private _objectsCacheFlag = allMissionObjects "Flag_Red_F";
     private _objectsCacheStone = allMissionObjects "Land_Cliff_stone_small_F";
+    private _objectsCacheMissionStone = allMissionObjects "Land_BluntStone_01";
     private _airVehicles = vehicles select { _x isKindOf "Air" };
 
     // Distance thresholds in meters
-    private _distanceThresholdStone = 500;
     private _distanceThresholdFlag = 150;
+    private _distanceThresholdStone = 500;
     private _distanceThreshold = 1000;
 
     //deleting location markers (Land_Cliff_stone_small_F) if there are no players near them
@@ -60,7 +61,9 @@ private _FN_garbageCollector = {
         _withinRange = [_x, _objectsCacheStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
         if (_withinRange) then { continue };
 
-        _withinRange = false;
+        _withinRange = [_x, _objectsCacheMissionStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
+
         _withinRange = [_x, _objectsCacheFlag, _distanceThresholdFlag] call _fn_checkProximityToDesiredObject;
         if (_withinRange) then { continue };
 
@@ -78,6 +81,9 @@ private _FN_garbageCollector = {
         private _withinRange = false;
 
         _withinRange = [_x, _objectsCacheStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
+
+        _withinRange = [_x, _objectsCacheMissionStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
         if (_withinRange) then { continue };
 
         _withinRange = [_x, _objectsCacheFlag, _distanceThresholdFlag] call _fn_checkProximityToDesiredObject;
@@ -103,6 +109,9 @@ private _FN_garbageCollector = {
         _withinRange = [_x, _objectsCacheStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
         if (_withinRange) then { continue };
 
+        _withinRange = [_x, _objectsCacheMissionStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
+
         _withinRange = [_x, _objectsCacheFlag, _distanceThresholdFlag] call _fn_checkProximityToDesiredObject;
         if (_withinRange) then { continue };
 
@@ -118,6 +127,9 @@ private _FN_garbageCollector = {
         private _withinRange = false;
 
         _withinRange = [_x, _objectsCacheStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
+        if (_withinRange) then { continue };
+
+        _withinRange = [_x, _objectsCacheMissionStone, _distanceThresholdStone] call _fn_checkProximityToDesiredObject;
         if (_withinRange) then { continue };
 
         _withinRange = [_x, _objectsCacheFlag, _distanceThresholdFlag] call _fn_checkProximityToDesiredObject;
@@ -139,8 +151,7 @@ if (_zeusAction) exitWith {
 };
 
 while {true} do {
-    // Wait for 5 minutes before next garbage collection
-    sleep 360;
+    sleep 120;
 
     // Check if all players are dead
     _isEveryoneDead = true;

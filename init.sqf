@@ -98,10 +98,10 @@ missionNamespace setVariable ["temperature", compileFinal preprocessFileLineNumb
 missionNamespace setVariable ["radSystem", compileFinal preprocessFileLineNumbers "Ambient\radSystem.sqf"];
 missionNamespace setVariable ["randomEncounters", compileFinal preprocessFileLineNumbers "Ambient\randomEncounters.sqf"];
 missionNamespace setVariable ["hydrationNutritionSystem", compileFinal preprocessFileLineNumbers "Ambient\hydrationNutritionSystem.sqf"];
-missionNamespace setVariable ["FN_poopSystem", compileFinal preprocessFileLineNumbers "FN_sleep.sqf"];
-missionNamespace setVariable ["FN_sleep", compileFinal preprocessFileLineNumbers "Ambient\randomEncounters.sqf"];
+missionNamespace setVariable ["FN_poopSystem", compileFinal preprocessFileLineNumbers "Ambient\FN_poopSystem.sqf"];
+missionNamespace setVariable ["FN_sleep", compileFinal preprocessFileLineNumbers "FN_sleep.sqf"];
 missionNamespace setVariable ["FN_setDownBaseCache", compileFinal preprocessFileLineNumbers "FN_setDownBaseCache.sqf"];
-missionNamespace setVariable ["FN_checkFaction.sqf", compileFinal preprocessFileLineNumbers "FN_checkFaction.sqf"];
+missionNamespace setVariable ["FN_checkFaction", compileFinal preprocessFileLineNumbers "FN_checkFaction.sqf"];
 
 waitUntil {!isNull player};
 sleep 0.1;
@@ -203,7 +203,7 @@ _actionMain = ["Main","Scenario Actions","",{},{true}] call ace_interact_menu_fn
 _action = ["Arsenal","Open the Arsenal","",{[player, player, true] call ace_arsenal_fnc_openBox;},{true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions","Main"], _action] call ace_interact_menu_fnc_addActionToClass;
 
-_actionFaction = ["faction","Check Faction Affiliation","",{call FN_checkFaction},{true}] call ace_interact_menu_fnc_createAction;
+_actionFaction = ["faction","Check Faction Affiliation","",{[player] call FN_checkFaction},{true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions","Main"], _actionFaction] call ace_interact_menu_fnc_addActionToClass;
 
 _actionSleep = ["sleep","Lay Down Sleeping Bag","",{call FN_sleep},{true}] call ace_interact_menu_fnc_createAction;
@@ -242,7 +242,7 @@ _actionDrinkWater = ["Drink", "Drink", "", { }, {true}] call ace_interact_menu_f
 _actionEatFood = ["Eat", "Eat", "", { }, {true}] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionEatFood] call ace_interact_menu_fnc_addActionToClass;
 
-_actionDefecate = ["Defecate", "Defecate", "", { [player] call fn_defecate; }, { true }] call ace_interact_menu_fnc_createAction;
+_actionDefecate = ["Defecate", "Defecate", "", { [player] call FN_defecate; }, { true }] call ace_interact_menu_fnc_createAction;
 [(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System", "Survival Actions"], _actionDefecate] call ace_interact_menu_fnc_addActionToClass;
 
 _actionRefillCanteen = ["refill", "Refill Canteen", "", { [player] call FN_refillCanteen; }, {true}] call ace_interact_menu_fnc_createAction;

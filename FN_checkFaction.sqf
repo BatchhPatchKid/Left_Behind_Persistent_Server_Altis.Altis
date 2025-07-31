@@ -1,5 +1,7 @@
-0 spawn {
+params ["_unit"];
+[_unit] spawn {
 	// Refresh the faction alliance check
+	params ["_unit"];
 	[_unit] call FN_factionClothingCheck;
 
 	private _factions = [
