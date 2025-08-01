@@ -132,7 +132,7 @@ private _spawnPredetermined = {
         // Check if this faction is a mutant type
         private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
         // 25% chance to do a hunting spawn (if not mutant), else 25% chance wandering
-        if (random 100 > 0.75 && !(_fac in _mutantArray)) then {
+        if (random 1 > 0.75 && !(_fac in _mutantArray)) then {
             [_pos, _fac] call (missionNamespace getVariable "FN_spawnHuntingFaction");
         } else {
             if (random 1 > 0.75) then {

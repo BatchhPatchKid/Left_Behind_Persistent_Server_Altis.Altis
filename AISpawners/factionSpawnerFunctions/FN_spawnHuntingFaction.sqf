@@ -1,6 +1,6 @@
 params ["_pos", "_faction"];
 private _posHuntingParty = [_pos, 100, 500, 250] call FN_findSafePosition;
-private _numOfHuntingParty = round (random [3, 5, 6]);
+private _numOfHuntingParty = selectRandom  [3, 5, 6];
 
 private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
 private _factionArray = ["wanderFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
@@ -36,16 +36,16 @@ if (random 1 > _meleeChance) then {
 		private _newAI = _grp createUnit [_unit, _posHuntingParty, [], 0, "FORM"];
 		[_factionSelected, _newAI, false, false, _sfOverride] call (missionNamespace getVariable "FN_equipAI");
 		[_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");	
-	} else {			
-		for "_i" from 1 to _numOfHuntingParty do {
-			grpTemp = createGroup east;
-			_newAI = grpTemp createUnit ["O_soldier_Melee_RUSH", _posHuntingParty, [], 1, "NONE"];
-			private _newAI = createUnit [_unit, _posHuntingParty, [], 0, "FORM"];
-			[_factionSelected, _newAI, true, false, false] call (missionNamespace getVariable "FN_equipAI");
-			[_newAI] joinSilent _grp;
-			[_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");		
-		};
+	};
+} else {			
+	for "_i" from 1 to _numOfHuntingParty do {
+		grpTemp = createGroup east;
+		private _newAI = grpTemp createUnit ["O_soldier_Melee_RUSH", _posHuntingParty, [], 1, "NONE"];
+		[_factionSelected, _newAI, true, false, false] call (missionNamespace getVariable "FN_equipAI");
+		[_newAI] joinSilent _grp;
+		[_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");		
 	};
 };
+
 [_grp, _pos, 50] call FN_createWaypoints;
 [_grp, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');

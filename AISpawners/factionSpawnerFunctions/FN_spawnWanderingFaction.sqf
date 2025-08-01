@@ -1,6 +1,6 @@
 params ["_pos", "_faction"];
 private _posWanderingFaction = [_pos, 150, 500, 250] call FN_findSafePosition;
-private _numOfWanderingFaction = round (random [2, 4, 6]);
+private _numOfWanderingFaction = selectRandom  [3, 5, 6];
 
 private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
 private _factionArray = ["wanderFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");

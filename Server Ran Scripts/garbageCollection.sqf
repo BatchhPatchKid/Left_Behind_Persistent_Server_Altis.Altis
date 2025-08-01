@@ -53,6 +53,8 @@ private _FN_garbageCollector = {
             deleteVehicle _x;
         }
     } forEach _objectsCacheStone;
+    
+    private _objectsCacheStone = allMissionObjects "Land_Cliff_stone_small_F";
 
     // Delete units (AI) outside player range
     {

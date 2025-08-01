@@ -91,6 +91,8 @@ while {true} do {
             };
             if (random 1 < 0.20) then {
                 player setDamage 1;
+                player setVariable ["hydrationLevel", 100];
+                player setVariable ["nutritionLevel", 100];
             };
         };
         
@@ -146,6 +148,8 @@ while {true} do {
             };
             if (random 1 < 0.20) then {
                 player setDamage 1;
+                player setVariable ["hydrationLevel", 100];
+                player setVariable ["nutritionLevel", 100];
             };
         };
         
