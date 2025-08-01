@@ -8,7 +8,7 @@ FN_mutantEffectsCaller = {
 
 FN_mutantEffects = {
 	params ["_triggerRadius", "_pos", "_faction"];
-	if (_numUnits == 0) then { _numUnits = round(random [1, 2, 4]); };
+	
 	{
 		if (((getPos _x) distance _pos <= (_triggerRadius + 100)) && hasInterface) then { [_faction,_x] remoteExec ["FN_mutantEffectsCaller", _x]; };
 	}  forEach allPlayers;

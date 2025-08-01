@@ -103,6 +103,7 @@ missionNamespace setVariable ["FN_sleep", compileFinal preprocessFileLineNumbers
 missionNamespace setVariable ["FN_setDownBaseCache", compileFinal preprocessFileLineNumbers "FN_setDownBaseCache.sqf"];
 missionNamespace setVariable ["FN_checkFaction", compileFinal preprocessFileLineNumbers "FN_checkFaction.sqf"];
 missionNamespace setVariable ["FN_changeGroupSide", compileFinal preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_changeGroupSide.sqf"];
+missionNamespace setVariable ["mutantEffects", compileFinal preprocessFileLineNumbers "AISpawners\mutantSpawners\mutantEffects.sqf"];
 
 waitUntil {!isNull player};
 sleep 0.1;

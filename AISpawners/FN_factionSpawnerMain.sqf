@@ -16,6 +16,21 @@
 // -----------------------------------------------------------------------------
 params ["_faction", "_numUnits", "_trigger", "_typeOfLocationArea"];
 
+// Mutant effects must come first as they are executed on client side/cannot be executed on server side
+private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
+if (_faction in _mutantArray) then {
+
+	{
+		if (((getPos _x) distance _pos <= (_triggerRadius + 100)) && hasInterface) then { [_faction,_x] call mutantEffects; };
+	}  forEach allPlayers;
+};
+
+
+// Entire spawner runs only on the server. Clients exit immediately to avoid
+// unnecessary calculations. Mutant visual effects are executed on clients via
+// remote calls within FN_factionSelector.
+if (!isServer) exitWith {};
+
 // Trigger position and radius
 private _pos = getPos _trigger;
 private _triggerRadius = (triggerArea _trigger) select 0;
@@ -51,9 +66,7 @@ private _triggerUsed = {
 // If on server and no rock exists, create one at the trigger
 private _spawnMarker = {
     params ["_trg"];
-    if (isServer) then {
-        "Land_Cliff_stone_small_F" createVehicle (getPos _trg);
-    };
+    "Land_Cliff_stone_small_F" createVehicle (getPos _trg);
 };
 
 // Spawn ambient civilian/military vehicles around the trigger
@@ -128,16 +141,14 @@ private _spawnMutantGroup = {
 // Spawn logic when a specific faction (not "Rnd") is requested
 private _spawnPredetermined = {
     params ["_fac", "_num", "_rad", "_pos", "_rvg", "_area"];
-    if (isServer) then {
-        // Check if this faction is a mutant type
-        private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
-        // 25% chance to do a hunting spawn (if not mutant), else 25% chance wandering
-        if (random 1 > 0.75 && !(_fac in _mutantArray)) then {
-            [_pos, _fac] call (missionNamespace getVariable "FN_spawnHuntingFaction");
-        } else {
-            if (random 1 > 0.75) then {
-                [_pos, _fac] call (missionNamespace getVariable "FN_spawnWanderingFaction");
-            };
+    // Check if this faction is a mutant type
+    private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
+    // 25% chance to do a hunting spawn (if not mutant), else 25% chance wandering
+    if (random 1 > 0.75 && !(_fac in _mutantArray)) then {
+        [_pos, _fac] call (missionNamespace getVariable "FN_spawnHuntingFaction");
+    } else {
+        if (random 1 > 0.75) then {
+            [_pos, _fac] call (missionNamespace getVariable "FN_spawnWanderingFaction");
         };
     };
     // Always call selector to spawn the requested faction units
@@ -150,13 +161,11 @@ private _spawnRandomFactions = {
 
     private _dice = random 1;
 
-    if (isServer) then {
-        if (_dice < 0.3) then {
-            [_numUnits, _radius, _pos, _rvg, _area] call _spawnSurvivorGroup;
-        };
-        if (_dice > 0.3) then {
-            [_numUnits, _radius, _pos, _rvg, _area] call _spawnZombieGroup;
-        };
+    if (_dice < 0.3) then {
+        [_numUnits, _radius, _pos, _rvg, _area] call _spawnSurvivorGroup;
+    };
+    if (_dice > 0.3) then {
+        [_numUnits, _radius, _pos, _rvg, _area] call _spawnZombieGroup;
     };
     if (_dice < 0.05 || _dice > 0.95) then {
         [_numUnits, _radius, _pos, _rvg, _area] call _spawnMutantGroup;
@@ -189,11 +198,9 @@ private _zombieRvg = if (daytime < 4 || daytime > 20 || random 1 > 0.85) then {
 // 5. AMBIENT & RENEGADES
 // -----------------------------------------------------------------------------
 
-if (isServer) then {
     [ _pos, _triggerRadius ] call _spawnAmbientVeh;   // civilian/military traffic
-};
 
-if (isServer && { random 1 > 0.375 }) then {
+if (random 1 > 0.375) then {
     [ _pos, _triggerRadius ] call _spawnRenegades;    // occasional small groups
 };
 
