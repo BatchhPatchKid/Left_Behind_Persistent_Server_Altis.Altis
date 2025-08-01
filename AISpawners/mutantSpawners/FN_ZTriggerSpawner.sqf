@@ -7,7 +7,7 @@ FN_setNumUnits = { // sets the random number of units
 	_numUnits = round (random [_numUnitsMin, _numUnitsMid, _numUnitsMax]);
 
 	{
-		if (_x distance _pos < _triggerRadius + 50) then {
+		if (_x distance _pos < _triggerRadius + 100) then {
 			_numUnits = _numUnits + 2;
 		};
 	} forEach allPlayers;
@@ -27,7 +27,7 @@ FN_spawnSpecialInfected = {
 			
 	for "_i" from 1 to _numUnits do {
 		_ZedType = selectRandomWeighted _ZedArray;
-		private _hordeUnit = _horde createUnit [_ZedType, [_pos, _minDist, _maxDist, 3, 0, 20, 0, [], []] call BIS_fnc_findSafePos, [], 1, "NONE"];
+		private _hordeUnit = _horde createUnit [_ZedType, [_pos, _minDist, _maxDist, 150] call FN_findSafePosition, [], 1, "NONE"];
 	};
 	
 	[_pos, 0, 20, (_triggerRadius/5), "sparseZombies", _zombieRvg, _triggerRadius] call (missionNamespace getVariable "FN_ZTriggerSpawner");
@@ -58,7 +58,7 @@ switch (_faction) do { //Going throuigh each zombie faction to spawn the appropr
 	case "Bloater": {
 		_minUnits = 2;
 		_midUnits = 4;
-		_maxUnits = 8;
+		_maxUnits = 5;
 		_ZedArray = ["Zombie_Special_OPFOR_Boomer", 1];
 		_lvl_loot = 1;
 			
@@ -67,7 +67,7 @@ switch (_faction) do { //Going throuigh each zombie faction to spawn the appropr
 	case "Leaper": {
 		_minUnits = 2;
 		_midUnits = 3;
-		_maxUnits = 6;
+		_maxUnits = 4;
 		_ZedArray = ["Zombie_Special_OPFOR_Leaper_1", 1,"Zombie_Special_OPFOR_Leaper_2", 1];
 		_lvl_loot = 1;
 			
@@ -75,8 +75,8 @@ switch (_faction) do { //Going throuigh each zombie faction to spawn the appropr
 	};
 	case "Screamer": {
 		_minUnits = 2;
-		_midUnits = 4;
-		_maxUnits = 5;
+		_midUnits = 3;
+		_maxUnits = 4;
 		_ZedArray = ["Zombie_Special_OPFOR_Screamer", 1];
 		_lvl_loot = 1;
 			
@@ -93,8 +93,8 @@ switch (_faction) do { //Going throuigh each zombie faction to spawn the appropr
 	};
 	case "demon": {
 		_minUnits = 1;
-		_midUnits = 3;
-		_maxUnits = 5;
+		_midUnits = 2;
+		_maxUnits = 3;
 		_ZedArray = ["RyanZombieboss1Opfor", 1,"RyanZombieboss2Opfor", 1,"RyanZombieboss3Opfor", 1,"RyanZombieboss4Opfor", 1,"RyanZombieboss5Opfor", 1,"RyanZombieboss6Opfor", 1,"RyanZombieboss7Opfor", 1,"RyanZombieboss8Opfor", 1,"RyanZombieboss9Opfor", 1,"RyanZombieboss10Opfor", 1,"RyanZombieboss11Opfor", 1,"RyanZombieboss12Opfor", 1,"RyanZombieboss13Opfor", 1,"RyanZombieboss14Opfor", 1,"RyanZombieboss15Opfor", 1,"RyanZombieboss16Opfor", 1,"RyanZombieboss17Opfor", 1,"RyanZombieboss18Opfor", 1,"RyanZombieboss19Opfor", 1,"RyanZombieboss20Opfor", 1,"RyanZombieboss21Opfor", 1,"RyanZombieboss22Opfor", 1,"RyanZombieboss23Opfor", 1,"RyanZombieboss24Opfor", 1,"RyanZombieboss25Opfor", 1,"RyanZombieboss26Opfor", 1,"RyanZombieboss27Opfor", 1,"RyanZombieboss28Opfor", 1,"RyanZombieboss29Opfor", 1,"RyanZombieboss30Opfor", 1,"RyanZombieboss31Opfor", 1,"RyanZombieboss32Opfor", 1];
 		_lvl_loot = 2;
 			
@@ -102,43 +102,34 @@ switch (_faction) do { //Going throuigh each zombie faction to spawn the appropr
 	};
 	case "sparseZombies": { // ambient zombies around a location
 		if (_numUnits == 0) then {
-			_numUnits = if (_zombieDefault) then { [6, 7, 8] } else { [4, 5, 6] } call FN_setNumUnits;
+			_numUnits = if (_zombieDefault) then { [3, 4, 5] } else { [1, 2, 4] } call FN_setNumUnits;
 		};
 
 		// 0 = slower zombies | 1 = faster Webknight zombies
-		_ZedArray = if (_zombieDefault) then { [0] } else { [1] } call FN_getZombieArray;
+		_ZedArray = [1] call FN_getZombieArray;
 		
 		private _horde = createGroup east;
-		if (_zombieDefault) then {
-			[_horde, _ZedArray, _numUnits, _pos, _maxDist] call (missionNamespace getVariable "FN_spawnZom");
-		} else {
-			[_horde, _ZedArray, _numUnits, _pos, _maxDist] call (missionNamespace getVariable "FN_spawnZom");
-		};
+		[_horde, _ZedArray, _numUnits, _pos, _maxDist] call (missionNamespace getVariable "FN_spawnZom");
+
 		[_horde, _pos, 100] call FN_createWaypoints;
 		[_horde, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 	};
 	default { // Default is zombies
 
+		if (_numUnits == 0) then {
+			_numUnits = if (_zombieDefault) then { [6, 8, 10] } else { [5, 6, 8] } call FN_setNumUnits;
+		};
+
 		if (_numUnits > 21) then {
 			[_pos, 1] call (missionNamespace getVariable "FN_lootSpawner");
 		} else { [_pos, 0] call (missionNamespace getVariable "FN_lootSpawner"); };
-		
-		
-		if (_numUnits == 0) then {
-			_numUnits = if (_zombieDefault) then { [8, 10, 12] } else { [5, 6, 10] } call FN_setNumUnits;
-		};
 
-		_ZedArray = if (_zombieDefault) then { [3] } else { [1] } call FN_getZombieArray;
+		_ZedArray = [1] call FN_getZombieArray;
 		
 		private _horde = createGroup east;
-		if (_zombieDefault) then {
-			[_horde, _ZedArray, (_numUnits/2), _pos, 50] call (missionNamespace getVariable "FN_spawnZom");
-			[_horde, _ZedArray, (_numUnits/2), _pos, _maxDist] call (missionNamespace getVariable "FN_spawnZom");
-			[_horde, _pos, 100] call FN_createWaypoints;
-			[_horde, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
-		} else {
-			[_horde, _ZedArray, (_numUnits/2), _pos, 15] call (missionNamespace getVariable "FN_spawnZom");
-			[_horde, _ZedArray, (_numUnits/2), _pos, _maxDist] call (missionNamespace getVariable "FN_spawnZom");
-		};
+		[_horde, _ZedArray, (_numUnits/2), _pos, 20] call (missionNamespace getVariable "FN_spawnZom");
+		[_horde, _ZedArray, (_numUnits/2), _pos, _maxDist] call (missionNamespace getVariable "FN_spawnZom");
+		[_horde, _pos, 100] call FN_createWaypoints;
+		[_horde, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 	};
 };

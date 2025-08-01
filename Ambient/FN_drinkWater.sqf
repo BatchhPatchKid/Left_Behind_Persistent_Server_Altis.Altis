@@ -17,11 +17,11 @@ if (!([_player, _item] call BIS_fnc_hasItem)) exitWith {
 };
 
 // 2. Define your arrays
-private _sodas        = ["drinkSodas"]        call (missionNamespace getVariable "FN_arrayReturn");
+private _sodas        = ["drinkSodas"] call (missionNamespace getVariable "FN_arrayReturn");
 private _waterBottles = ["drinkWaterBottles"] call (missionNamespace getVariable "FN_arrayReturn");
-private _canteens     = ["drinkCanteens"]     call (missionNamespace getVariable "FN_arrayReturn");
-private _dirty        = ["drinkDirty"]        call (missionNamespace getVariable "FN_arrayReturn");
-private _blood        = ["drinkBlood"]        call (missionNamespace getVariable "FN_arrayReturn");
+private _canteens     = ["drinkCanteens"] call (missionNamespace getVariable "FN_arrayReturn");
+private _dirty        = ["drinkDirty"] call (missionNamespace getVariable "FN_arrayReturn");
+private _blood        = ["drinkBlood"] call (missionNamespace getVariable "FN_arrayReturn");
 
 // 3. Determine hydration value and post‑drink behavior
 private _value = 0;
@@ -45,22 +45,22 @@ if (_item in _sodas) then {
                     switch (_switchItem) do {
 						case "ACE_bloodIV_250": {
 							// 250 ml blood
-							_selectedValue = 8;
+							_value = 8;
 							_selectedName  = "250 ml of human blood";
 						};
 						case "ACE_bloodIV_500": {
 							// 500 ml blood
-							_selectedValue = 16;
+							_value = 16;
 							_selectedName  = "500 ml of human blood";
 						};
 						case "ACE_bloodIV": {
 							// 1 L blood
-							_selectedValue = 32;
+							_value = 32;
 							_selectedName  = "1 liter of human blood";
 						};
 						default {
 							// fallback if somehow another item got through
-							_selectedValue = 0;
+							_value = 0;
 							_selectedName  = "";
 						};
 					};

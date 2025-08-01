@@ -148,25 +148,18 @@ private _spawnPredetermined = {
 private _spawnRandomFactions = {
     params ["_numUnits", "_radius", "_pos", "_rvg", "_area"];
 
-    // Determine 1, 2, or 3 zombie/mutant factions
-    private _numNonHuman = 1;
     private _dice = random 1;
-    if (_dice > 0.8 && _dice < 0.95) then { _numNonHuman = 2; };
-    if (_dice >= 0.95) then { _numNonHuman = 3; };
 
-    // 30% chance per potential faction to include a single survivor group
-    if (random 1 < (0.3 * _numNonHuman)) then {
-        [_numUnits, _radius, _pos, _rvg, _area] call _spawnSurvivorGroup;
-    };
-
-    for "_i" from 1 to _numNonHuman do {
-        private _typeChance = random 1;
-        // 90% zombies, 10% mutants for each non-human faction
-        if (_typeChance > 0.9) then {
-            [_numUnits, _radius, _pos, _rvg, _area] call _spawnMutantGroup;
-        } else {
+    if (isServer) then {
+        if (_dice < 0.3) then {
+            [_numUnits, _radius, _pos, _rvg, _area] call _spawnSurvivorGroup;
+        };
+        if (_dice > 0.3) then {
             [_numUnits, _radius, _pos, _rvg, _area] call _spawnZombieGroup;
         };
+    };
+    if (_dice < 0.05 || _dice > 0.95) then {
+        [_numUnits, _radius, _pos, _rvg, _area] call _spawnMutantGroup;
     };
 };
 
@@ -182,7 +175,18 @@ if ([ _trigger ] call _triggerUsed) exitWith {};
 [ _trigger ] call _spawnMarker;
 
 // -----------------------------------------------------------------------------
-// 4. AMBIENT & RENEGADES
+// 4. DETERMINE ZOMBIE “RVG” MODE
+// -----------------------------------------------------------------------------
+
+// false overnight or 15% random; true daytime majority
+private _zombieRvg = if (daytime < 4 || daytime > 20 || random 1 > 0.85) then {
+    false
+} else {
+    true
+};
+
+// -----------------------------------------------------------------------------
+// 5. AMBIENT & RENEGADES
 // -----------------------------------------------------------------------------
 
 if (isServer) then {
@@ -194,19 +198,9 @@ if (isServer && { random 1 > 0.375 }) then {
 };
 
 // -----------------------------------------------------------------------------
-// 5. DETERMINE ZOMBIE “RVG” MODE
-// -----------------------------------------------------------------------------
-
-// false overnight or 15% random; true daytime majority
-private _zombieRvg = if (daytime < 4 || daytime > 20 || random 1 > 0.85) then {
-    false
-} else {
-    true
-};
-
-// -----------------------------------------------------------------------------
 // 6. MAIN FACTION SPAWN ROUTINE
 // -----------------------------------------------------------------------------
+
 if (_faction == "Rnd") then {
     // Random mixture of zombie, survivor, and mutant factions
     [ _numUnits, _triggerRadius, _pos, _zombieRvg, _typeOfLocationArea ] call _spawnRandomFactions;

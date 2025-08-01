@@ -138,14 +138,14 @@ switch (_faction) do { //Going throuigh each mutant factions as well as zombie f
 	};
 	case "Zombie": {
 		if (isServer) then {
-			[([_pos, 10, 30, 3, 0, 20, 0, [], []] call BIS_fnc_findSafePos), _numUnits, 5, (_triggerRadius / 2), _faction, _zombieRvg, _triggerRadius] call (missionNamespace getVariable "FN_ZTriggerSpawner");																																			  
+			[([_pos, 10, 30, 250] call FN_findSafePosition), _numUnits, 5, (_triggerRadius / 2), _faction, _zombieRvg, _triggerRadius] call (missionNamespace getVariable "FN_ZTriggerSpawner");																																			  
 		};
 	};
 	default { // Default is survivors
 		if (random 1 > 0.15) then {
 			// Ambient Zombie Horde
 			if (isServer) then {
-				[_pos, 0, 20, (_triggerRadius/5), "sparseZombies", _zombieRvg, _triggerRadius] call (missionNamespace getVariable "FN_ZTriggerSpawner");
+				[_pos, 0, 50, (_triggerRadius/2), "sparseZombies", _zombieRvg, _triggerRadius] call (missionNamespace getVariable "FN_ZTriggerSpawner");
 			};
 		};
 	

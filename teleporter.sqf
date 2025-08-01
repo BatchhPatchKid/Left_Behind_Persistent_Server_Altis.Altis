@@ -19,7 +19,7 @@ if (_typeOfTeleporter) then {
 	removeBackpack _player;
 
 
-	_factionArray = ["BB",.25, "Bandit",.45, "DT",.25, "NH",.50, "PF",.15, "TRB",.02, "ALF",1.01, "WO",.02, "RC",.01, "SU",.05];
+	_factionArray = ["BB",.25, "Bandit",.45, "DT",.25, "NH",.50, "PF",.15, "TRB",.02, "ALF",.01, "WO",.02, "RC",.01, "SU",.05];
 	_factionSelected = _factionArray call BIS_fnc_selectRandomWeighted;
 
 	[_factionSelected, _player, false, true, false] call (missionNamespace getVariable "FN_equipAI");

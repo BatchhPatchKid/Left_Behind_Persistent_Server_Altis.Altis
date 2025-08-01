@@ -1,5 +1,4 @@
 params ["_faction", "_pos", "_buildingMain", "_addCamps"];
-_newAI = "";
 
 //For debugging purposes 
 //_pos = getPos player;    

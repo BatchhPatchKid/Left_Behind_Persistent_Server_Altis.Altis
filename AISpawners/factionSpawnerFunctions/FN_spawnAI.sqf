@@ -1,99 +1,5 @@
 params ["_faction", "_numUnits", "_pos", "_typeOfLocationArea", "_side", "_unit", "_sfGroup"];
 
-if (_typeOfLocationArea == "Rnd" OR _typeOfLocationArea == "") then {
-	_typeOfLocationArea = ["Patrol", .65, "Camp", .45, "Trucks", .15] call BIS_fnc_selectRandomWeighted;
-};
-
-_vehArray = ["defaultVeh"] call (missionNamespace getVariable "FN_arrayReturn");
-
-// default
-_buildingMain = "CamoNet_BLUFOR_open_F"; 
-_turret = ["I_G_HMG_02_high_F", .80, "I_G_Mortar_01_F", .10, "I_E_Static_AT_F", .03];
-_turretProb = .05;
-
-private _unitSkillsArray = [_faction, _pos] call (missionNamespace getVariable "FN_getFactionSkills");
-
-if (isNil "_side") then { _side = _unitSkillsArray select 0; _unit = _unitSkillsArray select 1;};
-
-if (isNil "_sfGroup") then { _sfGroup = _unitSkillsArray select 10; };
-
-_aim = _unitSkillsArray select 2;
-_aimSpeed = _unitSkillsArray select 3;
-_spot = _unitSkillsArray select 4;
-_courage = _unitSkillsArray select 5;
-_aimShake = _unitSkillsArray select 6;
-_command = _unitSkillsArray select 7;
-_spotDist = _unitSkillsArray select 8;
-_reload = _unitSkillsArray select 9;
-
-_allUnits = _pos nearEntities ["Man", 750];
-_players = _allUnits select {isPlayer _x};
-_numPlayers = count _players;
-if (_numPlayers != 1) then {
-	_numUnits = _numUnits + _numPlayers;
-};
-
-switch (_faction) do {
-    case "Bandit": {
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [4, 6, 8]); };
-        _buildingMain = "CamoNet_BLUFOR_F";
-    };
-    case "BB": {
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [5, 7, 8]); };
-    };
-    case "DT": {
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [5, 8, 10]); };
-        _buildingMain = "Land_cargo_addon02_V1_F";
-    };
-    case "NH": {
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [4, 6, 8]); };
-    };
-    case "PF": {
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [6, 10, 14]); };
-        _buildingMain = "Land_cargo_addon02_V1_F";
-    };
-    case "RC": {
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [6, 7, 8]); };
-    };
-    case "TRB": {
-        _turretProb = 0.25;
-        _buildingMain = "CamoNet_OPFOR_open_F";
-        _vehArray = ["TRBVeh"] call (missionNamespace getVariable "FN_arrayReturn");
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [5, 8, 10]); };
-    };
-    case "US": {
-        _turretProb = 0.55;
-        _turret = ["I_E_GMG_01_high_F", 0.55, "I_E_HMG_01_high_F", 0.75, "I_E_Static_AT_F", 0.35, "I_E_Mortar_01_F", 0.85];
-        _buildingMain = "CamoNet_BLUFOR_open_F";
-        _vehArray = ["USVeh"] call (missionNamespace getVariable "FN_arrayReturn");
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [8, 12, 16]); };
-    };
-    case "SU": {
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [4, 5, 8]); };
-        _buildingMain = "CamoNet_BLUFOR_F";
-    };
-    case "RU": {
-        _turretProb = 0.55;
-        _turret = ["I_E_GMG_01_high_F", 0.55, "I_E_HMG_01_high_F", 0.75, "I_E_Static_AT_F", 0.15, "I_E_Mortar_01_F", 0.35];
-        _buildingMain = "CamoNet_wdl_open_F";
-        _vehArray = ["RUVeh"] call (missionNamespace getVariable "FN_arrayReturn");
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [8, 12, 16]); };
-    };
-    case "WO": {
-        _turretProb = 0.25;
-        _vehArray = ["WOVeh"] call (missionNamespace getVariable "FN_arrayReturn");
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [6, 8, 10]); };
-        _buildingMain = "CamoNet_OPFOR_open_F";
-    };
-    default {
-        _turretProb = 0.35;
-        _turret = ["I_E_GMG_01_high_F", 0.25, "I_E_HMG_01_high_F", 0.75, "I_E_Static_AT_F", 0.15, "I_E_Mortar_01_F", 0.35];
-        _buildingMain = "CamoNet_OPFOR_open_F";
-        _vehArray = [_faction + "Veh"] call (missionNamespace getVariable "FN_arrayReturn");
-        if (_numUnits == 0) then { _numUnits = _numUnits + round(random [6, 8, 10]); };
-    };
-};
-
 //////////////////////////////////////////////////////////////////////////////
 // FUNCTION DECLARATIONS
 //////////////////////////////////////////////////////////////////////////////
@@ -201,7 +107,10 @@ FN_spawnFortifications = {
 };
 
 FN_spawnGroups = {
-	params ["_pos","_numUnits","_faction","_grp","_amountInGroup"];
+	params ["_pos","_numUnits","_faction","_grp","_amountInGroup", "_stopSpawnOverride"];
+
+	if (isNil "_stopSpawnOverride") then { _stopSpawnOverride = false; };
+
 	if (_amountInGroup == 0) then { _amountInGroup = round (random [2, 4, 6]); };
 	
 	_sfOverride = false;
@@ -212,18 +121,16 @@ FN_spawnGroups = {
 	
 	if (random 1 > _meleeChance) then {
 		for "_i" from 1 to _amountInGroup do {
-			_aiUnits = allUnits select { _x isKindOf "CAManBase" && side _x != civilian && {_x distance (_pos) <= 100} };
-			_numAI = _side countSide _aiUnits;
-			if (_numAI >= _numUnits) exitWith {_stopAISpawn = true;};
+			_numAI = allUnits select { _x isKindOf "CAManBase" && side _grp == side _x && side _x != civilian && {_x distance (_pos) <= 300} };
+			if (count _numAI >= _numUnits && !_stopSpawnOverride) exitWith {_stopAISpawn = true;};
 			_newAI = _grp createUnit [_unit,([_pos, 0, 10, 3, 0, 20, 0,[],[]] call BIS_fnc_findSafePos),[],1,"NONE"];
 			[_faction, _newAI, false, false, _sfOverride]  call (missionNamespace getVariable "FN_equipAI");
 			[_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");
 		};
 	} else {
 		for "_i" from 1 to _amountInGroup do {
-			_aiUnits = allUnits select { _x isKindOf "CAManBase" && side _x != civilian && {_x distance (_pos) <= 100} };
-			_numAI = _side countSide _aiUnits;
-			if (_numAI >= _numUnits) exitWith {_stopAISpawn = true;};
+			_numAI = allUnits select { _x isKindOf "CAManBase" && side _grp == side _x && side _x != civilian && {_x distance (_pos) <= 300} };
+			if (count _numAI >= _numUnits && !_stopSpawnOverride) exitWith {_stopAISpawn = true;};
 			_grpTemp = createGroup east;
 			_newAI = _grpTemp createUnit ["O_soldier_Melee_RUSH",([_pos, 0, 10, 3, 0, 20, 0,[],[]] call BIS_fnc_findSafePos),[],1,"NONE"];
 			[_faction, _newAI, true, false, false] call (missionNamespace getVariable "FN_equipAI");
@@ -238,6 +145,104 @@ FN_spawnGroups = {
 // FUNCTION DECLARATIONS ---- END
 //////////////////////////////////////////////////////////////////////////////
 
+if (_typeOfLocationArea == "Rnd" OR _typeOfLocationArea == "") then {
+	_typeOfLocationArea = ["Patrol", .65, "Camp", .45, "Trucks", .15] call BIS_fnc_selectRandomWeighted;
+};
+
+_vehArray = ["defaultVeh"] call (missionNamespace getVariable "FN_arrayReturn");
+
+// default
+_buildingMain = "CamoNet_BLUFOR_open_F"; 
+_turret = ["I_G_HMG_02_high_F", .80, "I_G_Mortar_01_F", .10, "I_E_Static_AT_F", .03];
+_turretProb = .05;
+
+private _unitSkillsArray = [_faction, _pos] call (missionNamespace getVariable "FN_getFactionSkills");
+
+if (isNil "_side") then { _side = _unitSkillsArray select 0; _unit = _unitSkillsArray select 1;};
+
+if (isNil "_sfGroup") then { _sfGroup = _unitSkillsArray select 10; };
+
+_aim = _unitSkillsArray select 2;
+_aimSpeed = _unitSkillsArray select 3;
+_spot = _unitSkillsArray select 4;
+_courage = _unitSkillsArray select 5;
+_aimShake = _unitSkillsArray select 6;
+_command = _unitSkillsArray select 7;
+_spotDist = _unitSkillsArray select 8;
+_reload = _unitSkillsArray select 9;
+
+// weighted list: three 4’s, three 5’s, one each of 6,7,8 - subject to change in the switch statement below
+private _weightedDefault = [4,4,4, 5,5,5, 6,7,8];
+
+switch (_faction) do {
+    case "Bandit": {
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+    };
+    case "BB": {
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+    };
+    case "DT": {
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+        _buildingMain = "Land_cargo_addon02_V1_F";
+    };
+    case "NH": {
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+    };
+    case "PF": {
+		_weightedDefault = [6,6,6, 7,7,7, 8,9];
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+        _buildingMain = "Land_cargo_addon02_V1_F";
+    };
+    case "RC": {
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+    };
+    case "TRB": {
+        _turretProb = 0.25;
+        _buildingMain = "CamoNet_OPFOR_open_F";
+        _vehArray = ["TRBVeh"] call (missionNamespace getVariable "FN_arrayReturn");
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+    };
+    case "US": {
+		_weightedDefault = [6,6,6, 7,7,7, 8,9];
+        _turretProb = 0.55;
+        _turret = ["I_E_GMG_01_high_F", 0.55, "I_E_HMG_01_high_F", 0.75, "I_E_Static_AT_F", 0.35, "I_E_Mortar_01_F", 0.85];
+        _vehArray = ["USVeh"] call (missionNamespace getVariable "FN_arrayReturn");
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+    };
+    case "SU": {
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+        _buildingMain = "CamoNet_BLUFOR_F";
+    };
+    case "RU": {
+		_weightedDefault = [6,6,6, 7,7,7, 8,9];
+        _turretProb = 0.55;
+        _turret = ["I_E_GMG_01_high_F", 0.55, "I_E_HMG_01_high_F", 0.75, "I_E_Static_AT_F", 0.15, "I_E_Mortar_01_F", 0.35];
+        _buildingMain = "CamoNet_wdl_open_F";
+        _vehArray = ["RUVeh"] call (missionNamespace getVariable "FN_arrayReturn");
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+    };
+    case "WO": {
+        _turretProb = 0.25;
+        _vehArray = ["WOVeh"] call (missionNamespace getVariable "FN_arrayReturn");
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+        _buildingMain = "CamoNet_OPFOR_open_F";
+    };
+    default {
+        _turretProb = 0.35;
+        _turret = ["I_E_GMG_01_high_F", 0.25, "I_E_HMG_01_high_F", 0.75, "I_E_Static_AT_F", 0.15, "I_E_Mortar_01_F", 0.35];
+        _buildingMain = "CamoNet_OPFOR_open_F";
+        _vehArray = [_faction + "Veh"] call (missionNamespace getVariable "FN_arrayReturn");
+        if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
+    };
+};
+
+_allUnits = _pos nearEntities ["Man", 750];
+_players = _allUnits select {isPlayer _x};
+_numPlayers = count _players;
+if (_numPlayers != 1) then {
+	_numUnits = _numUnits + _numPlayers;
+};
+
 private _stopAISpawn = false;
 
 //Camp is a territories main building location. Usually fortified with many auxilury camps surronding + garrisoned well
@@ -247,28 +252,18 @@ switch (_typeOfLocationArea) do {
 
         _grpCAMP = createGroup _side;
         [_pos, 10, 25, _grpCAMP] call FN_setWaypoints;
-        _stopAISpawn = [_pos, _numUnits, _faction, _grpCAMP, 4] call FN_spawnGroups;
+        _stopAISpawn = [_pos, _numUnits, _faction, _grpCAMP, 4, true] call FN_spawnGroups;
         _grpCAMP enableGunLights "ForceOn";
 
         _grp2 = createGroup _side;
         [_pos, 20, 40, _grp2] call FN_setWaypoints;
-        if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp2, 0] call FN_spawnGroups; };
+        if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp2, 2, true] call FN_spawnGroups; };
         _grp2 enableGunLights "ForceOn";
-
-        _grp3 = createGroup _side;
-        [_pos, 20, 40, _grp3] call FN_setWaypoints;
-		if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp3, 0] call FN_spawnGroups; };
-        _grp3 enableGunLights "ForceOn";
 
         _grp4 = createGroup _side;
         [_pos, 150, 200, _grp4] call FN_setWaypoints;
 		if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp4, _numUnits] call FN_spawnGroups; };
         _grp4 enableGunLights "ForceOn";
-
-        _grp5 = createGroup _side;
-        [_pos, 150, 350, _grp5] call FN_setWaypoints;
-		if (!_stopAISpawn) then { _stopAISpawn = [_pos, 100, _faction, _grp5, (floor(random 4) + 2)] call FN_spawnGroups; };
-        _grp5 enableGunLights "ForceOn";
 		
 		if (_turretProb > random 1) then {
 			[_turret] call FN_spawnFortifications;
@@ -299,41 +294,33 @@ switch (_typeOfLocationArea) do {
         _grpCAMP = createGroup _side;
         [_pos, 10, 25, _grpCAMP] call FN_setWaypoints;
         _posSpawn = [_pos, 10, 25, 3, 0, 20, 0] call BIS_fnc_findSafePos;
-        if (!_stopAISpawn) then { _stopAISpawn = [_posSpawn, _numUnits, _faction, _grpCAMP, (floor(random 2) + 2)] call FN_spawnGroups; };
+        [_posSpawn, _numUnits, _faction, _grpCAMP, (floor(random 2) + 2), true] call FN_spawnGroups;
         _grpCAMP enableGunLights "ForceOn";
 
-        {
-			private _grp = createGroup _side;
-			if (_x isEqualTo 0) then {
-				[_pos, 50, 100, _grp] call FN_setWaypoints;
-			} else {
-				[_pos, 50, 100, _grp] call FN_setWaypoints;
-			};
-			_posSpawn = [_pos, 50, 100, 3, 0, 20, 0] call BIS_fnc_findSafePos;
-			if (!_stopAISpawn) then { _stopAISpawn = [_posSpawn, _numUnits, _faction, _grp, (floor(random 2) + 2)] call FN_spawnGroups; };
-			_grp enableGunLights "ForceOn";
-		} count [0,1];
+        _grp1 = createGroup _side;
+        [_pos, 100, 200, _grp1] call FN_setWaypoints;
+        _posSpawn = [_pos, 30, 60, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+        [_posSpawn, _numUnits, _faction, _grp1, 2, true] call FN_spawnGroups;
+        _grp1 enableGunLights "ForceOn";
+
+		_grp2 = createGroup _side;
+        [_pos, 100, 200, _grp2] call FN_setWaypoints;
+        _posSpawn = [_pos, 100, 200, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+        _stopAISpawn = [_posSpawn, _numUnits, _faction, _grp2, 2, true] call FN_spawnGroups;
+        _grp2 enableGunLights "ForceOn";
 
         _grp3 = createGroup _side;
         [_pos, 100, 200, _grp3] call FN_setWaypoints;
         _posSpawn = [_pos, 100, 200, 3, 0, 20, 0] call BIS_fnc_findSafePos;
-        if (!_stopAISpawn) then { _stopAISpawn = [_posSpawn, _numUnits, _faction, _grp3, (floor(random 2) + 2)] call FN_spawnGroups; };
+        [_posSpawn, _numUnits, _faction, _grp3, 2, true] call FN_spawnGroups;
         _grp3 enableGunLights "ForceOn";
-
-        _grp4 = createGroup _side;
-        [_pos, 100, 200, _grp4] call FN_setWaypoints;
-        _posSpawn = [_pos, 100, 200, 3, 0, 20, 0] call BIS_fnc_findSafePos;
-        if (!_stopAISpawn) then { _stopAISpawn = [_posSpawn, _numUnits, _faction, _grp4, (floor(random 2) + 2)] call FN_spawnGroups; };
-        _grp4 enableGunLights "ForceOn";
 
         private _i = 0;
 		while {!_stopAISpawn} do {
 			private _grp = createGroup _side;
 			[_pos, 250, 500, _grp] call FN_setWaypoints;
 			private _posSpawn = [_pos, 150, 200, 3, 0, 20, 0] call BIS_fnc_findSafePos;
-			if (!_stopAISpawn) then {
-				_stopAISpawn = [_posSpawn, _numUnits, _faction, _grp, (floor(random 2) + 2)] call FN_spawnGroups;
-			};
+			_stopAISpawn = [_posSpawn, _numUnits, _faction, _grp, (floor(random 2) + 2)] call FN_spawnGroups;
 			_grp enableGunLights "ForceOn";
 		};
 
@@ -361,12 +348,12 @@ switch (_typeOfLocationArea) do {
 
         _grpCAMP = createGroup _side;
         [_pos, 10, 25, _grpCAMP] call FN_setWaypoints;
-        if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grpCAMP, 4] call FN_spawnGroups; };
+        if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grpCAMP, 4, true] call FN_spawnGroups; };
         _grpCAMP enableGunLights "ForceOn";
 
         _grp1 = createGroup _side;
         [_pos, 100, 350, _grp1] call FN_setWaypoints;
-        if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp1, 4] call FN_spawnGroups; };
+        if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp1, 4, true] call FN_spawnGroups; };
         _grp1 enableGunLights "ForceOn";
 
         _grp2 = createGroup _side;

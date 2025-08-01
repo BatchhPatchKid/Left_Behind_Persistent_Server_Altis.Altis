@@ -2,7 +2,7 @@ params ["_zombieGrp", "_zombieArray", "_numZombie", "_pos", "_spread"];
 
 for "_i" from 1 to _numZombie do {
 	private _ZedType = selectRandomWeighted _zombieArray; 
-	private _hordeUnit = _zombieGrp createUnit [_ZedType, [_pos, 5, _spread, 3, 0, 20, 0, [], []] call BIS_fnc_findSafePos, [], 20, "NONE"];
+	private _hordeUnit = _zombieGrp createUnit [_ZedType, [_pos, 15, _spread, 150] call FN_findSafePosition, [], 20, "NONE"];
 };
 
 private _randomStuff = ["randomCommon"] call (missionNamespace getVariable "FN_arrayReturn");

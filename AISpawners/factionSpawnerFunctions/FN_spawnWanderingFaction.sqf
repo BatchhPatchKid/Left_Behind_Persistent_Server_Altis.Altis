@@ -46,6 +46,5 @@ if (random 1 > _meleeChance) then {
 	};
 };
 
-[_grp, civilian] call FN_changeGroupSide;
-//[_grp, _pos, 200] call FN_createWaypoints;
-//[_grp, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
+[_grp, _pos, 200] call FN_createWaypoints;
+[_grp, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');

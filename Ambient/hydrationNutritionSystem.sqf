@@ -11,11 +11,11 @@ FN_getScalar = {
     private _temp = [player] call FN_getTemp;
     private _scalar = 0;
     if (_temp < 98.6) then {
-        _scalar = ((98.6 - _temp) / (98.6 - 89)) * 0.3;
+        _scalar = ((98.6 - _temp) / (98.6 - 89)) * 0.25;
     } else {
-        _scalar = ((_temp - 98.6) / (108 - 98.6)) * 0.3;
+        _scalar = ((_temp - 98.6) / (108 - 98.6)) * 0.25;
     };
-    _scalar = _scalar min 0.3;
+    _scalar = _scalar min 0.25;
     _scalar = _scalar max 0;
     _scalar
 };
