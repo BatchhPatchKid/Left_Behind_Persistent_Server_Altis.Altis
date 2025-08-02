@@ -39,7 +39,7 @@ private _FN_garbageCollector={
         if([_x,_missionStones,_distStone] call _fn_checkProximityToDesiredObject) then { continue; };
         if([_x,_flags,_distFlag] call _fn_checkProximityToDesiredObject) then { continue; };
         if([_x,_players,_distPlayer] call _fn_checkProximityToPlayer) then { continue; };
-        if(_airVehicles findIf{_x distance2D _x<5}!=-1)exitWith{};
+        if(_airVehicles findIf{_x distance2D _x<5}!=-1) then { continue; };
         deleteVehicle _x;
     } forEach allUnits;
 
@@ -81,13 +81,8 @@ if(_zeusAction) then {
     while{true} do {
         sleep 360;
 
-        private _everyoneDead=true;
-
-        { 
-            if (alive _x) then { _everyoneDead = false };
-        } forEach allPlayers;
-
-        if (_everyoneDead) then { waitUntil { count (allPlayers select{alive _x} ) >0 } };
+        // waiting until there are players connected and alive
+        waitUntil { count ( allPlayers select { alive _x } ) > 0 };
 
         call _FN_garbageCollector;
     };
