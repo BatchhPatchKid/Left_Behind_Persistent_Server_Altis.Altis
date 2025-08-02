@@ -23,6 +23,11 @@ missionNamespace setVariable ["FN_renegadeSpawner", compileFinal  preprocessFile
 missionNamespace setVariable ["FN_meleeChance", compileFinal  preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_meleeChance.sqf"];
 missionNamespace setVariable ["FN_factionSpawnerMain", compileFinal  preprocessFileLineNumbers "AISpawners\FN_factionSpawnerMain.sqf"];
 missionNamespace setVariable ["FN_lootSpawner", compileFinal  preprocessFileLineNumbers "AISpawners\FN_lootSpawner.sqf"];
+missionNamespace setVariable ["FN_fillLootCrate", compileFinal  preprocessFileLineNumbers "AISpawners\FN_fillLootCrate.sqf"];
+missionNamespace setVariable ["FN_addGarbageAction", compileFinal  preprocessFileLineNumbers "Ambient\FN_addGarbageAction.sqf"];
+missionNamespace setVariable ["FN_createGarbagePile", compileFinal  preprocessFileLineNumbers "Ambient\FN_createGarbagePile.sqf"];
+missionNamespace setVariable ["FN_spawnLootCrate", compileFinal  preprocessFileLineNumbers "Ambient\FN_spawnLootCrate.sqf"];
+missionNamespace setVariable ["FN_spawnGarbageLootServer", compileFinal  preprocessFileLineNumbers "Ambient\FN_spawnGarbageLootServer.sqf"];
 missionNamespace setVariable ["FN_ExitingTrigger", compileFinal  preprocessFileLineNumbers "ExitingTrigger.sqf"];
 missionNamespace setVariable ["FN_Conversations", compileFinal  preprocessFileLineNumbers "Economy System\Conversations.sqf"];
 missionNamespace setVariable ["FN_economySystem", compileFinal  preprocessFileLineNumbers "Economy System\economySystem.sqf"];

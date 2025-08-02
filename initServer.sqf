@@ -52,6 +52,8 @@ addMissionEventHandler ["PlayerDisconnected", {
     [] spawn (missionNamespace getVariable "sleepTime");
 }];
 
+[] spawn (missionNamespace getVariable "FN_spawnGarbageLootServer");
+
 sideEmpty setFriend [west, 0];
 sideEmpty setFriend [east, 0];
 sideEmpty setFriend [resistance, 0];
