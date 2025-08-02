@@ -9,9 +9,6 @@ To do:
 - trader gave an NLAW to Eli after (unable to replicate)
 - weapon holstered on back doesn't get deleted
 - When gutting, allow for a chance to obtain a bag of 250ml's of blood
-- if inventory is full, the skinned animal meat should be dropped on the ground
-- WATER PURIFICATION TABLET: lower $3
-- water and food items should refill the hunger and thirst bars more (priority)
 - water and food items should be more common (priority)
 - maps, compasses, watches, and radio should be more common (priority)
 - loot system needs to be created

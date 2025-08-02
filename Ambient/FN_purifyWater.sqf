@@ -23,7 +23,6 @@ if (!([ _player, "rvg_purificationTablets" ] call BIS_fnc_hasItem)) exitWith {
 if ([ _player, "rvg_canteen" ] call BIS_fnc_hasItem) exitWith {
     _player removeItem "rvg_canteen";
     _player addItem "rvg_canteenPurified";
-    _player removeItem "rvg_purificationTablets";
     hintSilent "Your canteen has been purified.";
 };
 
@@ -31,7 +30,6 @@ if ([ _player, "rvg_canteen" ] call BIS_fnc_hasItem) exitWith {
 if ([ _player, "rvg_plasticBottle" ] call BIS_fnc_hasItem) exitWith {
     _player removeItem "rvg_plasticBottle";
     _player addItem "rvg_plasticBottlePurified";
-    _player removeItem "rvg_purificationTablets";
     hintSilent "Your plastic bottle has been purified.";
 };
 

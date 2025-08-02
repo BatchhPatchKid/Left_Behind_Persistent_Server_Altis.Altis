@@ -7,11 +7,12 @@
 */
 params ["_player"];
 
-private _sodas        = ["drinkSodas"] call (missionNamespace getVariable "FN_arrayReturn");
-private _waterBottles = ["drinkWaterBottles"] call (missionNamespace getVariable "FN_arrayReturn");
-private _canteens     = ["drinkCanteens"] call (missionNamespace getVariable "FN_arrayReturn");
-private _dirty        = ["drinkDirty"] call (missionNamespace getVariable "FN_arrayReturn");
-private _blood        = ["drinkBlood"] call (missionNamespace getVariable "FN_arrayReturn");
+private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+private _sodas        = ["drinkSodas"] call _arrayReturn;
+private _waterBottles = ["drinkWaterBottles"] call _arrayReturn;
+private _canteens     = ["drinkCanteens"] call _arrayReturn;
+private _dirty        = ["drinkDirty"] call _arrayReturn;
+private _blood        = ["drinkBlood"] call _arrayReturn;
 
 private _allDrinks = _sodas + _waterBottles + _canteens + _dirty + _blood;
 

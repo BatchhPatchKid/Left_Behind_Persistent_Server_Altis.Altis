@@ -9,14 +9,15 @@ if (isServer) then {
 		
 		_vehArray = "";
 		
+		private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
 		switch _faction do {
-			case "TRB": { _vehArray = ["TRBVeh"] call (missionNamespace getVariable "FN_arrayReturn"); };
-			case "US": { _vehArray = ["USVeh"] call (missionNamespace getVariable "FN_arrayReturn"); };
-			case "RU": { _vehArray = ["RUVeh"] call (missionNamespace getVariable "FN_arrayReturn"); };
-			case "ROA": { _vehArray = ["ROAVeh"] call (missionNamespace getVariable "FN_arrayReturn"); };
-			case "PMC": { _vehArray = ["PMCVeh"] call (missionNamespace getVariable "FN_arrayReturn"); };
-			case "ALF": { _vehArray = ["ALFVeh"] call (missionNamespace getVariable "FN_arrayReturn"); };
-			default { _vehArray = ["defaultVeh"] call (missionNamespace getVariable "FN_arrayReturn"); };
+			case "TRB": { _vehArray = ["TRBVeh"] call _arrayReturn; };
+			case "US": { _vehArray = ["USVeh"] call _arrayReturn; };
+			case "RU": { _vehArray = ["RUVeh"] call _arrayReturn; };
+			case "ROA": { _vehArray = ["ROAVeh"] call _arrayReturn; };
+			case "PMC": { _vehArray = ["PMCVeh"] call _arrayReturn; };
+			case "ALF": { _vehArray = ["ALFVeh"] call _arrayReturn; };
+			default { _vehArray = ["defaultVeh"] call _arrayReturn; };
 		};
 		
 		private _playersInTrigger = [];

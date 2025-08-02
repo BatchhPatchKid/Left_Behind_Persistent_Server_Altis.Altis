@@ -17,17 +17,18 @@ if (!([_player, _item] call BIS_fnc_hasItem)) exitWith {
 };
 
 // 2. Define your arrays
-private _tier1  = ["foodTier1"]  call (missionNamespace getVariable "FN_arrayReturn");
-private _tier2  = ["foodTier2"]  call (missionNamespace getVariable "FN_arrayReturn");
-private _tier3  = ["foodTier3"]  call (missionNamespace getVariable "FN_arrayReturn");
-private _tier4  = ["foodTier4"]  call (missionNamespace getVariable "FN_arrayReturn");
-private _tier5  = ["foodTier5"]  call (missionNamespace getVariable "FN_arrayReturn");
-private _tier6  = ["foodTier6"]  call (missionNamespace getVariable "FN_arrayReturn");
-private _tier7  = ["foodTier7"]  call (missionNamespace getVariable "FN_arrayReturn");
-private _tier8  = ["foodTier8"]  call (missionNamespace getVariable "FN_arrayReturn");
-private _tier9  = ["foodTier9"]  call (missionNamespace getVariable "FN_arrayReturn");
-private _tier10 = ["foodTier10"] call (missionNamespace getVariable "FN_arrayReturn");
-private _tier11 = ["foodTier11"] call (missionNamespace getVariable "FN_arrayReturn");
+private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+private _tier1  = ["foodTier1"]  call _arrayReturn;
+private _tier2  = ["foodTier2"]  call _arrayReturn;
+private _tier3  = ["foodTier3"]  call _arrayReturn;
+private _tier4  = ["foodTier4"]  call _arrayReturn;
+private _tier5  = ["foodTier5"]  call _arrayReturn;
+private _tier6  = ["foodTier6"]  call _arrayReturn;
+private _tier7  = ["foodTier7"]  call _arrayReturn;
+private _tier8  = ["foodTier8"]  call _arrayReturn;
+private _tier9  = ["foodTier9"]  call _arrayReturn;
+private _tier10 = ["foodTier10"] call _arrayReturn;
+private _tier11 = ["foodTier11"] call _arrayReturn;
 
 private _allUncooked = _tier5 + _tier6 + _tier7 + _tier9 + _tier11;
 
@@ -37,17 +38,17 @@ private _radAmount = 0;
 private _sanityInc = true;
 
 switch (true) do {
-    case (_item in _tier1):  { _value = 15; };
-    case (_item in _tier2):  { _value = 25; };
-    case (_item in _tier3):  { _value = 35; };
-    case (_item in _tier4):  { _value = 35; };
-    case (_item in _tier5):  { _value = 25; };
-    case (_item in _tier6):  { _value = 35; };
-    case (_item in _tier7):  { _value = 15; };
-    case (_item in _tier8):  { _value = 10; };
-    case (_item in _tier9):  { _value = 10; };
-    case (_item in _tier10): { _value = 50; };
-    case (_item in _tier11): { _value = 50; };
+    case (_item in _tier1):  { _value = 25; };
+    case (_item in _tier2):  { _value = 35; };
+    case (_item in _tier3):  { _value = 45; };
+    case (_item in _tier4):  { _value = 45; };
+    case (_item in _tier5):  { _value = 35; };
+    case (_item in _tier6):  { _value = 45; };
+    case (_item in _tier7):  { _value = 25; };
+    case (_item in _tier8):  { _value = 20; };
+    case (_item in _tier9):  { _value = 20; };
+    case (_item in _tier10): { _value = 60; };
+    case (_item in _tier11): { _value = 60; };
     default { _value = 0; };
 };
 
@@ -102,7 +103,7 @@ if (_new > 100) then { _new = 100; };
 _player setVariable ["nutritionLevel", _new];
 
 // 6. Apply rads
-if (_radAmount > 0) then {
+if (_radAmount > 0 && (itemsWithMagazines player)) then {
     [_radAmount] call FN_addRad;
     [_player, ["rvg_geiger_1", 100, 1]] remoteExec ["say3D"];
 };

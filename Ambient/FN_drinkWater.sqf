@@ -17,28 +17,30 @@ if (!([_player, _item] call BIS_fnc_hasItem)) exitWith {
 };
 
 // 2. Define your arrays
-private _sodas = ["drinkSodas"] call (missionNamespace getVariable "FN_arrayReturn");
-private _waterBottles = ["drinkWaterBottles"] call (missionNamespace getVariable "FN_arrayReturn");
-private _canteens = ["drinkCanteens"] call (missionNamespace getVariable "FN_arrayReturn");
-private _dirty = ["drinkDirty"] call (missionNamespace getVariable "FN_arrayReturn");
-private _blood = ["drinkBlood"] call (missionNamespace getVariable "FN_arrayReturn");
+private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+
+private _sodas = ["drinkSodas"] call _arrayReturn;
+private _waterBottles = ["drinkWaterBottles"] call _arrayReturn;
+private _canteens = ["drinkCanteens"] call _arrayReturn;
+private _dirty = ["drinkDirty"] call _arrayReturn;
+private _blood = ["drinkBlood"] call _arrayReturn;
 
 // 3. Determine hydration value and post‑drink behavior
 private _value = 0;
 private _radAmount = 0;
 
 if (_item in _sodas) then {
-    _value = 15;
+    _value = 30;
     _radAmount = 5;
 } else {
     if (_item in _waterBottles) then {
-        _value = 25;
+        _value = 50;
     } else {
         if (_item in _canteens) then {
-            _value = 40;
+            _value = 80;
         } else {
             if (_item in _dirty) then {
-                _value = 25;
+                _value = 35;
                 _radAmount = 15;
             } else {
                 if (_item in _blood) then {
@@ -89,7 +91,7 @@ if (_new > 100) then { _new = 100; };
 _player setVariable ["hydrationLevel", _new, true];
 
 // 7. Apply radiation
-if (_radAmount > 0) then {
+if (_radAmount > 0 && (itemsWithMagazines player)) then {
     [_radAmount] call FN_addRad;
 	[_player, ["rvg_geiger_1", 100, 1]] remoteExec ["say3D"];
 };

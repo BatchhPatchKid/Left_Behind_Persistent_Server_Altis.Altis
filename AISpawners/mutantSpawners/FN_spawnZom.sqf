@@ -32,13 +32,38 @@ params ["_zombieGrp", "_zombieArray", "_numZombie", "_pos", "_spread"];
 		sleep 0.1;
 	};
 
-	private _randomStuff = ["randomCommon"] call (missionNamespace getVariable "FN_arrayReturn");
+	private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+
+	private _randomStuff = ["randomCommon"] call _arrayReturn;
+	private _backpackArraySelection = ["backpackCommon"] call _arrayReturn;
+	private _vestArraySelection = ["vestCommon"] call _arrayReturn;
+	private _uniformArraySelection = ["uniformCommon"] call _arrayReturn;
 
 	sleep .5;
 	{
-		if (random 1 > .8) then {
-			_x addItemToUniform (selectRandomWeighted _randomStuff);
+		private _bpObj = unitBackpack _x;
+		private _vestObj = vest _x;
+
+		if (isNull _bpObj && random 1 > .5) then {
+			_x addBackpack (selectRandomWeighted _backpackArraySelection);
+
+			if (random 1 > .25) then {
+				_x addItemToBackpack (selectRandomWeighted _randomStuff);
+			};
 		};
+
+		if (_vestObj == "" && random 1 > .75) then {
+			_x addVest (selectRandomWeighted _vestArraySelection);
+
+			if (random 1 > .25) then {
+				_x addItemToVest (selectRandomWeighted _randomStuff);
+			};
+		};
+
+		if (random 1 > .75) then {
+			_x addItemToUniform (selectRandomWeighted _uniformArraySelection);
+		};
+
 		sleep 0.1;
 	} forEach (units _zombieGrp);
 	[_zombieGrp, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');

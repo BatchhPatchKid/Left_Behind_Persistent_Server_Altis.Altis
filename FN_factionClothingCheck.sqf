@@ -1,30 +1,33 @@
 params ["_unit"];
 
+private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+private _convertWeightedArray = missionNamespace getVariable "FN_convertWeightedArray";
+
 // Weighted arrays setup
-headgearArraySelectionBB = [["headgearBB"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionDT = [["headgearDT"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionDT = [["facewearDT"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionNH = [["headgearNH"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionPF = [["headgearPF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionPF = [["uniformPF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionRC = [["facewearRC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionRC = [["uniformRC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionTRB = [["facewearTRB"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionTRB = [["uniformTRB"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionUS = [["headgearUS"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionUS = [["facewearUS"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionUS = [["uniformUS"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionRU = [["headgearRU"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionRU = [["uniformRU"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionROA = [["uniformROA"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionROA = [["headgearROA"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionPMC = [["uniformPMC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionPMC = [["facewearPMC"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-headgearArraySelectionWO = [["headgearWO"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionWO = [["uniformWO"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-uniformArraySelectionALF = [["uniformALF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionALF = [["facewearALF"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
-facewearArraySelectionBandit = [["facewearBandit"] call (missionNamespace getVariable "FN_arrayReturn")] call (missionNamespace getVariable "FN_convertWeightedArray");
+headgearArraySelectionBB = [["headgearBB"] call _arrayReturn] call _convertWeightedArray;
+headgearArraySelectionDT = [["headgearDT"] call _arrayReturn] call _convertWeightedArray;
+facewearArraySelectionDT = [["facewearDT"] call _arrayReturn] call _convertWeightedArray;
+headgearArraySelectionNH = [["headgearNH"] call _arrayReturn] call _convertWeightedArray;
+headgearArraySelectionPF = [["headgearPF"] call _arrayReturn] call _convertWeightedArray;
+uniformArraySelectionPF = [["uniformPF"] call _arrayReturn] call _convertWeightedArray;
+facewearArraySelectionRC = [["facewearRC"] call _arrayReturn] call _convertWeightedArray;
+uniformArraySelectionRC = [["uniformRC"] call _arrayReturn] call _convertWeightedArray;
+facewearArraySelectionTRB = [["facewearTRB"] call _arrayReturn] call _convertWeightedArray;
+uniformArraySelectionTRB = [["uniformTRB"] call _arrayReturn] call _convertWeightedArray;
+headgearArraySelectionUS = [["headgearUS"] call _arrayReturn] call _convertWeightedArray;
+facewearArraySelectionUS = [["facewearUS"] call _arrayReturn] call _convertWeightedArray;
+uniformArraySelectionUS = [["uniformUS"] call _arrayReturn] call _convertWeightedArray;
+headgearArraySelectionRU = [["headgearRU"] call _arrayReturn] call _convertWeightedArray;
+uniformArraySelectionRU = [["uniformRU"] call _arrayReturn] call _convertWeightedArray;
+uniformArraySelectionROA = [["uniformROA"] call _arrayReturn] call _convertWeightedArray;
+headgearArraySelectionROA = [["headgearROA"] call _arrayReturn] call _convertWeightedArray;
+uniformArraySelectionPMC = [["uniformPMC"] call _arrayReturn] call _convertWeightedArray;
+facewearArraySelectionPMC = [["facewearPMC"] call _arrayReturn] call _convertWeightedArray;
+headgearArraySelectionWO = [["headgearWO"] call _arrayReturn] call _convertWeightedArray;
+uniformArraySelectionWO = [["uniformWO"] call _arrayReturn] call _convertWeightedArray;
+uniformArraySelectionALF = [["uniformALF"] call _arrayReturn] call _convertWeightedArray;
+facewearArraySelectionALF = [["facewearALF"] call _arrayReturn] call _convertWeightedArray;
+facewearArraySelectionBandit = [["facewearBandit"] call _arrayReturn] call _convertWeightedArray;
 
 private _sanity = _unit getVariable ["sanityLevel", 100];
 if (!(_unit getVariable ["Renegade_Relation", false])) then {

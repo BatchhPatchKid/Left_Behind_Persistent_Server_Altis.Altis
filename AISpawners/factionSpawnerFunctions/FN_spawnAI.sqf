@@ -275,7 +275,8 @@ if (_typeOfLocationArea == "Rnd" OR _typeOfLocationArea == "") then {
 	_typeOfLocationArea = ["Building", .65, "Patrol", .65, "Camp", .45, "Trucks", .15] call BIS_fnc_selectRandomWeighted;
 };
 
-_vehArray = ["defaultVeh"] call (missionNamespace getVariable "FN_arrayReturn");
+private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+_vehArray = ["defaultVeh"] call _arrayReturn;
 
 // default
 _buildingMain = "CamoNet_BLUFOR_open_F"; 
@@ -325,14 +326,14 @@ switch (_faction) do {
     case "TRB": {
         _turretProb = 0.25;
         _buildingMain = "CamoNet_OPFOR_open_F";
-        _vehArray = ["TRBVeh"] call (missionNamespace getVariable "FN_arrayReturn");
+        _vehArray = ["TRBVeh"] call _arrayReturn;
         if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
     };
     case "US": {
 		_weightedDefault = [6,6,6, 7,7,7, 8,9];
         _turretProb = 0.55;
         _turret = ["I_E_GMG_01_high_F", 0.55, "I_E_HMG_01_high_F", 0.75, "I_E_Static_AT_F", 0.35, "I_E_Mortar_01_F", 0.85];
-        _vehArray = ["USVeh"] call (missionNamespace getVariable "FN_arrayReturn");
+        _vehArray = ["USVeh"] call _arrayReturn;
         if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
     };
     case "SU": {
@@ -344,12 +345,12 @@ switch (_faction) do {
         _turretProb = 0.55;
         _turret = ["I_E_GMG_01_high_F", 0.55, "I_E_HMG_01_high_F", 0.75, "I_E_Static_AT_F", 0.15, "I_E_Mortar_01_F", 0.35];
         _buildingMain = "CamoNet_wdl_open_F";
-        _vehArray = ["RUVeh"] call (missionNamespace getVariable "FN_arrayReturn");
+        _vehArray = ["RUVeh"] call _arrayReturn;
         if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
     };
     case "WO": {
         _turretProb = 0.25;
-        _vehArray = ["WOVeh"] call (missionNamespace getVariable "FN_arrayReturn");
+        _vehArray = ["WOVeh"] call _arrayReturn;
         if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
         _buildingMain = "CamoNet_OPFOR_open_F";
     };
@@ -357,7 +358,7 @@ switch (_faction) do {
         _turretProb = 0.35;
         _turret = ["I_E_GMG_01_high_F", 0.25, "I_E_HMG_01_high_F", 0.75, "I_E_Static_AT_F", 0.15, "I_E_Mortar_01_F", 0.35];
         _buildingMain = "CamoNet_OPFOR_open_F";
-        _vehArray = [_faction + "Veh"] call (missionNamespace getVariable "FN_arrayReturn");
+        _vehArray = [_faction + "Veh"] call _arrayReturn;
         if (_numUnits == 0) then { _numUnits = (selectRandom _weightedDefault); };
     };
 };

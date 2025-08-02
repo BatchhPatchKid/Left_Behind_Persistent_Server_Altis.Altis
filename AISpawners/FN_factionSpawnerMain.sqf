@@ -21,7 +21,8 @@ private _pos = getPos _trigger;
 private _triggerRadius = (triggerArea _trigger) select 0;
 
 // Mutant effects must come first as they are executed on client side/cannot be executed on server side
-private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
+private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+private _mutantArray = ["mutantArray"] call _arrayReturn;
 if (_faction in _mutantArray) then {
 
 	{
@@ -103,7 +104,7 @@ private _spawnSurvivorGroup = {
     private _survivorPos = _pos;
 
     // Weighted list of survivor sub-factions and their spawn chances
-    private _survivorFactions = ["_survivorFactions"] call (missionNamespace getVariable "FN_arrayReturn");
+    private _survivorFactions = ["_survivorFactions"] call _arrayReturn;
 
     // Pick a specific survivor sub-faction
     private _factionSelected = [_survivorFactions, ""] call (missionNamespace getVariable "FN_selectFaction");
@@ -126,7 +127,7 @@ private _spawnMutantGroup = {
     params ["_num", "_rad", "_pos", "_rvg", "_area"];
 
     // Weighted list of mutant types
-    private _mutantWeights = ["_mutantWeights"] call (missionNamespace getVariable "FN_arrayReturn");
+    private _mutantWeights = ["_mutantWeights"] call _arrayReturn;
 
     // Choose a random mutant type
     private _factionSelected = selectRandomWeighted _mutantWeights;
@@ -142,7 +143,7 @@ private _spawnMutantGroup = {
 private _spawnPredetermined = {
     params ["_fac", "_num", "_rad", "_pos", "_rvg", "_area"];
     // Check if this faction is a mutant type
-    private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
+    private _mutantArray = ["mutantArray"] call _arrayReturn;
     // 25% chance to do a hunting spawn (if not mutant), else 25% chance wandering
     if (random 1 > 0.75 && !(_fac in _mutantArray)) then {
         [_pos, _fac] call (missionNamespace getVariable "FN_spawnHuntingFaction");
