@@ -29,8 +29,6 @@ FN_spawnSpecialInfected = {
 		_ZedType = selectRandomWeighted _ZedArray;
 		private _hordeUnit = _horde createUnit [_ZedType, [_pos, _minDist, _maxDist, 150] call FN_findSafePosition, [], 1, "NONE"];
 	};
-	
-	[_pos, 0, 20, (_triggerRadius/5), "sparseZombies", _zombieRvg, _triggerRadius] call (missionNamespace getVariable "FN_ZTriggerSpawner");
 };
 
 FN_getZombieArray = {

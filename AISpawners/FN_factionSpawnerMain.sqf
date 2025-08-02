@@ -16,6 +16,10 @@
 // -----------------------------------------------------------------------------
 params ["_faction", "_numUnits", "_trigger", "_typeOfLocationArea"];
 
+// Trigger position and radius
+private _pos = getPos _trigger;
+private _triggerRadius = (triggerArea _trigger) select 0;
+
 // Mutant effects must come first as they are executed on client side/cannot be executed on server side
 private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
 if (_faction in _mutantArray) then {
@@ -30,10 +34,6 @@ if (_faction in _mutantArray) then {
 // unnecessary calculations. Mutant visual effects are executed on clients via
 // remote calls within FN_factionSelector.
 if (!isServer) exitWith {};
-
-// Trigger position and radius
-private _pos = getPos _trigger;
-private _triggerRadius = (triggerArea _trigger) select 0;
 
 // Default location‐type tag if none passed
 if (isNil "_typeOfLocationArea") then {

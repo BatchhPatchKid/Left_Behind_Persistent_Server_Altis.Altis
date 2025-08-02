@@ -17,11 +17,11 @@ if (!([_player, _item] call BIS_fnc_hasItem)) exitWith {
 };
 
 // 2. Define your arrays
-private _sodas        = ["drinkSodas"] call (missionNamespace getVariable "FN_arrayReturn");
+private _sodas = ["drinkSodas"] call (missionNamespace getVariable "FN_arrayReturn");
 private _waterBottles = ["drinkWaterBottles"] call (missionNamespace getVariable "FN_arrayReturn");
-private _canteens     = ["drinkCanteens"] call (missionNamespace getVariable "FN_arrayReturn");
-private _dirty        = ["drinkDirty"] call (missionNamespace getVariable "FN_arrayReturn");
-private _blood        = ["drinkBlood"] call (missionNamespace getVariable "FN_arrayReturn");
+private _canteens = ["drinkCanteens"] call (missionNamespace getVariable "FN_arrayReturn");
+private _dirty = ["drinkDirty"] call (missionNamespace getVariable "FN_arrayReturn");
+private _blood = ["drinkBlood"] call (missionNamespace getVariable "FN_arrayReturn");
 
 // 3. Determine hydration value and post‑drink behavior
 private _value = 0;

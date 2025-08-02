@@ -63,6 +63,32 @@ FN_carPatrol = {
 	};
 	[_grp, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 };
+
+FN_lootSpawnByFaction = {
+    params [
+        "_pos",     // world position to spawn loot at
+        "_faction", // faction name string
+        "_side"     // side of the unit/group calling this
+    ];
+
+    if (_side != WEST) then {
+        switch (_faction) do {
+            case "US";
+            case "RU": {
+                [_pos, 2] call (missionNamespace getVariable "FN_lootSpawner");
+            };
+            case "TRB";
+            case "PMC";
+            case "ROA";
+            case "ALF": {
+                [_pos, 1] call (missionNamespace getVariable "FN_lootSpawner");
+            };
+            default {
+                [_pos, 0] call (missionNamespace getVariable "FN_lootSpawner");
+            };
+        };
+    };
+};
 	
 FN_spawnFortifications = {
 	params ["_turret"];
@@ -107,38 +133,138 @@ FN_spawnFortifications = {
 };
 
 FN_spawnGroups = {
-	params ["_pos","_numUnits","_faction","_grp","_amountInGroup", "_stopSpawnOverride"];
+    params [
+        "_pos",               // spawn center
+        "_numUnits",          // max allowed nearby before stopping
+        "_faction",           // passed through to equip/skill functions
+        "_grp",               // group to add spawned units into
+        "_amountInGroup",     // how many to spawn right now
+        "_stopSpawnOverride"  // true = ignore the _numUnits cap
+    ];
 
-	if (isNil "_stopSpawnOverride") then { _stopSpawnOverride = false; };
+    // default override flag
+    if (isNil "_stopSpawnOverride") then { _stopSpawnOverride = false; };
 
-	if (_amountInGroup == 0) then { _amountInGroup = round (random [2, 4, 6]); };
-	
-	_sfOverride = false;
-	if (random _sfGroup < 1) then { _sfOverride = true; };
-	
-	_meleeChance = [_faction] call (missionNamespace getVariable "FN_meleeChance");
-	private _stopAISpawn = false;
-	
-	if (random 1 > _meleeChance) then {
-		for "_i" from 1 to _amountInGroup do {
-			_numAI = allUnits select { _x isKindOf "CAManBase" && side _grp == side _x && side _x != civilian && {_x distance (_pos) <= 300} };
-			if (count _numAI >= _numUnits && !_stopSpawnOverride) exitWith {_stopAISpawn = true;};
-			_newAI = _grp createUnit [_unit,([_pos, 0, 10, 3, 0, 20, 0,[],[]] call BIS_fnc_findSafePos),[],1,"NONE"];
-			[_faction, _newAI, false, false, _sfOverride]  call (missionNamespace getVariable "FN_equipAI");
-			[_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");
-		};
+    // default group size: pick 2, 4, or 6 if zero/neg
+    if (_amountInGroup <= 0) then { _amountInGroup = selectRandom [2,4,6]; };
+
+    private _sfOverride    = (random _sfGroup < 1);
+    private _meleeChance   = [_faction] call (missionNamespace getVariable "FN_meleeChance");
+    private _stopAISpawn   = false;
+
+    // find nearby building and its interior points -- fallback to a safe position if no buildings found
+    private _buildings = nearestObjects [_pos, ["House","Land_Building"], 50];
+	private _insidePoints = [];
+    if (count _buildings != 0) then {
+		private _building  = selectRandom _buildings;
+		_insidePoints = [_building] call BIS_fnc_buildingPositions;
+    	if (count _insidePoints == 0) then {
+        	_insidePoints   = [[_pos, 20, 45, 3] call (missionNamespace getVariable "FN_findSafePosition")];
+		}; 
 	} else {
-		for "_i" from 1 to _amountInGroup do {
-			_numAI = allUnits select { _x isKindOf "CAManBase" && side _grp == side _x && side _x != civilian && {_x distance (_pos) <= 300} };
-			if (count _numAI >= _numUnits && !_stopSpawnOverride) exitWith {_stopAISpawn = true;};
-			_grpTemp = createGroup east;
-			_newAI = _grpTemp createUnit ["O_soldier_Melee_RUSH",([_pos, 0, 10, 3, 0, 20, 0,[],[]] call BIS_fnc_findSafePos),[],1,"NONE"];
-			[_faction, _newAI, true, false, false] call (missionNamespace getVariable "FN_equipAI");
-			[_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");
-			[_newAI] joinSilent _grp;
-		};
+		_insidePoints   = [[_pos, 20, 45, 3] call (missionNamespace getVariable "FN_findSafePosition")];
 	};
-	_stopAISpawn
+    
+    if (random 1 > _meleeChance) then {
+        for "_i" from 1 to _amountInGroup do {
+            private _spawnPos  = selectRandom _insidePoints;
+            private _nearbyAI  = count (allUnits select {(_x isKindOf "CAManBase") && (side _x == side _grp) && (_x distance _spawnPos <= 300)});
+            if (_nearbyAI >= _numUnits && !_stopSpawnOverride) exitWith {
+                _stopAISpawn = true;
+            };
+
+            private _newAI = _grp createUnit [_unit, _spawnPos, [], 1, "NONE"];
+            [_faction, _newAI, false, false, _sfOverride] call (missionNamespace getVariable "FN_equipAI");
+            [_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");
+        };
+    } else {
+        for "_i" from 1 to _amountInGroup do {
+            private _spawnPos  = selectRandom _insidePoints;
+            private _nearbyAI  = count (allUnits select {(_x isKindOf "CAManBase") && (side _x == side _grp) && (_x distance _spawnPos <= 300)});
+            if (_nearbyAI >= _numUnits && !_stopSpawnOverride) exitWith {
+                _stopAISpawn = true;
+            };
+
+            private _tempGrp = createGroup (side _grp);
+            private _newAI   = _tempGrp createUnit ["O_soldier_Melee_RUSH", _spawnPos, [], 1, "NONE"];
+            [_faction, _newAI, true, false, false] call (missionNamespace getVariable "FN_equipAI");
+            [_newAI] joinSilent _grp;
+            [_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");
+        };
+    };
+
+    _stopAISpawn
+};
+
+FN_spawnGroupsBld = {
+    params [
+        "_pos",               // spawn center
+        "_numUnits",          // max allowed nearby before stopping
+        "_faction",           // passed through to equip/skill functions
+        "_grp",               // group to add spawned units into
+        "_amountInGroup",     // how many to spawn right now
+        "_stopSpawnOverride"  // true = ignore the _numUnits cap
+    ];
+
+    // default override flag
+    if (isNil "_stopSpawnOverride") then { _stopSpawnOverride = false; };
+
+    // default group size: pick 2, 4, or 6 if zero/neg
+    if (_amountInGroup <= 0) then { _amountInGroup = selectRandom [2,4,6]; };
+
+    private _sfOverride = (random _sfGroup < 1);
+    private _stopAISpawn = false;
+
+	// find nearby buildings and sort by footprint (prefer larger)
+    private _buildings = nearestObjects [_pos, ["House","Land_Building"], 50];
+    if (count _buildings == 0 ) exitWith { _stopAISpawn };
+
+	 private _areaPairs = [];
+    {
+        private _bb    = boundingBoxReal _x;
+        private _dx    = ((_bb select 1) select 0) - ((_bb select 0) select 0);
+        private _dy    = ((_bb select 1) select 1) - ((_bb select 0) select 1);
+        private _area  = abs (_dx * _dy);
+        _areaPairs pushBack [_area, _x];
+    } forEach _buildings;
+
+	_areaPairs sort false;
+
+	private _sortedBuildings = [];
+    {
+        _sortedBuildings pushBack (_x select 1);
+    } forEach _areaPairs;
+
+	private _building = _sortedBuildings select 0;
+    private _insidePoints = [_building] call BIS_fnc_buildingPositions;
+
+	if (count _insidePoints == 0) exitWith {
+        _stopAISpawn
+    };
+	
+	for "_i" from 1 to _amountInGroup do {
+		// pick random interior point for spawn
+		private _spawnPos = selectRandom _insidePoints;
+
+		_numAI = allUnits select { _x isKindOf "CAManBase" && side _grp == side _x && side _x != civilian && {_x distance (_spawnPos) <= 300} };
+		if (count _numAI >= _numUnits && !_stopSpawnOverride) exitWith {_stopAISpawn = true;};
+
+		_newAI = _grp createUnit [_unit,_spawnPos,[],1,"NONE"];
+		[_faction, _newAI, false, false, _sfOverride]  call (missionNamespace getVariable "FN_equipAI");
+		[_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");
+		
+		// disable movement until trigger fires
+		_newAI disableAI "PATH";
+
+		//placing a light next to the AI to make them more easibly findable (only applicable at night)
+		if ((_i mod 2) == 1) then {
+			createVehicle ["Land_Camping_Light_F", (_newAI modelToWorld [1,0,0]), [], 0, "NONE"];
+    	};
+	};
+
+	[(selectRandom _insidePoints), _faction, (side _grp)] call FN_lootSpawnByFaction;
+
+    _stopAISpawn
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -146,7 +272,7 @@ FN_spawnGroups = {
 //////////////////////////////////////////////////////////////////////////////
 
 if (_typeOfLocationArea == "Rnd" OR _typeOfLocationArea == "") then {
-	_typeOfLocationArea = ["Patrol", .65, "Camp", .45, "Trucks", .15] call BIS_fnc_selectRandomWeighted;
+	_typeOfLocationArea = ["Building", .65, "Patrol", .65, "Camp", .45, "Trucks", .15] call BIS_fnc_selectRandomWeighted;
 };
 
 _vehArray = ["defaultVeh"] call (missionNamespace getVariable "FN_arrayReturn");
@@ -255,37 +381,25 @@ switch (_typeOfLocationArea) do {
         _stopAISpawn = [_pos, _numUnits, _faction, _grpCAMP, 4, true] call FN_spawnGroups;
         _grpCAMP enableGunLights "ForceOn";
 
-        _grp2 = createGroup _side;
-        [_pos, 20, 40, _grp2] call FN_setWaypoints;
-        if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp2, 2, true] call FN_spawnGroups; };
-        _grp2 enableGunLights "ForceOn";
+		_grpBLD1 = createGroup _side;
+        _stopAISpawn = [_pos, _numUnits, _faction, _grpBLD1, (ceil(random 3)), true] call FN_spawnGroupsBld;
+        _grpBLD1 enableGunLights "ForceOn";
 
-        _grp4 = createGroup _side;
-        [_pos, 150, 200, _grp4] call FN_setWaypoints;
-		if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp4, _numUnits] call FN_spawnGroups; };
-        _grp4 enableGunLights "ForceOn";
+        _grp1 = createGroup _side;
+        [_pos, 30, 60, _grp1] call FN_setWaypoints;
+        if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp1, 2] call FN_spawnGroups; };
+        _grp1 enableGunLights "ForceOn";
+
+		_grp1 = createGroup _side;
+        [_pos, 30, 60, _grp1] call FN_setWaypoints;
+        if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp1, _numUnits] call FN_spawnGroups; };
+        _grp1 enableGunLights "ForceOn";
 		
 		if (_turretProb > random 1) then {
 			[_turret] call FN_spawnFortifications;
 		};
 
-		if (_side != WEST) then {
-			switch (_faction) do {
-				case "US";
-				case "RU": {
-					[_pos, 2] call (missionNamespace getVariable "FN_lootSpawner");
-				};
-				case "TRB";
-				case "PMC";
-				case "ROA";
-				case "ALF": {
-					[_pos, 1] call (missionNamespace getVariable "FN_lootSpawner");
-				};
-				default {
-					[_pos, 0] call (missionNamespace getVariable "FN_lootSpawner");
-				};
-			};
-		};
+		[_pos, _faction, _side] call FN_lootSpawnByFaction;
     };
 
     case "Patrol": {
@@ -324,24 +438,30 @@ switch (_typeOfLocationArea) do {
 			_grp enableGunLights "ForceOn";
 		};
 
-		if (_side != WEST) then {
-			switch (_faction) do {
-				case "US";
-				case "RU": {
-					[_pos, 2] call (missionNamespace getVariable "FN_lootSpawner");
-				};
-				case "TRB";
-				case "PMC";
-				case "ROA";
-				case "ALF": {
-					[_pos, 1] call (missionNamespace getVariable "FN_lootSpawner");
-				};
-				default {
-					[_pos, 0] call (missionNamespace getVariable "FN_lootSpawner");
-				};
-			};
-		};
+		
+		[_pos, _faction, _side] call FN_lootSpawnByFaction;
     };
+
+	case "Building": {
+		
+		_grpBLD1 = createGroup _side;
+        _stopAISpawn = [_pos, _numUnits, _faction, _grpBLD1, (ceil(random 3)), true] call FN_spawnGroupsBld;
+        _grpBLD1 enableGunLights "ForceOn";
+
+		_grpBLD2 = createGroup _side;
+        _stopAISpawn = [_pos, _numUnits, _faction, _grpBLD2, (ceil(random 3)), true] call FN_spawnGroupsBld;
+        _grpBLD2 enableGunLights "ForceOn";
+
+		 _grp1 = createGroup _side;
+        [_pos, 20, 50, _grp1] call FN_setWaypoints;
+        if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp1, 2, true] call FN_spawnGroups; };
+        _grp1 enableGunLights "ForceOn";
+
+		_grp2 = createGroup _side;
+        [_pos, 20, 50, _grp2] call FN_setWaypoints;
+        if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp2, _numUnits] call FN_spawnGroups; };
+        _grp2 enableGunLights "ForceOn";
+	};
 
     case "Trucks": {
         _index = 0;
@@ -366,23 +486,8 @@ switch (_typeOfLocationArea) do {
             [_vehArray, (round(random 3) + 3)] call FN_carPatrol;
         };
 		
-		if (_side != WEST) then {
-			switch (_faction) do {
-				case "US";
-				case "RU": {
-					[_pos, 2] call (missionNamespace getVariable "FN_lootSpawner");
-				};
-				case "TRB";
-				case "PMC";
-				case "ROA";
-				case "ALF": {
-					[_pos, 1] call (missionNamespace getVariable "FN_lootSpawner");
-				};
-				default {
-					[_pos, 0] call (missionNamespace getVariable "FN_lootSpawner");
-				};
-			};
-		};
+		
+		[_pos, _faction, _side] call FN_lootSpawnByFaction;
     };
 	
 	case "Squad": { //Only to be used for spawning group(s) of a certain faction

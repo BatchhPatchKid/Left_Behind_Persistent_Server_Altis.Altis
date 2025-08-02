@@ -79,7 +79,7 @@ if(_zeusAction) then {
     hintSilent"Garbage collection executed.";
 } else {
     while{true} do {
-        sleep 120;
+        sleep 360;
 
         private _everyoneDead=true;
 
