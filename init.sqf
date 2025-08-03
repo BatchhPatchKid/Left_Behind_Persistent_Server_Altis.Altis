@@ -113,6 +113,8 @@ missionNamespace setVariable ["mutantEffects", compileFinal preprocessFileLineNu
 waitUntil {!isNull player};
 sleep 0.1;
 
+//[] spawn (missionNamespace getVariable "FN_spawnGarbageLootServer");
+
 // Define the function to add multiple diary entries
 addDiaryEntries = {
     params ["_entries"];
