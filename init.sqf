@@ -304,3 +304,4 @@ civilian setFriend [civilian, 1];
 [player] call FN_updateDrinkActions;
 [player] call FN_updateEatActions;
 [player] call FN_factionClothingCheck;
+[player] call FN_spawnGarbageLootServer;
