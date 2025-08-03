@@ -55,8 +55,6 @@ addMissionEventHandler ["PlayerDisconnected", {
     [] spawn (missionNamespace getVariable "sleepTime");
 }];
 
-[] spawn (missionNamespace getVariable "FN_spawnGarbageLootServer");
-
 // Start the garbage collection script
 [false] spawn (missionNamespace getVariable "garbageCollection");
 

@@ -36,6 +36,7 @@ private _FN_garbageCollector={
     private _distPlayer=3000;
 
     {
+        private _unit = _x;
         if([_x,_missionStones,_distStone] call _fn_checkProximityToDesiredObject) then { continue; };
         if([_x,_flags,_distFlag] call _fn_checkProximityToDesiredObject) then { continue; };
         if([_x,_players,_distPlayer] call _fn_checkProximityToPlayer) then { continue; };
@@ -79,7 +80,7 @@ if(_zeusAction) then {
     hintSilent"Garbage collection executed.";
 } else {
     while{true} do {
-        sleep 5;
+        sleep 360;
 
         // waiting until there are players connected and alive
         waitUntil { count ( allPlayers select { alive _x } ) > 0 };

@@ -1,34 +1,37 @@
-if (!isServer) exitWith {};
+[] spawn {
+    private _classesToScan = [
+        "Land_GarbageBags_F",
+        "Land_GarbageBarrel_01_english_F",
+        "Land_GarbageBarrel_01_F",
+        "Land_GarbagePallet_F",
+        "Land_GarbageWashingMachine_F",
+        "Land_GarbageHeap_01_F",
+        "Land_GarbageHeap_02_F",
+        "Land_GarbageHeap_03_F",
+        "Land_GarbageHeap_04_F",
+        "Land_OfficeCabinet_01_F"
+    ];
 
-missionNamespace setVariable ["garbagePilePositions", []];
-
-// your two distance thresholds
-private _minPileDist  = 30;  // min meters from any existing pile
-private _garbageTypes = ["Land_GarbageBarrel_02_F"];
-
-while { true } do {
-    private _piles = missionNamespace getVariable ["garbagePilePositions", []];
-
-    {
-        // _x is each player here
-        private _houses = nearestObjects [_x, ["house"], 300];
-        private _player = _x;
+    private _action = [
+        "searchGarbage",
+        "Search the garbage pile",
+        "",
         {
-            // _x is each house here
-            private _positions = _x buildingPos -1;
-            if (_positions isEqualTo []) then { continue };
+            params ["_target","_player","_params"];
+            hint format ["%1 searched by %2", _target, name _player];
+        },
+        { true }
+    ] call ace_interact_menu_fnc_createAction;
 
-            private _pos = selectRandom _positions;
-            private _housePos = getPosATL _x;
+    while { true } do {
+        private _allObjs = allMissionObjects "all";
+        private _targets = _allObjs select { typeOf _x in _classesToScan };
 
-            if (((_pos distance (getPos _player)) >= 200 && (_pos distance (getPos _player)) <= 300) && (({ _pos distance _x < _minPileDist } count _piles) == 0) && (random 1 > 0.75)) then {
-                private _pile = createVehicle [(selectRandom _garbageTypes), _pos, [], 0, "CAN_COLLIDE"];
-                _piles pushBack _pos;
-                [_pile, _pos] remoteExec ["FN_createGarbageAction", 0, _pile];
-            };
-        } forEach _houses;
-    } forEach allPlayers;
+        {
+            hintSilent format ["Found garbage pile: %1", _x];
+            [_x, 0, ["ACE_Actions"], _action] call ace_interact_menu_fnc_addActionToObject;
+        } forEach _targets;
 
-    missionNamespace setVariable ["garbagePilePositions", _piles];
-    sleep 120;
+        sleep 1800;  // wait 30 minutes before re-scanning
+    };
 };
