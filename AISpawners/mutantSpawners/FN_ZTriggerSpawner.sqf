@@ -104,7 +104,7 @@ switch (_faction) do { //Going throuigh each zombie faction to spawn the appropr
 		};
 
 		// 0 = slower zombies | 1 = faster Webknight zombies
-		_ZedArray = [1] call FN_getZombieArray;
+		_ZedArray = [0] call FN_getZombieArray;
 		
 		private _horde = createGroup east;
 		[_horde, _ZedArray, _numUnits, _pos, _maxDist] call (missionNamespace getVariable "FN_spawnZom");

@@ -24,7 +24,7 @@ while { true } do {
             if (((_pos distance (getPos _player)) >= 200 && (_pos distance (getPos _player)) <= 300) && (({ _pos distance _x < _minPileDist } count _piles) == 0) && (random 1 > 0.75)) then {
                 private _pile = createVehicle [(selectRandom _garbageTypes), _pos, [], 0, "CAN_COLLIDE"];
                 _piles pushBack _pos;
-                [_pile, _pos] remoteExec ["FN_createGarbagePile", 0, _pile];
+                [_pile, _pos] remoteExec ["FN_createGarbageAction", 0, _pile];
             };
         } forEach _houses;
     } forEach allPlayers;

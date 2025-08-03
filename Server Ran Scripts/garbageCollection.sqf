@@ -79,7 +79,7 @@ if(_zeusAction) then {
     hintSilent"Garbage collection executed.";
 } else {
     while{true} do {
-        sleep 360;
+        sleep 5;
 
         // waiting until there are players connected and alive
         waitUntil { count ( allPlayers select { alive _x } ) > 0 };
