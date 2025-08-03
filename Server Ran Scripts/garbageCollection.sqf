@@ -39,7 +39,7 @@ private _FN_garbageCollector={
         if([_x,_missionStones,_distStone] call _fn_checkProximityToDesiredObject) then { continue; };
         if([_x,_flags,_distFlag] call _fn_checkProximityToDesiredObject) then { continue; };
         if([_x,_players,_distPlayer] call _fn_checkProximityToPlayer) then { continue; };
-        if(_airVehicles findIf{_x distance2D _x<5}!=-1) then { continue; };
+        if (_airVehicles findIf { _x distance2D _unit < 5 } != -1) then { continue; };
         deleteVehicle _x;
     } forEach allUnits;
 

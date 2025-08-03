@@ -43,6 +43,7 @@
 ]] call acex_fortify_fnc_registerObjects;
 
 waitUntil { !isNil { missionNamespace getVariable "FN_spawnGarbageLootServer" } };
+waitUntil { !isNil { missionNamespace getVariable "garbageCollection" } };
 
 // Set up event-driven sleep system
 sleepRequestUpdate = 0;
