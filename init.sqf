@@ -24,9 +24,8 @@ missionNamespace setVariable ["FN_meleeChance", compileFinal  preprocessFileLine
 missionNamespace setVariable ["FN_factionSpawnerMain", compileFinal  preprocessFileLineNumbers "AISpawners\FN_factionSpawnerMain.sqf"];
 missionNamespace setVariable ["FN_lootSpawner", compileFinal  preprocessFileLineNumbers "AISpawners\FN_lootSpawner.sqf"];
 missionNamespace setVariable ["FN_fillLootCrate", compileFinal  preprocessFileLineNumbers "AISpawners\FN_fillLootCrate.sqf"];
-missionNamespace setVariable ["FN_addGarbageAction", compileFinal  preprocessFileLineNumbers "Ambient\FN_addGarbageAction.sqf"];
 missionNamespace setVariable ["FN_spawnLootCrate", compileFinal  preprocessFileLineNumbers "Ambient\FN_spawnLootCrate.sqf"];
-missionNamespace setVariable ["FN_spawnGarbageLootServer", compileFinal  preprocessFileLineNumbers "Server Ran Scripts\FN_spawnGarbageLootServer.sqf"];
+missionNamespace setVariable ["FN_lootGarbageSystem", compileFinal  preprocessFileLineNumbers "Server Ran Scripts\FN_lootGarbageSystem.sqf"];
 missionNamespace setVariable ["FN_ExitingTrigger", compileFinal  preprocessFileLineNumbers "ExitingTrigger.sqf"];
 missionNamespace setVariable ["FN_Conversations", compileFinal  preprocessFileLineNumbers "Economy System\Conversations.sqf"];
 missionNamespace setVariable ["FN_economySystem", compileFinal  preprocessFileLineNumbers "Economy System\economySystem.sqf"];
@@ -304,4 +303,4 @@ civilian setFriend [civilian, 1];
 [player] call FN_updateDrinkActions;
 [player] call FN_updateEatActions;
 [player] call FN_factionClothingCheck;
-[player] call FN_spawnGarbageLootServer;
+[player] call FN_lootGarbageSystem;
