@@ -30,7 +30,7 @@ FN_getScalar = {
      
    Nutrition:
    - Maximum: 100.
-   - Base rate: 1 point per 3 minutes (≈0.67 points per 30 second cycle).
+   - Base rate: 0.75 points per cycle (every 30 seconds).
    - Modified by adding the scalar value from FN_getScalar.
      
    When either hydration or nutrition reaches 0:

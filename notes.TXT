@@ -11,15 +11,14 @@ To do:
 - When gutting, allow for a chance to obtain a bag of 250ml's of blood
 
 Fixes:
-- no animations for eating or drinkning?
-- restructure scenario actions
+- no animations for eating or drinkning? (Fixed hopefully)
+- restructure scenario actions (Done)
 - give ace interaction to: water sources (drink/refill), dead animals(skin)
-- cook meat missing hints for no meat found in inventory
-- looting hint does not display to the client
+- cook meat missing hints for no meat found in inventory (FIXED)
+- looting hint does not display to the client (Fixed hopefully)
 - maybe switch from winter 2035?
 - return weapon info: fire rate, ranging
-- water too prevelant now
-- increase dehydration a tiny bit and increase starvation by a lot
+- water too prevelant now (Possibly fixed)
 - geiger counter telling me I'm being irraditated despite taking no radiation - did eventually stop
 - random encounter heli flyby did not give hint
 - add holster ace interaction

@@ -8,7 +8,7 @@
 params ["_player"];
 
 // 1. Define the parent branch path
-private _branchParent = ["ACE_SelfActions","Main","Survival System","Survival Actions","Eat"];
+private _branchParent = ["ACE_SelfActions","Survival_System","Eat"];
 
 // 2. Remove all old Eat actions by their full-paths
 private _oldEntries = _player getVariable ["LB_currentEatEntries", []];

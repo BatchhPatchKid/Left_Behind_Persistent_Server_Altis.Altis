@@ -20,6 +20,7 @@ private _meatPairs = [
     ["rvg_Sheep_Meat",    "rvg_Sheep_Meat_Cooked"]
 ];
 
+private _cookedItem = false;
 // Loop through each pair; cook only one piece total
 {
     private _uncooked = _x select 0;
@@ -29,14 +30,20 @@ private _meatPairs = [
     if ([_player, _uncooked] call BIS_fnc_hasItem) exitWith {
         // Remove one uncooked and add one cooked
         _player removeItem _uncooked;
-        _player addItem    _cooked;
+        _player addItem _cooked;
+        _cookedItem = true;
 
         // Show which item was cooked
-        hint format ["You successfully cooked a piece of meat", _uncooked, _cooked];
+        hintSilent "You successfully cooked a piece of meat";
 		_player playMove "AinvPknlMstpSnonWnonDnon_medicUp5";
-		0 spawn {
-			sleep 3;
-			hintSilent "";
-		};
     };
 } forEach _meatPairs;
+
+if (!_cookedItem) then {
+    hintSilent "Could not find any uncooked meat in your inventory";
+};
+
+0 spawn {
+    sleep 3;
+    hintSilent "";
+};

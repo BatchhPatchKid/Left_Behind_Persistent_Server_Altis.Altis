@@ -55,7 +55,8 @@ FN_temperature = {
 };
 
 FN_getTemp = {
-	bodyTemp;
+    params ["_player"];
+    bodyTemp;
 };
 
 getCalculatedBodyTempAndHealth = {

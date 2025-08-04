@@ -52,7 +52,10 @@ if (random 1 > .5) then {
 			_holder addItemCargoGlobal [(selectRandomWeighted _lootArray), 1];
 		};
 	};
+
+	_displayText = format ["<t color='#ffffffff' size='.80'>You managed to salvage something</t>"];
+    [_displayText, 0.85, 1, 2, 0.3, 0, 789] remoteExec ["BIS_fnc_dynamicText", 2];
 } else {
-	_displayText = format ["<t color='#ffffffff' size='.80'>No Loot Was Found...</t>"];
-    [ _displayText, 0.85, 1, 2, 0.3, 0, 789 ] spawn BIS_fnc_dynamicText;
+	_displayText = format ["<t color='#d0df08ff' size='.80'>No Loot Was Found...</t>"];
+    [_displayText, 0.85, 1, 2, 0.3, 0, 789] remoteExec ["BIS_fnc_dynamicText", 2];
 };

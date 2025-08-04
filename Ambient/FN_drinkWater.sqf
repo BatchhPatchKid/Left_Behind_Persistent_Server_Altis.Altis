@@ -48,22 +48,18 @@ if (_item in _sodas) then {
 						case "ACE_bloodIV_250": {
 							// 250 ml blood
 							_value = 8;
-							_selectedName  = "250 ml of human blood";
 						};
 						case "ACE_bloodIV_500": {
 							// 500 ml blood
 							_value = 16;
-							_selectedName  = "500 ml of human blood";
 						};
 						case "ACE_bloodIV": {
 							// 1 L blood
 							_value = 32;
-							_selectedName  = "1 liter of human blood";
 						};
 						default {
 							// fallback if somehow another item got through
 							_value = 0;
-							_selectedName  = "";
 						};
 					};
                     _radAmount = 0;
@@ -84,6 +80,10 @@ if (_item in _canteens) then {
     _player addItem "rvg_canteenEmpty";
 };
 
+if (_item in _waterBottles or _item in _dirty) then {
+    _player addItem "rvg_plasticBottleEmpty";
+};
+
 // 6. Adjust hydration
 private _current = _player getVariable ["hydrationLevel", 100];
 private _new = _current + _value;
@@ -91,7 +91,8 @@ if (_new > 100) then { _new = 100; };
 _player setVariable ["hydrationLevel", _new, true];
 
 // 7. Apply radiation
-if (_radAmount > 0 && (itemsWithMagazines player)) then {
+_arr = (itemsWithMagazines _player) select { _x == "rvg_geiger" };
+if ((_radAmount > 0) and ((count _arr) > 0)) then {
     [_radAmount] call FN_addRad;
 	[_player, ["rvg_geiger_1", 100, 1]] remoteExec ["say3D"];
 };
