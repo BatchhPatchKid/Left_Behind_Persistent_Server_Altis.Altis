@@ -42,8 +42,11 @@
 
 ]] call acex_fortify_fnc_registerObjects;
 
-waitUntil { !isNil { missionNamespace getVariable "FN_spawnGarbageLootServer" } };
 waitUntil { !isNil { missionNamespace getVariable "garbageCollection" } };
+[false] spawn (missionNamespace getVariable "garbageCollection");
+
+waitUntil { !isNil { missionNamespace getVariable "FN_lootGarbageSystem" } };
+[] spawn (missionNamespace getVariable "FN_lootGarbageSystem");
 
 // Set up event-driven sleep system
 sleepRequestUpdate = 0;
@@ -55,8 +58,6 @@ addMissionEventHandler ["PlayerDisconnected", {
     [] spawn (missionNamespace getVariable "sleepTime");
 }];
 
-// Start the garbage collection script
-[false] spawn (missionNamespace getVariable "garbageCollection");
 
 sideEmpty setFriend [west, 0];
 sideEmpty setFriend [east, 0];

@@ -22,10 +22,12 @@ missionNamespace setVariable ["FN_equipAI", compileFinal  preprocessFileLineNumb
 missionNamespace setVariable ["FN_renegadeSpawner", compileFinal  preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_renegadeSpawner.sqf"];
 missionNamespace setVariable ["FN_meleeChance", compileFinal  preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_meleeChance.sqf"];
 missionNamespace setVariable ["FN_factionSpawnerMain", compileFinal  preprocessFileLineNumbers "AISpawners\FN_factionSpawnerMain.sqf"];
-missionNamespace setVariable ["FN_lootSpawner", compileFinal  preprocessFileLineNumbers "AISpawners\FN_lootSpawner.sqf"];
-missionNamespace setVariable ["FN_fillLootCrate", compileFinal  preprocessFileLineNumbers "AISpawners\FN_fillLootCrate.sqf"];
-missionNamespace setVariable ["FN_spawnLootCrate", compileFinal  preprocessFileLineNumbers "Ambient\FN_spawnLootCrate.sqf"];
+missionNamespace setVariable ["FN_lootSpawner", compileFinal  preprocessFileLineNumbers "LootSystem\FN_lootSpawner.sqf"];
+missionNamespace setVariable ["FN_fillLootCrate", compileFinal  preprocessFileLineNumbers "LootSystem\FN_fillLootCrate.sqf"];
+missionNamespace setVariable ["FN_spawnLootCrate", compileFinal  preprocessFileLineNumbers "LootSystem\FN_spawnLootCrate.sqf"];
 missionNamespace setVariable ["FN_lootGarbageSystem", compileFinal  preprocessFileLineNumbers "Server Ran Scripts\FN_lootGarbageSystem.sqf"];
+missionNamespace setVariable ["FN_attachAceLoot", compileFinal  preprocessFileLineNumbers "LootSystem\FN_attachAceLoot.sqf"];
+missionNamespace setVariable ["FN_spawnLootGround", compileFinal  preprocessFileLineNumbers "LootSystem\FN_spawnLootGround.sqf"];
 missionNamespace setVariable ["FN_ExitingTrigger", compileFinal  preprocessFileLineNumbers "ExitingTrigger.sqf"];
 missionNamespace setVariable ["FN_Conversations", compileFinal  preprocessFileLineNumbers "Economy System\Conversations.sqf"];
 missionNamespace setVariable ["FN_economySystem", compileFinal  preprocessFileLineNumbers "Economy System\economySystem.sqf"];
@@ -155,6 +157,7 @@ _diaryEntries = [
 // Broadcast the diary entries to all clients
 if (hasInterface) then {
     [_diaryEntries] call addDiaryEntries;
+    [player] spawn (missionNamespace getVariable "FN_attachAceLoot");
 } else {
     [_diaryEntries] remoteExec ["addDiaryEntries", 0, true];
 };
@@ -179,6 +182,8 @@ if (side player != civilian && (hasInterface or isDedicated)) then {
 if (isServer) then {
 	enableDynamicSimulationSystem true;
 	"Group" setDynamicSimulationDistance 500;
+	PFrun=false;
+	[] spawn compileFinal(preprocessFile"PF\init.sqf");
 };
 
 // adding any food or drinks to the player's ace interact menu as they spawn;
@@ -303,4 +308,3 @@ civilian setFriend [civilian, 1];
 [player] call FN_updateDrinkActions;
 [player] call FN_updateEatActions;
 [player] call FN_factionClothingCheck;
-[player] call FN_lootGarbageSystem;

@@ -32,3 +32,24 @@ _handle = 0 spawn {
 	sleep 20;
 	player playMoveNow "AmovPercMstpSrasWrflDnon"; 
 };
+
+[] spawn {
+	private _garbagePiles = nearestObjects [player, [], 10];
+
+	{
+		private _obj = _x;
+		private _dist = player distance _obj;
+
+		private _info = getModelInfo _obj;
+		if (count _info == 0) then { continue; };
+
+		private _fullPath = _info select 0;
+		private _parts = _fullPath splitString ".";
+		if (count _parts == 0) then { continue; };
+
+		private _class = _parts select 0;
+
+		hintSilent format ["Name: %1", _class];
+		sleep 10;
+	} forEach _garbagePiles;
+};
