@@ -183,7 +183,7 @@ if (isServer) then {
 	enableDynamicSimulationSystem true;
 	"Group" setDynamicSimulationDistance 500;
 	PFrun=false;
-	[] spawn compileFinal(preprocessFile"PF\init.sqf");
+	[] spawn compileFinal(preprocessFileLineNumbers"PF\init.sqf");
 };
 
 // adding any food or drinks to the player's ace interact menu as they spawn;

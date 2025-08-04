@@ -35,13 +35,13 @@ if (random 1 > .5) then {
 		case ("primaryCommon"): {
 			_weaponSelected = selectRandomWeighted _lootArray;
 			_holder addWeaponCargoGlobal [_weaponSelected, 1];
-			_weaponSelected addMagazineCargoGlobal [compatibleItems _weaponSelected, round (random 5)];
+			_holder addMagazineCargoGlobal [(compatibleItems _weaponSelected), round (random 5)];
 		};
 
 		case ("primaryRare"): {
 			_weaponSelected = selectRandomWeighted _lootArray;
 			_holder addWeaponCargoGlobal [_weaponSelected, 1];
-			_weaponSelected addMagazineCargoGlobal [compatibleItems _weaponSelected, round (random 5)];
+			_holder addMagazineCargoGlobal [(compatibleItems _weaponSelected), round (random 5)];
 		};
 
 		case ("backpackCommon"): {
