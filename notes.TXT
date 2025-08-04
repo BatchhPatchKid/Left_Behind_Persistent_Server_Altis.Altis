@@ -9,10 +9,20 @@ To do:
 - trader gave an NLAW to Eli after (unable to replicate)
 - weapon holstered on back doesn't get deleted
 - When gutting, allow for a chance to obtain a bag of 250ml's of blood
-- water and food items should be more common (priority)
-- maps, compasses, watches, and radio should be more common (priority)
-- loot system needs to be created
-- garbage collection not working on dedicated server?
+
+Fixes:
+- no animations for eating or drinkning?
+- restructure scenario actions
+- give ace interaction to: water sources (drink/refill), dead animals(skin)
+- cook meat missing hints for no meat found in inventory
+- looting hint does not display to the client
+- maybe switch from winter 2035?
+- return weapon info: fire rate, ranging
+- water too prevelant now
+- increase dehydration a tiny bit and increase starvation by a lot
+- geiger counter telling me I'm being irraditated despite taking no radiation - did eventually stop
+- random encounter heli flyby did not give hint
+- add holster ace interaction
 
 Notes:
 - Good animation for psionsics injury: _player playMove "AinvPknlMstpSnonWnonDnon_healed_1"; (or _2)

@@ -100,8 +100,8 @@ while {true} do {
         // NUTRITION SECTION  //
         //////////////////////////
         
-        // Base nutrition decrease is 1 point per 3 minutes (≈0.67 per 30 second cycle).
-        private _baseNutritionDecrease = 2/3;
+        // Nutrition decreases every 3 minutes (0.75 per 30s cycle)
+        private _baseNutritionDecrease = 3/4;
         // Final nutrition decrease is base rate plus the scalar.
         private _finalNutritionDecrease = _baseNutritionDecrease + _scalar;
         

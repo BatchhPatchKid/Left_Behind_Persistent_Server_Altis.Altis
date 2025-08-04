@@ -1,43 +1,225 @@
-_object0 = createVehicle ["VirtualReammoBox_small_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
-_object0 setVectorDirAndUp [[0.610352,-0.792131,-0.000366211],[-0.0426353,-0.0333129,0.998535]];
-_object0 setPosASL [16755.9,13646.3,9.67585];
+_object0 = createVehicle ["ACE_medicalSupplyCrate", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object0 setVectorDirAndUp [[-0.00012207,0.999943,-0.0106812],[0.0120238,0.0106818,0.999871]];
+_object0 setPosASL [20775.7,7281.96,27.937];
 
 clearItemCargoGlobal _object0;
 clearWeaponCargoGlobal _object0;
 clearMagazineCargoGlobal _object0;
 clearBackpackCargoGlobal _object0;
 
-{_object0 addItemCargoGlobal _x} forEach [["ACE_fieldDressing",6],["ACE_bloodIV",1],["WBK_HeadLampItem",1],["acc_flashlight",1]];
-{_object0 addWeaponCargoGlobal _x} forEach [["rhsusf_weap_MP7A2",1]];
-{_object0 addMagazineCargoGlobal _x} forEach [["rvg_money",7],["rhsusf_8Rnd_00Buck",2],["rhs_mag_9x19mm_7n21_20",2],["HandGrenade",1],["rvg_bacon",1],["rvg_beansEmpty",1],["rvg_canteenEmpty",1],["rvg_baconEmpty",1],["rvg_Sheep_Meat_Cooked",1],["rvg_rice",1],["16Rnd_9x21_Mag",3]];
+{_object0 addItemCargoGlobal _x} forEach [["rvg_rangemaster_1",1],["H_Bandanna_camo",1],["H_Shemag_olive_hs",1]];
+{_object0 addWeaponCargoGlobal _x} forEach [["rhs_weap_aks74u",1]];
+{_object0 addMagazineCargoGlobal _x} forEach [["I_IR_Grenade",1],["rvg_notepad",1],["Chemlight_blue",3],["ACE_Chemlight_HiBlue",3]];
 
 
-_object1 = createVehicle ["C_Van_01_fuel_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
-_object1 setVectorDirAndUp [[-0.58075,0.81408,-0.0020752],[-0.0309266,-0.019515,0.999331]];
-_object1 setPosASL [16748.5,13649.3,9.57712];
-_object1 setFuel 0.971879;
-{_object1 setHitIndex [_forEachIndex, _x, false]} forEach [0,0,0,0,0,0.754695,0.741981,0,0,0,0,0,0,0,0,0,0,0,0,0,0.753872,0,0,0,0,0,0];
-[_object1, ["White",1], [], true] call BIS_fnc_initVehicle;
+_object1 = createVehicle ["C_SUV_01_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object1 setVectorDirAndUp [[-0.466553,0.884457,0.00799561],[0.0134231,-0.00195857,0.999908]];
+_object1 setPosASL [20769.4,7277.55,27.88];
+_object1 setFuel 0.979602;
+{_object1 setHitIndex [_forEachIndex, _x, false]} forEach [0.0947826,0.10769,0.0947826,0.565403,0.238488,0.0139458,0.0570382,0.0238235,0.0251559,0,0,0,0,0,0.116368,0,0,0,0,0,0.157971,0.157971];
+[_object1, ["Red",1], [], true] call BIS_fnc_initVehicle;
 
 clearItemCargoGlobal _object1;
 clearWeaponCargoGlobal _object1;
 clearMagazineCargoGlobal _object1;
 clearBackpackCargoGlobal _object1;
 
-{_object1 addItemCargoGlobal _x} forEach [["ACE_rope12",1]];
+{_object1 addItemCargoGlobal _x} forEach [["ACE_rope6",1],["ACE_plasmaIV",1],["ACE_plasmaIV_500",1]];
+{_object1 addMagazineCargoGlobal _x} forEach [["SLAMDirectionalMine_Wire_Mag",1],["O_R_IR_Grenade",1],["IEDUrbanSmall_Remote_Mag",1],["30Rnd_556x45_Stanag",13]];
 
 {_object1 removeMagazineTurret (_x select [0, 2])} forEach magazinesAllTurrets _object1;
 {_object1 addMagazineTurret _x} forEach [];
 _object2 = createVehicle ["Flag_Red_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
-_object2 setVectorDirAndUp [[0.81543,0.578856,0],[0,0,1]];
-_object2 setPosASL [16750.9,13644.6,9.45573];
+_object2 setVectorDirAndUp [[0.167603,0.985855,0],[0,0,1]];
+_object2 setPosASL [20777.5,7285.11,27.9006];
 
 
-_object3 = createVehicle ["Land_Sleeping_bag_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
-_object3 setVectorDirAndUp [[0.801453,0.598058,0],[0,0,1]];
-_object3 setPosASL [16750.7,13654.9,9.70846];
+_object3 = createVehicle ["Land_PaperBox_closed_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object3 setVectorDirAndUp [[0.707092,0.707121,0],[0,0,1]];
+_object3 setPosASL [20780.5,7285.86,27.8481];
 
 
-_object4 = createVehicle ["FirePlace_burning_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
-_object4 setVectorDirAndUp [[0.220215,0.975451,0],[0,0,1]];
-_object4 setPosASL [16752,13656.5,9.71362];
+_object4 = createVehicle ["CamoNet_BLUFOR_open_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object4 setVectorDirAndUp [[0,1,0],[0,0,1]];
+_object4 setPosASL [20777.4,7291.86,27.8478];
+
+
+_object5 = createVehicle ["Campfire_burning_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object5 setVectorDirAndUp [[0,1,0],[0,0,1]];
+_object5 setPosASL [20777.4,7291.86,27.8478];
+
+
+_object6 = createVehicle ["Land_Cliff_stone_small_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object6 setVectorDirAndUp [[-0.00012207,0.999986,-0.00531006],[0.0173344,0.00531138,0.999836]];
+_object6 setPosASL [20777.4,7291.87,27.8478];
+
+
+_object7 = createVehicle ["Land_HelipadEmpty_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object7 setVectorDirAndUp [[-0.000183105,0.999943,-0.0106812],[0.0173336,0.0106827,0.999793]];
+_object7 setPosASL [20782.9,7285.29,28.9383];
+
+
+_object8 = createVehicle ["GroundWeaponHolder", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object8 setVectorDirAndUp [[-0.000183105,0.999943,-0.0106812],[0.0173336,0.0106827,0.999793]];
+_object8 setPosASL [20784.4,7285.29,27.8854];
+
+clearItemCargoGlobal _object8;
+clearWeaponCargoGlobal _object8;
+clearMagazineCargoGlobal _object8;
+clearBackpackCargoGlobal _object8;
+
+{_object8 addItemCargoGlobal _x} forEach [["rvg_legstrapbag_4",1]];
+
+
+_object9 = createVehicle ["Land_Shoot_House_Wall_Long_Crouch_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object9 setVectorDirAndUp [[-1,0,0],[0,0,1]];
+_object9 setPosASL [20783.8,7289.86,27.7562];
+
+
+_object10 = createVehicle ["rvg_dome_tent_gry", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object10 setVectorDirAndUp [[0.148315,0.98894,0],[0,0,1]];
+_object10 setPosASL [20782.4,7291.86,27.7611];
+
+clearItemCargoGlobal _object10;
+clearWeaponCargoGlobal _object10;
+clearMagazineCargoGlobal _object10;
+clearBackpackCargoGlobal _object10;
+
+{_object10 addMagazineCargoGlobal _x} forEach [["rvg_purificationTablets",2],["rvg_canteenEmpty",1],["rvg_beans",1]];
+
+
+_object11 = createVehicle ["Land_Shoot_House_Wall_Long_Crouch_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object11 setVectorDirAndUp [[-1,0,0],[0,0,1]];
+_object11 setPosASL [20783.8,7293.86,27.7351];
+
+
+_object12 = createVehicle ["GroundWeaponHolder", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object12 setVectorDirAndUp [[0.996582,0.0806905,-0.0177002],[0.0170609,0.00860513,0.999817]];
+_object12 setPosASL [20781.9,7296.48,27.744];
+
+clearItemCargoGlobal _object12;
+clearWeaponCargoGlobal _object12;
+clearMagazineCargoGlobal _object12;
+clearBackpackCargoGlobal _object12;
+
+{_object12 addItemCargoGlobal _x} forEach [["H_Cap_headphones",1]];
+
+
+_object13 = createVehicle ["Land_WoodenBox_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object13 setVectorDirAndUp [[0.599854,0.799955,-0.0157471],[0.016652,0.00719507,0.999835]];
+_object13 setPosASL [20781.2,7297.66,27.7508];
+
+
+_object14 = createVehicle ["GroundWeaponHolder", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object14 setVectorDirAndUp [[0.952454,-0.304684,0],[0.0106437,0.0332727,0.99939]];
+_object14 setPosASL [20762.5,7300.4,27.9487];
+
+clearItemCargoGlobal _object14;
+clearWeaponCargoGlobal _object14;
+clearMagazineCargoGlobal _object14;
+clearBackpackCargoGlobal _object14;
+
+{_object14 addItemCargoGlobal _x} forEach [["WBK_HeadLampItem",1]];
+
+
+_object15 = createVehicle ["Land_HelipadEmpty_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object15 setVectorDirAndUp [[0.952454,-0.304684,0],[0,0,1]];
+_object15 setPosASL [20760.5,7300.6,28.0946];
+
+
+_object16 = createVehicle ["Land_HelipadEmpty_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object16 setVectorDirAndUp [[0.921143,0.385777,-0.0516968],[0.0120092,0.104587,0.994443]];
+_object16 setPosASL [20755.8,7299.42,28.184];
+
+
+_object17 = createVehicle ["ACE_medicalSupplyCrate", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object17 setVectorDirAndUp [[0,0.999996,-0.00268555],[0.00268555,0.00268554,0.999993]];
+_object17 setPosASL [20795.2,7293.28,27.6675];
+
+clearItemCargoGlobal _object17;
+clearWeaponCargoGlobal _object17;
+clearMagazineCargoGlobal _object17;
+clearBackpackCargoGlobal _object17;
+
+{_object17 addItemCargoGlobal _x} forEach [["rvg_rangemaster_2",1],["H_Bandanna_surfer_blk",1]];
+{_object17 addMagazineCargoGlobal _x} forEach [["rvg_hose",1]];
+
+
+_object18 = createVehicle ["Land_HelipadEmpty_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object18 setVectorDirAndUp [[0.70166,-0.712512,0],[0,0,1]];
+_object18 setPosASL [20787.1,7304.46,27.8561];
+
+
+_object19 = createVehicle ["Land_HelipadEmpty_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object19 setVectorDirAndUp [[0.952026,-0.306016,0],[0,0,1]];
+_object19 setPosASL [20769,7310.72,27.9101];
+
+
+_object20 = createVehicle ["Land_HelipadEmpty_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object20 setVectorDirAndUp [[0.99762,-0.0689571,0],[0,0,1]];
+_object20 setPosASL [20784.6,7312.75,27.7584];
+
+
+_object21 = createVehicle ["Land_HelipadEmpty_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object21 setVectorDirAndUp [[0.99762,-0.0689571,0],[0,0,1]];
+_object21 setPosASL [20778.3,7317.89,27.5019];
+
+
+_object22 = createVehicle ["GroundWeaponHolder", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object22 setVectorDirAndUp [[-0.17926,-0.983404,0.0279541],[0.16869,-0.00273139,0.985665]];
+_object22 setPosASL [20759.8,7329.18,24.8599];
+
+clearItemCargoGlobal _object22;
+clearWeaponCargoGlobal _object22;
+clearMagazineCargoGlobal _object22;
+clearBackpackCargoGlobal _object22;
+
+{_object22 addItemCargoGlobal _x} forEach [["rhs_6sh92_digi_radio",1]];
+{_object22 addMagazineCargoGlobal _x} forEach [["9Rnd_45ACP_Mag",2]];
+
+
+_object23 = createVehicle ["VirtualReammoBox_small_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object23 setVectorDirAndUp [[0.610352,-0.792131,-0.000366211],[-0.0426353,-0.0333129,0.998535]];
+_object23 setPosASL [16755.9,13646.3,9.67505];
+
+clearItemCargoGlobal _object23;
+clearWeaponCargoGlobal _object23;
+clearMagazineCargoGlobal _object23;
+clearBackpackCargoGlobal _object23;
+
+{_object23 addItemCargoGlobal _x} forEach [["ACE_fieldDressing",6],["ACE_bloodIV",1],["WBK_HeadLampItem",1],["acc_flashlight",1]];
+{_object23 addWeaponCargoGlobal _x} forEach [["rhsusf_weap_MP7A2",1]];
+{_object23 addMagazineCargoGlobal _x} forEach [["rvg_money",7],["rhsusf_8Rnd_00Buck",2],["rhs_mag_9x19mm_7n21_20",2],["HandGrenade",1],["rvg_bacon",1],["rvg_beansEmpty",1],["rvg_canteenEmpty",1],["rvg_baconEmpty",1],["rvg_Sheep_Meat_Cooked",1],["rvg_rice",1],["16Rnd_9x21_Mag",3]];
+
+
+_object24 = createVehicle ["FirePlace_burning_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object24 setVectorDirAndUp [[0.220215,0.975451,0],[0,0,1]];
+_object24 setPosASL [16752,13656.5,9.71362];
+
+
+_object25 = createVehicle ["Land_Sleeping_bag_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object25 setVectorDirAndUp [[0.801453,0.598058,0],[0,0,1]];
+_object25 setPosASL [16750.7,13654.9,9.70846];
+
+
+_object26 = createVehicle ["Flag_Red_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object26 setVectorDirAndUp [[0.81543,0.578856,0],[0,0,1]];
+_object26 setPosASL [16750.9,13644.6,9.45573];
+
+
+_object27 = createVehicle ["C_Van_01_fuel_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+_object27 setVectorDirAndUp [[-0.579956,0.814646,-0.00152588],[-0.0420913,-0.0280946,0.998719]];
+_object27 setPosASL [16748.4,13649.3,9.57615];
+_object27 setFuel 0.971879;
+{_object27 setHitIndex [_forEachIndex, _x, false]} forEach [0,0,0,0,0,0.754695,0.741981,0,0,0,0,0,0,0,0,0,0,0,0,0,0.753872,0,0,0,0,0,0];
+[_object27, ["White",1], [], true] call BIS_fnc_initVehicle;
+
+clearItemCargoGlobal _object27;
+clearWeaponCargoGlobal _object27;
+clearMagazineCargoGlobal _object27;
+clearBackpackCargoGlobal _object27;
+
+{_object27 addItemCargoGlobal _x} forEach [["ACE_rope12",2]];
+
+{_object27 removeMagazineTurret (_x select [0, 2])} forEach magazinesAllTurrets _object27;
+{_object27 addMagazineTurret _x} forEach [];
