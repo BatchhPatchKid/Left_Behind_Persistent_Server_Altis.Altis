@@ -2,7 +2,7 @@
 player setVariable ["defecationStatus", 0];
 
 FN_checkDefecationStatus = {
-	params ["_player"];
+	params ["_player", "_display"];
     private _status = player getVariable ["defecationStatus", 0];
 	// Ensure that any status below 1 is treated as 1 for tier calculation.
 	private _adjusted = _status max 1;
@@ -10,19 +10,26 @@ FN_checkDefecationStatus = {
 	// For instance, values 1-20 become tier 0, 21–40 become tier 1, etc.
 	private _tier = floor(( _adjusted - 1 ) / 20);
 
-   switch (_tier) do {
-	   case 0: { hintSilent "You feel comfortable. No urgent need to defecate."; };
-	   case 1: { hintSilent "You feel a slight urge to defecate."; };
-	   case 2: { hintSilent "Your stomach is rumbling – you may need to find a bush soon."; };
-	   case 3: { hintSilent "The need is strong – you should defecate very soon"; };
-	   case 4: { hintSilent "You desperately need to defecate"; };
-	   default { hintSilent "Defecation status is unknown"; };
+	private _text = "";
+	switch (_tier) do {
+		case 0: { _text = "You feel comfortable. No urgent need to defecate."; };
+		case 1: { _text = "You feel a slight urge to defecate."; };
+		case 2: { _text = "Your stomach is rumbling – you may need to find a bush soon."; };
+		case 3: { _text = "The need is strong – you should defecate very soon"; };
+		case 4: { _text = "You desperately need to defecate"; };
+		default { _text = "Defecation status is unknown"; };
 	};
-	//Clear hint after ~3s
-	0 spawn {
-		sleep 3;
-		hintSilent "";
+
+	if (_display) exitWith {
+		[_text] spawn {
+			params ["_text"];
+			hintSilent _text;
+			sleep 3;
+			hintSilent "";
+		};
 	};
+
+	_text
 };
 
 FN_addDefecationPoints = {

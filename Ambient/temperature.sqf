@@ -41,7 +41,7 @@ FN_temperature = {
 
 
 		if (bodyTemp < 93) then {
-			hintSilent parseText format["<t color='#0000FF' size='1'>Body Temp: %1<br/>Uniform is %2<br/> Headgear is %3<br/>Facewear is %4<br/>Vest %5</t>",bodyTemp,_playerUniformText, _playerHeadgearText, _playerGogglesText, _playerVestText];
+			hintSilent parseText format["<t color='#0000ff' size='1'>Body Temp: %1<br/><t color='#ffffff' size='1'>Uniform is %2<br/> Headgear is %3<br/>Facewear is %4<br/>Vest %5</t>",bodyTemp,_playerUniformText, _playerHeadgearText, _playerGogglesText, _playerVestText];
 		};
 		if (bodyTemp > 100) then {
 			hintSilent parseText format["<t color='#F38701' size='1'>Body Temp: %1<br/><t color='#ffffff' size='1'>Uniform is %2<br/> Headgear is %3<br/>Facewear is %4<br/>Vest %5</t>",bodyTemp,_playerUniformText, _playerHeadgearText, _playerGogglesText, _playerVestText];
@@ -188,11 +188,13 @@ while {true} do {
         bodyTemp = _returnedValues select 0;
         sleep 5;
     };
+
     // Once the player dies, reset the variables
     bodyTemp = 98.6;
     _coldUniform = 1; // lower is better
     _coldRain = 0; // higher is better
     _fireCancel = 1;
     _inBuilding = false;
-    sleep 5;
+
+    waitUntil {alive player};
 };

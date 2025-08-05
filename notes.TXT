@@ -13,15 +13,14 @@ To do:
 Fixes:
 - no animations for eating or drinkning? (Fixed hopefully)
 - restructure scenario actions (Done)
-- give ace interaction to: water sources (drink/refill), dead animals(skin)
 - cook meat missing hints for no meat found in inventory (FIXED)
-- looting hint does not display to the client (Fixed hopefully)
-- maybe switch from winter 2035?
-- return weapon info: fire rate, ranging
 - water too prevelant now (Possibly fixed)
 - geiger counter telling me I'm being irraditated despite taking no radiation - did eventually stop
+- restructure scenario actions (Done)
+
 - random encounter heli flyby did not give hint
-- add holster ace interaction
+- return weapon info: fire rate, ranging
+- looting hint still doesn't display to client
 
 Notes:
 - Good animation for psionsics injury: _player playMove "AinvPknlMstpSnonWnonDnon_healed_1"; (or _2)

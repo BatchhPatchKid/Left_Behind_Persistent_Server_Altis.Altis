@@ -189,16 +189,37 @@ if (!isDedicated) then {
 		[_unit] call FN_updateDrinkActions;
 		// Refresh eat menu
 		[_unit] call FN_updateEatActions;
-		// Refresh the faction alliance check
-		[_unit] call FN_factionClothingCheck;
 
 		hintSilent "";
 	}];
 
 	player addEventHandler ["InventoryOpened", {
 		params ["_unit"];
+
+		//getting temp
 		private _temp = [_unit] call FN_getTemp;
-		hintSilent format ["Body Temperature: %1", _temp];
+
+		//getting hydration/nutrition - returns an array
+		private _hydrationNutrition = [_unit] call FN_getHydrationNutrition;
+
+		//get sanity 
+		private _sanity = [_unit] call FN_getSanity;
+
+		//getting defecation status
+		private _defecationStatus = [_unit, false] call FN_checkDefecationStatus;
+
+		//get radiation exposure
+		_rad = [_unit] call FN_getRadiation;
+		_arr = (itemsWithMagazines _unit) select { _x == "rvg_geiger" };
+
+		//get faction affiliation
+		_faction = [_unit] call FN_checkFaction;
+
+		if ((count _arr) > 0) then {
+			hintSilent format ["Body Temperature: %1\n\nHydration: %2\nNutrition: %3\n\n%4\n\nSanity: %5\n\nRadiation Exposure: %6\n\nFaction: %7", _temp, (_hydrationNutrition select 0), (_hydrationNutrition select 1), _defecationStatus, _sanity, _rad, (_faction joinString " and ")];
+		} else {
+			hintSilent format ["Body Temperature: %1\n\nHydration: %2\nNutrition: %3\n\n%4\n\nSanity: %5\n\nRadiation Exposure: *Geiger Counter Required*\n\nFaction: %6", _temp, (_hydrationNutrition select 0), (_hydrationNutrition select 1), _defecationStatus, _sanity, (_faction joinString " and ")];
+		};
 	}];
 
 	addMissionEventHandler ["EntityRespawned", {
@@ -222,12 +243,16 @@ if (!isDedicated) then {
 	_survivalFolder = ["Survival_System", "Survival System", "", {}, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions"], _survivalFolder] call ace_interact_menu_fnc_addActionToClass;
 
+	_checkInv = ["check_inv","Scenario Checks","",{},{true}] call ace_interact_menu_fnc_createAction;
+	[(typeOf player), 1, ["ACE_SelfActions"], _checkInv] call ace_interact_menu_fnc_addActionToClass; 
+
+	// Holster Weapon ACE Self-Action
+	_actionHolster = ["holster","Holster Weapon","",{player action ["SwitchWeapon",player,player,-1];}, {true}] call ace_interact_menu_fnc_createAction;
+	[(typeOf player),1,["ACE_SelfActions"],_actionHolster] call ace_interact_menu_fnc_addActionToClass;
+
 	//Ace Scenario Actions
 	_action = ["Arsenal","Open the Arsenal","",{[player, player, true] call ace_arsenal_fnc_openBox;},{true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions","Scenario_Actions"], _action] call ace_interact_menu_fnc_addActionToClass;
-
-	_actionFaction = ["faction","Check Faction Affiliation","",{[player] call FN_checkFaction},{true}] call ace_interact_menu_fnc_createAction;
-	[(typeOf player), 1, ["ACE_SelfActions","Scenario_Actions"], _actionFaction] call ace_interact_menu_fnc_addActionToClass;
 
 	_actionSleep = ["sleep","Lay Down Sleeping Bag","",{call FN_sleep},{true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions","Scenario_Actions"], _actionSleep] call ace_interact_menu_fnc_addActionToClass;
@@ -260,30 +285,25 @@ if (!isDedicated) then {
 	_actionCreateFire = ["createFire", "Make Fire", "", {[player] call (missionNamespace getVariable "FN_createFire");}, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions","Survival_System"], _actionCreateFire] call ace_interact_menu_fnc_addActionToClass;
 
+	//Following ace actions can be performed; however, are not needed
 
-	/*
-		Old scenario actions 
-		_survivalFolderChecks = ["Survival Checks", "Survival Checks", "", {}, {true}] call ace_interact_menu_fnc_createAction;
-		[(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System"], _survivalFolderChecks] call ace_interact_menu_fnc_addActionToClass;
+	_actionTemp = ["temperature", "Check Clothing Capabilities", "", {call FN_temperature;}, {true}] call ace_interact_menu_fnc_createAction;
+	[(typeOf player), 1, ["ACE_SelfActions", "check_inv"], _actionTemp] call ace_interact_menu_fnc_addActionToClass;
 
-		_survivalFolderActions = ["Survival Actions", "Survival Actions", "", {}, {true}] call ace_interact_menu_fnc_createAction;
-		[(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System"], _survivalFolderActions] call ace_interact_menu_fnc_addActionToClass;
+	_actionRad = ["radiation", "Check Rad Exposure", "", {call FN_radiation;}, {true}] call ace_interact_menu_fnc_createAction;
+	[(typeOf player), 1, ["ACE_SelfActions", "check_inv"], _actionRad] call ace_interact_menu_fnc_addActionToClass;
 
-		_actionTemp = ["temperature", "Check Temperature", "", {call FN_temperature;}, {true}] call ace_interact_menu_fnc_createAction;
-		[(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System"], _actionTemp] call ace_interact_menu_fnc_addActionToClass;
+	_actionDisplayStats = ["status", "Check Hydration And Nutrition", "", {[player] call FN_displayHydrationNutrition;}, {true}] call ace_interact_menu_fnc_createAction;
+	[(typeOf player), 1, ["ACE_SelfActions", "check_inv"], _actionDisplayStats] call ace_interact_menu_fnc_addActionToClass;
 
-		_actionRad = ["radiation", "Check Rad Exposure", "", {call FN_radiation;}, {true}] call ace_interact_menu_fnc_createAction;
-		[(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System"], _actionRad] call ace_interact_menu_fnc_addActionToClass;
+	_actionSanity = ["sanity", "Check Sanity", "", { call FN_checkSanity; }, {true}] call ace_interact_menu_fnc_createAction;
+	[(typeOf player), 1, ["ACE_SelfActions", "check_inv"], _actionSanity] call ace_interact_menu_fnc_addActionToClass;
 
-		_actionDisplayStats = ["status", "Check Hydration And Nutrition", "", {[player] call FN_displayHydrationNutrition;}, {true}] call ace_interact_menu_fnc_createAction;
-		[(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System"], _actionDisplayStats] call ace_interact_menu_fnc_addActionToClass;
+	_actionCheckDefecation = ["Check Defecation Status", "Check Defecation Status", "", { [player, true] call FN_checkDefecationStatus }, { true }] call ace_interact_menu_fnc_createAction;
+	[(typeOf player), 1, ["ACE_SelfActions", "check_inv"], _actionCheckDefecation] call ace_interact_menu_fnc_addActionToClass;
 
-		_actionSanity = ["sanity", "Check Sanity", "", { call FN_checkSanity; }, {true}] call ace_interact_menu_fnc_createAction;
-		[(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System"], _actionSanity] call ace_interact_menu_fnc_addActionToClass;
-
-		_actionCheckDefecation = ["Check Defecation Status", "Check Defecation Status", "", { [player] call FN_checkDefecationStatus }, { true }] call ace_interact_menu_fnc_createAction;
-		[(typeOf player), 1, ["ACE_SelfActions", "Main", "Survival System"], _actionCheckDefecation] call ace_interact_menu_fnc_addActionToClass;
-	*/
+	_actionFaction = ["faction","Check Faction Affiliation","",{[player, true] call FN_checkFaction},{true}] call ace_interact_menu_fnc_createAction;
+	[(typeOf player), 1, ["ACE_SelfActions","check_inv"], _actionFaction] call ace_interact_menu_fnc_addActionToClass;
 
 	// Add zeus action to start garbage collection
 	private _gcAction = ["StartGC","Start Garbage Collection","",{ [true] spawn (missionNamespace getVariable "garbageCollection"); },{ true }] call ace_interact_menu_fnc_createAction;

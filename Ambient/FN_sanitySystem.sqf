@@ -40,6 +40,13 @@ FN_checkSanity = {
     };
 };
 
+FN_getSanity = {
+	params ["_player"];
+	private _sanity = _player getVariable ["sanityLevel", 100];
+
+	_sanity
+};
+
 // Main loop: gradually restores sanity, applies radiation and mutant penalties, and handles low sanity effects.
 [] spawn {
     private _restoreRate = 0.005;   // Increase sanity by 0.005 every cycle.

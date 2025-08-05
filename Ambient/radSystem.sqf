@@ -35,6 +35,12 @@ FN_radiation = {
 	};
 };
 
+FN_getRadiation = {
+	params ["_player"];
+
+	radExposure;
+};
+
 getCalculatedRadExposure = {
     params ["_radMultiplier","_radRain","_radWater", "_radMutantMultiplier"];
 	

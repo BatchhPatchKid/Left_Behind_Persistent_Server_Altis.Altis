@@ -52,6 +52,15 @@ FN_displayHydrationNutrition = {
     };
 };
 
+FN_getHydrationNutrition = {
+    params ["_player"];
+    
+    private _hydration = _player getVariable ["hydrationLevel", 100];
+    private _nutrition = _player getVariable ["nutritionLevel", 100];
+
+    [_hydration, _nutrition]
+};
+
 // Initialize hydration and nutrition if not already set
 if (isNil "hydrationLevel") then {
     player setVariable ["hydrationLevel", 100];
