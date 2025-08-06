@@ -50,7 +50,8 @@ while {alive _unit} do {
     if (count _lines > 0) then {
         private _msg = selectRandom _lines;
         private _nearPlayers = allPlayers select { _x distance _unit < 25 };
-        [_unit, BB_Channel, _message] remoteExecCall ["customChat", _nearPlayers];
+        [_unit, BB_Channel, _msg] remoteExecCall ["customChat", _nearPlayers];
+        [_unit, BB_Channel, _msg] remoteExecCall ["customChat", _nearPlayers];
 
     };
 };

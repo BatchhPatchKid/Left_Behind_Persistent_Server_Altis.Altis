@@ -168,11 +168,9 @@ if (!isDedicated) then {
 		[_diaryEntries] remoteExec ["addDiaryEntries", 0, true];
 	};
 
-	if (isServer) then {
-		// color [R,G,B,A], channel name, name-format, initial listeners
-		BB_Channel = radioChannelCreate [[0,0,1,1], "Boonie Boys", "%UNIT_NAME", allPlayers];
-		publicVariable "BB_Channel";
-	};
+	// color [R,G,B,A], channel name, name-format, initial listeners
+	BB_Channel = radioChannelCreate [[0,0,1,1], "Boonie Boys", "%UNIT_NAME", allPlayers];
+	publicVariable "BB_Channel";
 
 	player groupChat "Remember to check the briefing tab for a scenario information in your map";
 
