@@ -28,8 +28,14 @@ if (isNil {_grp getVariable "LB_spawnLineSent"}) then {
     private _lines = _spawnLines getOrDefault [_faction, []];
     if (count _lines > 0) then {
         private _msg = selectRandom _lines;
-        private _nearPlayers = allPlayers select { _x distance _unit < 500 };
-        [_unit, _msg] remoteExec ["globalChat", _nearPlayers];
+
+        {
+			private _player = _x;
+			// check distance
+			if ((_player distance _unit) <= 25) then {
+				_unit customChat _msg;
+			};
+		} forEach allPlayers;
     };
 };
 
@@ -40,7 +46,7 @@ while {alive _unit} do {
     sleep (60 + random 120);
     if (count _chatter > 0) then {
         private _msg = selectRandom _chatter;
-        private _nearPlayers = allPlayers select { _x distance _unit < 500 };
-        [_unit, _msg] remoteExec ["globalChat", _nearPlayers];
+        private _nearPlayers = allPlayers select { _x distance _unit < 25 };
+        [_unit, _msg] remoteExec ["customChat", _nearPlayers];
     };
 };

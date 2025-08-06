@@ -1,4 +1,4 @@
-call compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\chatterConfig.sqf"; //Making the hashmaps available to the entire server
+call compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_chatterConfig.sqf"; //Making the hashmaps available to the entire server
 
 // Compiling functions and storing them in the missionNamespace
 missionNamespace setVariable ["FN_findSafePosition", compileFinal  preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_findSafePosition.sqf"];
@@ -23,6 +23,7 @@ missionNamespace setVariable ["FN_equipAI", compileFinal  preprocessFileLineNumb
 missionNamespace setVariable ["FN_renegadeSpawner", compileFinal  preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_renegadeSpawner.sqf"];
 missionNamespace setVariable ["FN_meleeChance", compileFinal  preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_meleeChance.sqf"];
 missionNamespace setVariable ["FN_factionSpawnerMain", compileFinal  preprocessFileLineNumbers "AISpawners\FN_factionSpawnerMain.sqf"];
+missionNamespace setVariable ["FN_chatterConfig", compileFinal preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_chatterConfig.sqf"];
 missionNamespace setVariable ["FN_lootSpawner", compileFinal  preprocessFileLineNumbers "LootSystem\FN_lootSpawner.sqf"];
 missionNamespace setVariable ["FN_fillLootCrate", compileFinal  preprocessFileLineNumbers "LootSystem\FN_fillLootCrate.sqf"];
 missionNamespace setVariable ["FN_spawnLootCrate", compileFinal  preprocessFileLineNumbers "LootSystem\FN_spawnLootCrate.sqf"];
@@ -199,13 +200,13 @@ if (!isDedicated) then {
 		params ["_unit"];
 
 		//–– Gather stats ––
-		private _temp               = [_unit] call FN_getTemp;
+		private _temp = [_unit] call FN_getTemp;
 		private _hydrationNutrition = [_unit] call FN_getHydrationNutrition;  // [hydration, nutrition]
-		private _sanity             = [_unit] call FN_getSanity;
-		private _defecationStatus   = [_unit, false] call FN_checkDefecationStatus;
-		private _rad                = [_unit] call FN_getRadiation;
-		private _hasGeiger          = ((itemsWithMagazines _unit) select { _x == "rvg_geiger" }) isNotEqualTo [];
-		private _faction            = [_unit] call FN_checkFaction;
+		private _sanity = [_unit] call FN_getSanity;
+		private _defecationStatus = [_unit, false] call FN_checkDefecationStatus;
+		private _rad = [_unit] call FN_getRadiation;
+		private _hasGeiger = ((itemsWithMagazines _unit) select { _x == "rvg_geiger" }) isNotEqualTo [];
+		private _faction = [_unit] call FN_checkFaction;
 
 		//–– Build “Body Temperature” line ––
 		private _tempLine = if (_temp < 93) then {

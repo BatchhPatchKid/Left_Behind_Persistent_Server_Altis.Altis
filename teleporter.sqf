@@ -47,6 +47,7 @@ if (_typeOfTeleporter) then {
 	_player addItemToUniform "rvg_notepad";
 	_player addItemToBackpack "rvg_beans";
 	_player addItemToBackpack "rvg_plasticBottlePurified"; 
+	_player linkItem "ItemRadio";
 
 	[_player] call (missionNamespace getVariable "FN_factionClothingCheck");
 };
