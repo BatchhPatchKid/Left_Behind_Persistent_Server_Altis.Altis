@@ -28,7 +28,7 @@ if (random 1 > .5) then {
 	// Use the key to get the loot array
 	private _lootArray = [_chosenKey] call _arrayReturn;
 
-	private _holder = createVehicle ["GroundWeaponHolder", _player, [], 0, "CAN_COLLIDE"];
+	private _holder = createVehicle ["GroundWeaponHolder", getPosATL _player, [], 0, "CAN_COLLIDE"];
 	_holder setPosATL [(getPosATL _holder select 0), (getPosATL _holder select 1), (getPosATL _holder select 2) + 0.1];
 
 	switch (_chosenKey) do {
@@ -53,9 +53,7 @@ if (random 1 > .5) then {
 		};
 	};
 
-	_displayText = format ["<t color='#ffffffff' size='.80'>You managed to salvage something</t>"];
-    [_displayText, 0.85, 1, 2, 0.3, 0, 789] remoteExec ["BIS_fnc_dynamicText", 2];
+	[format ["<t color='#ffffffff' size='0.80'>You managed to salvage something</t>"], .8, 1, 1, .3, 0, 789] spawn BIS_fnc_dynamicText;
 } else {
-	_displayText = format ["<t color='#d0df08ff' size='.80'>No Loot Was Found...</t>"];
-    [_displayText, 0.85, 1, 2, 0.3, 0, 789] remoteExec ["BIS_fnc_dynamicText", 2];
+	[format ["<t color='#ffffffff' size='0.80'>You found nothing</t>"], .8, 1, 1, .3, 0, 789] spawn BIS_fnc_dynamicText;
 };

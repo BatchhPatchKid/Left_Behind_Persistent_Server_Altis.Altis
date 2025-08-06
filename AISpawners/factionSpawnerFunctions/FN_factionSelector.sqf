@@ -78,7 +78,7 @@ switch (_faction) do { //Going throuigh each mutant factions as well as zombie f
 		if (random 1 > 0.15) then {
 			// Ambient Zombie Horde
 			if (isServer) then {
-				[_pos, 0, 50, (_triggerRadius/2), "sparseZombies", _zombieRvg, _triggerRadius] call (missionNamespace getVariable "FN_ZTriggerSpawner");
+				[_pos, 0, 50, (_triggerRadius-150), "sparseZombies", _zombieRvg, _triggerRadius] call (missionNamespace getVariable "FN_ZTriggerSpawner");
 			};
 		};
 	

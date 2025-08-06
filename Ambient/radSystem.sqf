@@ -90,11 +90,13 @@ getCalculatedRadExposure = {
 			};
 		};
 	} else {
-		if (radExposure > 100) then { player setDamage 1; };
+		if (radExposure > 100) then {
+			if (random 1 > .85) then { player setDamage 1; };
+		};
 		
 
 		if (radExposure > 90) then {
-			["<t color='#ff0000' size='.5'>You're body feels like it's being cooked alive</t>", .8, 1, 1, .3, 0, 789] spawn BIS_fnc_dynamicText;
+			["<t color='#ff0000' size='.5'>Your body feels like it's being cooked alive</t>", .8, 1, 1, .3, 0, 789] spawn BIS_fnc_dynamicText;
 			addCamShake [0.5, 1, 10];
 			if ((random 10) == 1) then {
 				[player, true, 15] call ace_medical_fnc_setUnconscious;

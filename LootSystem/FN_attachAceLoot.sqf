@@ -11,14 +11,14 @@ params ["_player"];
 [_player] spawn {
     params ["_player"];
 
-    // Define the ACE interaction action (do this ONCE per client)
+    // Define the ACE interaction action (do this once per client)
     private _aceAction = [
         "ace_garbage_search", // Unique action name
         "Search the garbage pile",
         "",
         {
             params ["_target", "_player", "_params"];
-            [getPosATL _player] remoteExec ["FN_spawnLootGround", 2];
+            [_player] remoteExec ["FN_spawnLootGround", 2];
 
             // Mark as searched (globally so all clients see it)
             _target setVariable ["lootSearched", true, true];
@@ -30,10 +30,9 @@ params ["_player"];
 			}] remoteExec ["call", -2];
 
         },
-        // The ACE condition: Only allow interaction if not searched
         { isNil {_target getVariable "lootSearched"} },
         nil,
-        3 // distance in meters
+        3
     ] call ace_interact_menu_fnc_createAction;
 
     // Function to attach ACE action only if not already searched and not already attached
@@ -50,7 +49,7 @@ params ["_player"];
 
     while {true} do {
         // Find all helpers (within 3000m of player for efficiency)
-        private _helpers = nearestObjects [_player, ["Land_HelipadEmpty_F"], 3000];
+        private _helpers = nearestObjects [_player, ["Sign_Sphere200cm_F"], 300];
         {
             [_x] call _attachAceAction;
             sleep 0.01; // Very short sleep to prevent frame hitching in big loops

@@ -30,17 +30,17 @@ private _value = 0;
 private _radAmount = 0;
 
 if (_item in _sodas) then {
-    _value = 30;
+    _value = 20;
     _radAmount = 5;
 } else {
     if (_item in _waterBottles) then {
-        _value = 50;
+        _value = 35;
     } else {
         if (_item in _canteens) then {
-            _value = 80;
+            _value = 60;
         } else {
             if (_item in _dirty) then {
-                _value = 35;
+                _value = 25;
                 _radAmount = 15;
             } else {
                 if (_item in _blood) then {
@@ -80,7 +80,7 @@ if (_item in _canteens) then {
     _player addItem "rvg_canteenEmpty";
 };
 
-if (_item in _waterBottles or _item in _dirty) then {
+if (_item in _waterBottles && _item in _dirty) then {
     _player addItem "rvg_plasticBottleEmpty";
 };
 

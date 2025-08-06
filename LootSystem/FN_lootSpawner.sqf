@@ -1,7 +1,7 @@
 params ["_pos","_levelGear"];
 
 //spawning the loot box
-_box = createVehicle ["ACE_medicalSupplyCrate", [_pos, 5, 15, 3, 0, 20, 0,[],[]] call BIS_fnc_findSafePos];
+_box = createVehicle ["Box_FIA_Wps_F", [_pos, 5, 15, 3, 0, 20, 0,[],[]] call BIS_fnc_findSafePos];
 clearBackpackCargoGlobal _box;
 clearMagazineCargoGlobal _box;
 clearWeaponCargoGlobal _box;

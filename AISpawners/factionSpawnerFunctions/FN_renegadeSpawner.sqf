@@ -52,4 +52,6 @@ _waypoint3 setWaypointBehaviour "AWARE";
 
 waitUntil {!isNull _newAI};
 
+[_newAI, "Renegade"] remoteExec ["FN_ambientChatter", 0];
+
 _newAI addRating -900000;

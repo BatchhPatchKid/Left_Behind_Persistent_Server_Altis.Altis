@@ -1,7 +1,18 @@
-params ["_zombieGrp", "_zombieArray", "_numZombie", "_pos", "_spread"];
+params ["_zombieGrp", "_zombieArray", "_numZombie", "_pos", "_spread", "_spawnSleep"];
 
-[_zombieGrp, _zombieArray, _numZombie, _pos, _spread] spawn {
-	params ["_zombieGrp", "_zombieArray", "_numZombie", "_pos", "_spread"];
+if (isNil "_spawnSleep") then {
+	_spawnSleep = 0.5;
+};
+
+[_zombieGrp, _zombieArray, _numZombie, _pos, _spread, _spawnSleep] spawn {
+	params ["_zombieGrp", "_zombieArray", "_numZombie", "_pos", "_spread", "_spawnSleep"];
+
+	private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+
+	private _randomStuff = ["randomCommon"] call _arrayReturn;
+	private _backpackArraySelection = ["backpackCommon"] call _arrayReturn;
+	private _vestArraySelection = ["vestCommon"] call _arrayReturn;
+	private _uniformArraySelection = ["uniformCommon"] call _arrayReturn;
 
 	// before the loop: collect all interior points around _pos
 	private _buildings    = nearestObjects [_pos, ["House","Land_Building"], _spread];
@@ -29,42 +40,32 @@ params ["_zombieGrp", "_zombieArray", "_numZombie", "_pos", "_spread"];
 		};
 		
 		private _hordeUnit = _zombieGrp createUnit [_ZedType,_spawnPos,[],20,"NONE"];
-		sleep 0.1;
-	};
 
-	private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
-
-	private _randomStuff = ["randomCommon"] call _arrayReturn;
-	private _backpackArraySelection = ["backpackCommon"] call _arrayReturn;
-	private _vestArraySelection = ["vestCommon"] call _arrayReturn;
-	private _uniformArraySelection = ["uniformCommon"] call _arrayReturn;
-
-	sleep .5;
-	{
-		private _bpObj = unitBackpack _x;
-		private _vestObj = vest _x;
+		private _bpObj = unitBackpack _hordeUnit;
+		private _vestObj = vest _hordeUnit;
 
 		if (isNull _bpObj && random 1 > .5) then {
-			_x addBackpack (selectRandomWeighted _backpackArraySelection);
+			_hordeUnit addBackpack (selectRandomWeighted _backpackArraySelection);
 
 			if (random 1 > .25) then {
-				_x addItemToBackpack (selectRandomWeighted _randomStuff);
+				_hordeUnit addItemToBackpack (selectRandomWeighted _randomStuff);
 			};
 		};
 
 		if (_vestObj == "" && random 1 > .75) then {
-			_x addVest (selectRandomWeighted _vestArraySelection);
+			_hordeUnit addVest (selectRandomWeighted _vestArraySelection);
 
 			if (random 1 > .25) then {
-				_x addItemToVest (selectRandomWeighted _randomStuff);
+				_hordeUnit addItemToVest (selectRandomWeighted _randomStuff);
 			};
 		};
 
 		if (random 1 > .75) then {
-			_x addItemToUniform (selectRandomWeighted _uniformArraySelection);
+			_hordeUnit addItemToUniform (selectRandomWeighted _uniformArraySelection);
 		};
 
-		sleep 0.1;
-	} forEach (units _zombieGrp);
+		sleep _spawnSleep;
+	};
+
 	[_zombieGrp, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
 };

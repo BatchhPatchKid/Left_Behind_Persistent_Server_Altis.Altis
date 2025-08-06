@@ -31,7 +31,7 @@ FN_checkSanity = {
     _handle = 0 spawn {
         private _sanity = player getVariable ["sanityLevel", 100];
         if (_sanity <= 10) then {
-            hintSilent parseText format["<t color='#ff0000' size='1.2'>Sanity: %1</t>", _sanity];
+            hintSilent parseText format["<t color='#860000ff' size='1.2'>Sanity: %1</t>", _sanity];
         } else {
             hintSilent parseText format["<t color='#ffffff' size='1.2'>Sanity: %1</t>", _sanity];
         };

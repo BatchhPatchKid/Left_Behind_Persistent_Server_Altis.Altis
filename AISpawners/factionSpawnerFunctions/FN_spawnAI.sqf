@@ -262,8 +262,6 @@ FN_spawnGroupsBld = {
     	};
 	};
 
-	[(selectRandom _insidePoints), _faction, (side _grp)] call FN_lootSpawnByFaction;
-
     _stopAISpawn
 };
 
@@ -400,7 +398,7 @@ switch (_typeOfLocationArea) do {
 			[_turret] call FN_spawnFortifications;
 		};
 
-		[_pos, _faction, _side] call FN_lootSpawnByFaction;
+		
     };
 
     case "Patrol": {
@@ -438,9 +436,7 @@ switch (_typeOfLocationArea) do {
 			_stopAISpawn = [_posSpawn, _numUnits, _faction, _grp, (floor(random 2) + 2)] call FN_spawnGroups;
 			_grp enableGunLights "ForceOn";
 		};
-
 		
-		[_pos, _faction, _side] call FN_lootSpawnByFaction;
     };
 
 	case "Building": {
@@ -487,8 +483,6 @@ switch (_typeOfLocationArea) do {
             [_vehArray, (round(random 3) + 3)] call FN_carPatrol;
         };
 		
-		
-		[_pos, _faction, _side] call FN_lootSpawnByFaction;
     };
 	
 	case "Squad": { //Only to be used for spawning group(s) of a certain faction
@@ -497,3 +491,5 @@ switch (_typeOfLocationArea) do {
         _grp1 enableGunLights "ForceOn";
 	};
 };
+
+[_pos, _faction, _side] call FN_lootSpawnByFaction;

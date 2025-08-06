@@ -21,8 +21,7 @@ private _pos = getPos _trigger;
 private _triggerRadius = (triggerArea _trigger) select 0;
 
 // Mutant effects must come first as they are executed on client side/cannot be executed on server side
-private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
-private _mutantArray = ["mutantArray"] call _arrayReturn;
+private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
 if (_faction in _mutantArray) then {
 
 	{
@@ -70,12 +69,6 @@ private _spawnMarker = {
     "Land_Cliff_stone_small_F" createVehicle (getPos _trg);
 };
 
-// Spawn ambient civilian/military vehicles around the trigger
-private _spawnAmbientVeh = {
-    params ["_p", "_r"];
-    [_p, _r] call (missionNamespace getVariable "FN_ambientVeh");
-};
-
 // Occasionally spawn small renegade groups near the trigger
 private _spawnRenegades = {
     params ["_p", "_r"];
@@ -94,6 +87,14 @@ private _spawnZombieGroup = {
     // Pick a safe spot a short distance out
     private _zombiePos = [_pos, 20, 45, 3] call (missionNamespace getVariable "FN_findSafePosition");
     
+    if (random 1 > 0.75) then {
+        [_pos, ""] call (missionNamespace getVariable "FN_spawnHuntingFaction");
+    } else {
+        if (random 1 > 0.75) then {
+            [_pos, ""] call (missionNamespace getVariable "FN_spawnWanderingFaction");
+        };
+    };
+    
     // Finalize zombie group spawn
     ["Zombie", _num, _rad, _zombiePos, _rvg, _area] call (missionNamespace getVariable "FN_factionSelector");
 };
@@ -101,25 +102,23 @@ private _spawnZombieGroup = {
 // Spawn a survivor group, with optional first-group hunting/wandering extras
 private _spawnSurvivorGroup = {
     params ["_num", "_rad", "_pos", "_rvg", "_area"];
-    private _survivorPos = _pos;
 
     // Weighted list of survivor sub-factions and their spawn chances
-    private _survivorFactions = ["_survivorFactions"] call _arrayReturn;
+    private _survivorFactions = ["_survivorFactions"] call (missionNamespace getVariable "FN_arrayReturn");
 
     // Pick a specific survivor sub-faction
     private _factionSelected = [_survivorFactions, ""] call (missionNamespace getVariable "FN_selectFaction");
 
-    // On the very first human group, optionally spawn hunting & wandering extras
     if (random 1 > 0.75) then {
-        [_survivorPos, _factionSelected] call (missionNamespace getVariable "FN_spawnHuntingFaction");
-    };
-
-    if (random 1 > 0.75) then {
-        [_survivorPos, _factionSelected] call (missionNamespace getVariable "FN_spawnWanderingFaction");
+        [_pos, _factionSelected] call (missionNamespace getVariable "FN_spawnHuntingFaction");
+    } else {
+        if (random 1 > 0.75) then {
+            [_pos, _factionSelected] call (missionNamespace getVariable "FN_spawnWanderingFaction");
+        };
     };
 
     // Finalize survivor group spawn
-    [_factionSelected, _num, _rad, _survivorPos, _rvg, _area] call (missionNamespace getVariable "FN_factionSelector");
+    [_factionSelected, _num, _rad, _pos, _rvg, _area] call (missionNamespace getVariable "FN_factionSelector");
 };
 
 // Spawn a mutant group, with optional wandering extras
@@ -144,6 +143,7 @@ private _spawnPredetermined = {
     params ["_fac", "_num", "_rad", "_pos", "_rvg", "_area"];
     // Check if this faction is a mutant type
     private _mutantArray = ["mutantArray"] call _arrayReturn;
+
     // 25% chance to do a hunting spawn (if not mutant), else 25% chance wandering
     if (random 1 > 0.75 && !(_fac in _mutantArray)) then {
         [_pos, _fac] call (missionNamespace getVariable "FN_spawnHuntingFaction");
@@ -152,6 +152,7 @@ private _spawnPredetermined = {
             [_pos, _fac] call (missionNamespace getVariable "FN_spawnWanderingFaction");
         };
     };
+
     // Always call selector to spawn the requested faction units
     [_fac, _num, _rad, _pos, _rvg, _area] call (missionNamespace getVariable "FN_factionSelector");
 };
@@ -199,7 +200,7 @@ private _zombieRvg = if (daytime < 4 || daytime > 20 || random 1 > 0.85) then {
 // 5. AMBIENT & RENEGADES
 // -----------------------------------------------------------------------------
 
-    [ _pos, _triggerRadius ] call _spawnAmbientVeh;   // civilian/military traffic
+[_pos, _triggerRadius] call (missionNamespace getVariable "FN_ambientVeh");  // civilian/military traffic
 
 if (random 1 > 0.375) then {
     [ _pos, _triggerRadius ] call _spawnRenegades;    // occasional small groups
@@ -211,8 +212,8 @@ if (random 1 > 0.375) then {
 
 if (_faction == "Rnd") then {
     // Random mixture of zombie, survivor, and mutant factions
-    [ _numUnits, _triggerRadius, _pos, _zombieRvg, _typeOfLocationArea ] call _spawnRandomFactions;
+    [ _numUnits, _triggerRadius, _pos, _zombieRvg, _typeOfLocationArea] call _spawnRandomFactions;
 } else {
     // Spawn exactly the requested faction
-    [ _faction, _numUnits, _triggerRadius, _pos, _zombieRvg, _typeOfLocationArea ] call _spawnPredetermined;
+    [ _faction, _numUnits, _triggerRadius, _pos, _zombieRvg, _typeOfLocationArea] call _spawnPredetermined;
 };

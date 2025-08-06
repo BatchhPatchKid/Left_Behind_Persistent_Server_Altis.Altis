@@ -1,5 +1,6 @@
-// Compiling functions and storing them in the missionNamespace
+call compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\ChatterConfig.sqf"; //Making the hashmaps available to the entire server
 
+// Compiling functions and storing them in the missionNamespace
 missionNamespace setVariable ["FN_findSafePosition", compileFinal  preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_findSafePosition.sqf"];
 missionNamespace setVariable ["FN_createAIUnit", compileFinal  preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_createAIUnit.sqf"];
 missionNamespace setVariable ["FN_setUnitSkills", compileFinal  preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_setUnitSkills.sqf"];
@@ -36,6 +37,7 @@ missionNamespace setVariable ["FN_spawnStaticTrader", compileFinal  preprocessFi
 missionNamespace setVariable ["FN_traderTasks", compileFinal  preprocessFileLineNumbers "Economy System\traderTasks.sqf"];
 missionNamespace setVariable ["FN_specialVehicleSpawns", compileFinal  preprocessFileLineNumbers "Ambient\FN_specialVehicleSpawns.sqf"];
 missionNamespace setVariable ["FN_factionArea", compileFinal  preprocessFileLineNumbers "Ambient\FN_factionArea.sqf"];
+missionNamespace setVariable ["FN_ambientChatter", compileFinal preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_ambientChatter.sqf"];
 missionNamespace setVariable ["FN_spawnZom", compileFinal  preprocessFileLineNumbers "AISpawners\mutantSpawners\FN_spawnZom.sqf"];
 missionNamespace setVariable ["FN_drinkWater", compileFinal  preprocessFileLineNumbers "Ambient\FN_drinkWater.sqf"];
 missionNamespace setVariable ["FN_refillCanteen", compileFinal  preprocessFileLineNumbers "Ambient\FN_refillCanteen.sqf"];
@@ -196,30 +198,86 @@ if (!isDedicated) then {
 	player addEventHandler ["InventoryOpened", {
 		params ["_unit"];
 
-		//getting temp
-		private _temp = [_unit] call FN_getTemp;
+		//–– Gather stats ––
+		private _temp               = [_unit] call FN_getTemp;
+		private _hydrationNutrition = [_unit] call FN_getHydrationNutrition;  // [hydration, nutrition]
+		private _sanity             = [_unit] call FN_getSanity;
+		private _defecationStatus   = [_unit, false] call FN_checkDefecationStatus;
+		private _rad                = [_unit] call FN_getRadiation;
+		private _hasGeiger          = ((itemsWithMagazines _unit) select { _x == "rvg_geiger" }) isNotEqualTo [];
+		private _faction            = [_unit] call FN_checkFaction;
 
-		//getting hydration/nutrition - returns an array
-		private _hydrationNutrition = [_unit] call FN_getHydrationNutrition;
-
-		//get sanity 
-		private _sanity = [_unit] call FN_getSanity;
-
-		//getting defecation status
-		private _defecationStatus = [_unit, false] call FN_checkDefecationStatus;
-
-		//get radiation exposure
-		_rad = [_unit] call FN_getRadiation;
-		_arr = (itemsWithMagazines _unit) select { _x == "rvg_geiger" };
-
-		//get faction affiliation
-		_faction = [_unit] call FN_checkFaction;
-
-		if ((count _arr) > 0) then {
-			hintSilent format ["Body Temperature: %1\n\nHydration: %2\nNutrition: %3\n\n%4\n\nSanity: %5\n\nRadiation Exposure: %6\n\nFaction: %7", _temp, (_hydrationNutrition select 0), (_hydrationNutrition select 1), _defecationStatus, _sanity, _rad, (_faction joinString " and ")];
+		//–– Build “Body Temperature” line ––
+		private _tempLine = if (_temp < 93) then {
+			format ["<t size='1.5' color='#0000ff'>Body Temperature: %1</t>", _temp]
 		} else {
-			hintSilent format ["Body Temperature: %1\n\nHydration: %2\nNutrition: %3\n\n%4\n\nSanity: %5\n\nRadiation Exposure: *Geiger Counter Required*\n\nFaction: %6", _temp, (_hydrationNutrition select 0), (_hydrationNutrition select 1), _defecationStatus, _sanity, (_faction joinString " and ")];
+			if (_temp > 100) then {
+				format ["<t size='1.5' color='#F38701'>Body Temperature: %1</t>", _temp]
+			} else {
+				format ["<t size='1.3'>Body Temperature: %1</t>", _temp]
+			}
 		};
+
+		//–– Build “Hydration” line ––
+		private _hydrVal      = _hydrationNutrition select 0;
+		private _hydrationLine = if (_hydrVal < 1) then {
+			format ["<t size='1.5' color='#36aac2'>Hydration: %1</t>", _hydrVal]
+		} else {
+			if (_hydrVal < 20) then {
+				format ["<t size='1.5' color='#74d3e7'>Hydration: %1</t>", _hydrVal]
+			} else {
+				format ["<t size='1.3'>Hydration: %1</t>", _hydrVal]
+			}
+		};
+
+		//–– Build “Nutrition” line ––
+		private _nutrVal       = _hydrationNutrition select 1;
+		private _nutritionLine = if (_nutrVal < 1) then {
+			format ["<t size='1.5' color='#aa6910'>Nutrition: %1</t>", _nutrVal]
+		} else {
+			if (_nutrVal < 20) then {
+				format ["<t size='1.5' color='#e7b774'>Nutrition: %1</t>", _nutrVal]
+			} else {
+				format ["<t size='1.3'>Nutrition: %1</t>", _nutrVal]
+			}
+		};
+
+		//–– Build “Defecation Status” line (no custom color) ––
+		private _defecationLine = format ["<t size='1.3'>%1</t>", _defecationStatus];
+
+		//–– Build “Sanity” line ––
+		private _sanityLine = if (_sanity <= 10) then {
+			format ["<t size='1.5' color='#f860000ff'>Sanity: %1</t>", _sanity]
+		} else {
+			format ["<t size='1.3'>Sanity: %1</t>", _sanity]
+		};
+
+		//–– Build “Radiation Exposure” line ––
+		private _radLine = if (_rad >= 50) then {
+			format ["<t size='1.5' color='#ff0000'>Radiation Exposure: %1</t>", _rad]
+		} else {
+			format ["<t size='1.3'>Radiation Exposure: %1</t>", _rad]
+		};
+		private _noRadLine = if (_rad >= 50) then {
+			"<t size='1.5' color='#ff0000'>Radiation Exposure: *Geiger Counter Required*</t>"
+		} else {
+			"<t size='1.3'>Radiation Exposure: *Geiger Counter Required*</t>"
+		};
+
+		//–– Build “Faction” line (default size, no color) ––
+		private _factionLine = format ["<t size='1.3'>Faction: %1</t>", (_faction joinString " and ")];
+
+		//–– Assemble all lines and display ––
+		private _hintText =
+			_tempLine + "<br/><br/>" +
+			_hydrationLine + "<br/>" +
+			_nutritionLine + "<br/><br/>" +
+			_defecationLine + "<br/><br/>" +
+			_sanityLine + "<br/><br/>" +
+			(if _hasGeiger then { _radLine } else { _noRadLine }) + "<br/><br/>" +
+			_factionLine;
+
+		hintSilent parseText _hintText;
 	}];
 
 	addMissionEventHandler ["EntityRespawned", {
