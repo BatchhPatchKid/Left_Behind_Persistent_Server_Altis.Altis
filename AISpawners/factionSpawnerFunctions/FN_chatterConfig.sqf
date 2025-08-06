@@ -104,6 +104,59 @@ _chatterLines = createHashMapFromArray [
     ]]
 ];
 
+
+// Combat chatter lines used when units are engaged
+_combatLines = createHashMapFromArray [
+    ["US", [
+        "Contact!",
+        "We're taking fire!"
+    ]],
+    ["RU", [
+        "Enemy ahead!",
+        "Open fire!"
+    ]],
+    ["TRB", [
+        "Strike true!",
+        "Defend the tribe!"
+    ]],
+    ["PMC", [
+        "Hostiles engaging!",
+        "Return fire!"
+    ]],
+    ["ALF", [
+        "For Altis!",
+        "Hold the line!"
+    ]],
+    ["Renegade", [
+        "No rules now!",
+        "Light 'em up!"
+    ]],
+    ["BB", [
+        "From the bush!",
+        "Camouflage strike!"
+    ]],
+    ["SU", [
+        "Union, stand firm!",
+        "Push them back!"
+    ]],
+    ["Bandits", [
+        "Take them down!",
+        "Loot awaits!"
+    ]],
+    ["NH", [
+        "Future fights now!",
+        "Drive them out!"
+    ]],
+    ["DT", [
+        "Cut through them!",
+        "Trident strike!"
+    ]],
+    ["WO", [
+        "Maintain order!",
+        "Neutralize target!"
+    ]]
+];
+
 // Callsigns used for group IDs
 _callsigns = createHashMapFromArray [
     ["US", ["Eagle", "Razor", "Viper"]],
@@ -122,4 +175,5 @@ _callsigns = createHashMapFromArray [
 
 missionNamespace setVariable ["LB_spawnLines", _spawnLines];
 missionNamespace setVariable ["LB_chatterLines", _chatterLines];
+missionNamespace setVariable ["LB_combatLines", _combatLines];
 missionNamespace setVariable ["LB_callsigns", _callsigns];

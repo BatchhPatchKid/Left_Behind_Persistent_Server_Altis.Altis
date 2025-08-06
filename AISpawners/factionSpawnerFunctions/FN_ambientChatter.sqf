@@ -10,6 +10,7 @@ if (!local _unit) exitWith {};
 
 private _spawnLines = missionNamespace getVariable ["LB_spawnLines", createHashMapFromArray []];
 private _chatterLines = missionNamespace getVariable ["LB_chatterLines", createHashMapFromArray []];
+private _combatLines = missionNamespace getVariable ["LB_combatLines", createHashMapFromArray []];
 private _callsigns = missionNamespace getVariable ["LB_callsigns", createHashMapFromArray []];
 
 private _grp = group _unit;
@@ -40,13 +41,16 @@ if (isNil {_grp getVariable "LB_spawnLineSent"}) then {
 };
 
 private _chatter = _chatterLines getOrDefault [_faction, []];
+private _combat = _combatLines getOrDefault [_faction, []];
 
 // Periodic chatter loop
 while {alive _unit} do {
-    sleep (60 + random 120);
-    if (count _chatter > 0) then {
-        private _msg = selectRandom _chatter;
+    sleep (6.0 + random 1.20);
+    private _lines = if (behaviour _unit == "COMBAT") then { _combat } else { _chatter };
+    if (count _lines > 0) then {
+        private _msg = selectRandom _lines;
         private _nearPlayers = allPlayers select { _x distance _unit < 25 };
-        [_unit, _msg] remoteExec ["customChat", _nearPlayers];
+        [_unit, BB_Channel, _message] remoteExecCall ["customChat", _nearPlayers];
+
     };
 };
