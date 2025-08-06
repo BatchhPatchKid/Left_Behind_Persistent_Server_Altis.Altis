@@ -1,4 +1,4 @@
-call compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\ChatterConfig.sqf"; //Making the hashmaps available to the entire server
+call compile preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\chatterConfig.sqf"; //Making the hashmaps available to the entire server
 
 // Compiling functions and storing them in the missionNamespace
 missionNamespace setVariable ["FN_findSafePosition", compileFinal  preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_findSafePosition.sqf"];
