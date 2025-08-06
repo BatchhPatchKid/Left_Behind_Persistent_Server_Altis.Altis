@@ -115,6 +115,22 @@ missionNamespace setVariable ["mutantEffects", compileFinal preprocessFileLineNu
 missionNamespace setVariable ["mutantEffects", compileFinal preprocessFileLineNumbers "AISpawners\mutantSpawners\mutantEffects.sqf"];
 missionNamespace setVariable ["PF_init", compileFinal preprocessFileLineNumbers"PF\init.sqf"];
 
+// Turning off VoN
+0 enableChannel [true, false];
+1 enableChannel [true, false];
+2 enableChannel [true, false];
+3 enableChannel [true, false];
+4 enableChannel [true, false];
+5 enableChannel [true, true];
+
+if (isServer) then {
+	// color [R,G,B,A], channel name, name-format, initial listeners
+	_channelName_BB = "BB_Channel";
+	_channelID_BB = radioChannelCreate [[0,0,1,1], "Boonie Boys", "%UNIT_NAME", allPlayers];
+	[_channelID_BB, {_this radioChannelAdd [player]}] remoteExec ["call", [0, -2] select isDedicated, _channelName_BB];
+	publicVariable "_channelID_BB";
+};
+
 if (!isDedicated) then {
 	waitUntil {!isNull player};
 	sleep 0.1;
@@ -167,10 +183,6 @@ if (!isDedicated) then {
 	} else {
 		[_diaryEntries] remoteExec ["addDiaryEntries", 0, true];
 	};
-
-	// color [R,G,B,A], channel name, name-format, initial listeners
-	BB_Channel = radioChannelCreate [[0,0,1,1], "Boonie Boys", "%UNIT_NAME", allPlayers];
-	publicVariable "BB_Channel";
 
 	player groupChat "Remember to check the briefing tab for a scenario information in your map";
 

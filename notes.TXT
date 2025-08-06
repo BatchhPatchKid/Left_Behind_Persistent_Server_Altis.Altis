@@ -25,6 +25,7 @@ Fixes:
 
 Notes:
 - Good animation for psionsics injury: _player playMove "AinvPknlMstpSnonWnonDnon_healed_1"; (or _2)
+- good command for playing radio transmissions: unit globalRadio radioName
 
 Update:
 - 

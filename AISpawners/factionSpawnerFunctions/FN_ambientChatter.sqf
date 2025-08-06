@@ -43,15 +43,22 @@ if (isNil {_grp getVariable "LB_spawnLineSent"}) then {
 private _chatter = _chatterLines getOrDefault [_faction, []];
 private _combat = _combatLines getOrDefault [_faction, []];
 
-// Periodic chatter loop
-while {alive _unit} do {
-    sleep (6.0 + random 1.20);
-    private _lines = if (behaviour _unit == "COMBAT") then { _combat } else { _chatter };
-    if (count _lines > 0) then {
-        private _msg = selectRandom _lines;
-        private _nearPlayers = allPlayers select { _x distance _unit < 25 };
-        [_unit, BB_Channel, _msg] remoteExecCall ["customChat", _nearPlayers];
-        [_unit, BB_Channel, _msg] remoteExecCall ["customChat", _nearPlayers];
+[_unit, _faction, _lines, _combat, _chatter] spawn {
+    params ["_unit", "_faction", "_lines", "_combat", "_chatter"];
+    // Periodic chatter loop
 
+    publicVariable "_channelID_BB";
+
+    while {alive _unit} do {
+        sleep (6.0 + random 1.20);
+        private _lines = if (behaviour _unit == "COMBAT") then { _combat } else { _chatter };
+        if (count _lines > 0) then {
+            private _msg = selectRandom _lines;
+            private _nearPlayers = allPlayers select { _x distance _unit < 25 };
+            
+            {
+                _unit customChat [_channelID_BB, _msg];
+            } forEach _nearPlayers
+        };
     };
 };
