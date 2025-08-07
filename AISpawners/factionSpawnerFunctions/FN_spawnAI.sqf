@@ -130,6 +130,9 @@ FN_spawnFortifications = {
 	_newAIBodyguard setVectorDirAndUp [[1,1,0], (vectorUp _newAIBodyguard)];  
 	_newAIBodyguard setPosATL [(_turretPos select 0)+3, (_turretPos select 1)+2.5, 0];
 	[_grpTurret, [_turretSelected], [_newAIBodyguard, _newAI_Turret]] call (missionNamespace getVariable 'FN_enableDynamicSim');
+
+    
+    [_grpTurret, _faction] call FN_ambientChatter;
 };
 
 FN_spawnGroups = {
@@ -192,6 +195,8 @@ FN_spawnGroups = {
             [_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");
         };
     };
+
+    [_grp, _faction] call FN_ambientChatter;
 
     _stopAISpawn
 };
@@ -261,6 +266,8 @@ FN_spawnGroupsBld = {
 			createVehicle ["Land_Camping_Light_F", (_newAI modelToWorld [1,0,0]), [], 0, "NONE"];
     	};
 	};
+
+    [_grp, _faction] call FN_ambientChatter;
 
     _stopAISpawn
 };
@@ -377,6 +384,7 @@ switch (_typeOfLocationArea) do {
 
         _grpCAMP = createGroup _side;
         [_pos, 10, 25, _grpCAMP] call FN_setWaypoints;
+        [_grp1, "Renegade"] call FN_ambientChatter;
         _stopAISpawn = [_pos, _numUnits, _faction, _grpCAMP, 4, true] call FN_spawnGroups;
         _grpCAMP enableGunLights "ForceOn";
 

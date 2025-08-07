@@ -1,34 +1,83 @@
 /*
-    Registers an AI group's radio chatter data.
-    Called when a unit is created.
+    Registers an AI group’s radio-chatter data.
+    Called once per group (e.g. when the group is created).
+
     Params: [ _grp, _faction ]
 */
+params ["_grp", "_faction"];
 
-params ["_unit", "_faction"];
+private _leader = leader _grp;
 
-// Only run where the unit is local
-if (!local _unit) exitWith {};
+// Only run on the machine where the leader is local
+if (!local _leader) exitWith {};
 
 // Initialise group data once
 if (isNil { _grp getVariable "LB_chatterInit" }) then {
     _grp setVariable ["LB_chatterInit", true];
     _grp setVariable ["LB_faction", _faction, true];
 
+    // assign callsign
     private _callsigns = missionNamespace getVariable ["LB_callsigns", createHashMapFromArray []];
     private _available = _callsigns getOrDefault [_faction, ["Unit"]];
     private _cs = selectRandom _available;
     _grp setVariable ["LB_callsign", _cs, true];
-    _grp setGroupIdGlobal [_cs];
 
-    // Send spawn line once per group if a player is nearby
+    // play a single spawn-line if a player is nearby
     private _spawnLines = missionNamespace getVariable ["LB_spawnLines", createHashMapFromArray []];
-    private _lines = _spawnLines getOrDefault [_faction, []];
+    private _lines      = _spawnLines getOrDefault [_faction, []];
     if (count _lines > 0) then {
         private _msg = selectRandom _lines;
-        private _speaker = leader _grp;
-        private _nearPlayers = allPlayers select { _x distance _speaker <= 500 };
+        private _nearPlayers = allPlayers select { _x distance _leader <= 500 };
         if (count _nearPlayers > 0) then {
-            [_speaker, _msg] remoteExec ["globalChat", _nearPlayers];
+            [_leader, _msg] remoteExec ["globalChat", _nearPlayers];
         };
     };
+
+    // Register "Fired" event-handler on the leader
+    _leader addEventHandler ["Fired", {
+        params ["_unit"];
+        private _grp     = group _unit;
+        private _faction = _grp getVariable ["LB_faction", ""];
+        private _map     = missionNamespace getVariable ["LB_firedLines", createHashMapFromArray []];
+        private _lines   = _map getOrDefault [_faction, []];
+        if (_lines isNotEqualTo []) then {
+            private _msg         = selectRandom _lines;
+            private _nearPlayers = allPlayers select { _x distance _unit <= 500 };
+            if (_nearPlayers isNotEqualTo []) then {
+                [_unit, _msg] remoteExec ["globalChat", _nearPlayers];
+            };
+        };
+    }];
+
+    // Register "Hit" event-handler on the leader
+    _leader addEventHandler ["Hit", {
+        params ["_unit"];
+        private _grp     = group _unit;
+        private _faction = _grp getVariable ["LB_faction", ""];
+        private _map     = missionNamespace getVariable ["LB_hitLines", createHashMapFromArray []];
+        private _lines   = _map getOrDefault [_faction, []];
+        if (_lines isNotEqualTo []) then {
+            private _msg         = selectRandom _lines;
+            private _nearPlayers = allPlayers select { _x distance _unit <= 500 };
+            if (_nearPlayers isNotEqualTo []) then {
+                [_unit, _msg] remoteExec ["globalChat", _nearPlayers];
+            };
+        };
+    }];
+
+    // Register "Killed" event-handler on the leader
+    _leader addEventHandler ["Killed", {
+        params ["_unit"];
+        private _grp     = group _unit;
+        private _faction = _grp getVariable ["LB_faction", ""];
+        private _map     = missionNamespace getVariable ["LB_deathLines", createHashMapFromArray []];
+        private _lines   = _map getOrDefault [_faction, []];
+        if (_lines isNotEqualTo []) then {
+            private _msg         = selectRandom _lines;
+            private _nearPlayers = allPlayers select { _x distance _unit <= 500 };
+            if (_nearPlayers isNotEqualTo []) then {
+                [_unit, _msg] remoteExec ["globalChat", _nearPlayers];
+            };
+        };
+    }];
 };
