@@ -52,6 +52,6 @@ _waypoint3 setWaypointBehaviour "AWARE";
 
 waitUntil {!isNull _newAI};
 
-[_newAI, "Renegade"] call FN_ambientChatter;
+[_grp1, "Renegade"] call FN_ambientChatter;
 
 _newAI addRating -900000;

@@ -123,14 +123,6 @@ missionNamespace setVariable ["PF_init", compileFinal preprocessFileLineNumbers"
 4 enableChannel [true, false];
 5 enableChannel [true, true];
 
-if (isServer) then {
-	// color [R,G,B,A], channel name, name-format, initial listeners
-	_channelName_BB = "BB_Channel";
-	_channelID_BB = radioChannelCreate [[0,0,1,1], "Boonie Boys", "%UNIT_NAME", allPlayers];
-	[_channelID_BB, {_this radioChannelAdd [player]}] remoteExec ["call", [0, -2] select isDedicated, _channelName_BB];
-	publicVariable "_channelID_BB";
-};
-
 if (!isDedicated) then {
 	waitUntil {!isNull player};
 	sleep 0.1;
@@ -422,3 +414,6 @@ if (isServer) then {
     PFrun=false;
     [] spawn (missionNamespace getVariable "PF_init");
 };
+
+missionNamespace setVariable ["FN_groupChatterManager", compileFinal preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_groupChatterManager.sqf"];
+[] spawn (missionNamespace getVariable "FN_groupChatterManager");
