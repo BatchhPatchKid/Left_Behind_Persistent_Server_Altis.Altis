@@ -1,41 +1,41 @@
-private _lastSpoken = createHashMap;
+while { true } do {
 
-while {true} do {
+    // Preload once
     private _players = allPlayers;
+    private _combatLines  = missionNamespace getVariable ["LB_combatLines",  createHashMapFromArray []];
+    private _chatterLines = missionNamespace getVariable ["LB_chatterLines", createHashMapFromArray []];
 
-    private _globalFactionsSpoken = [];
+    // Find all AI leaders
+    private _leaders = allUnits select {
+        (!isPlayer _x) && ((leader group _x) == _x)
+    };
 
-	{
-		private _player = _x;
-		private _nearAI = (_player nearEntities ["Man", 25]) select { !isPlayer _x };
+    {
+        private _leader  = _x;
+        private _grp = group _leader;
+        private _faction = _grp getVariable ["LB_faction", ""];
 
-		{
-			private _grp = group _x;
-			private _faction = _grp getVariable ["LB_faction", ""];
-			if (_faction == "" || {_faction in _globalFactionsSpoken}) exitWith {};
+        // Choose appropriate lines
+        private _lines = _chatterLines getOrDefault [_faction, []];
+        if (behaviour _leader == "COMBAT") then {
+            _lines = _combatLines getOrDefault [_faction, []];
+        };
 
-			_globalFactionsSpoken pushBack _faction;
+        if (!(_lines isEqualTo [])) then {
+            // Pick a random line
+            private _msg = _faction +": " + selectRandom _lines;
 
-			private _leader = leader _grp;
-			private _lines = if (behaviour _leader == "COMBAT") then {
-				_combatLines getOrDefault [_faction, []]
-			} else {
-				_chatterLines getOrDefault [_faction, []]
-			};
+            // Find nearby players
+            private _nearPlayers = _players select {
+                _x distance _leader <= 50
+            };
 
-			if (_lines isEqualTo []) exitWith {};
+            if (_nearPlayers isNotEqualTo []) then {
+                // Broadcast the formatted text
+                [_leader, _msg] remoteExec ["globalChat", _nearPlayers];
+            };
+        };
+    } forEach _leaders;
 
-			private _last = _lastSpoken getOrDefault [_faction, 0];
-			if (time - _last <= 15) exitWith {};
-
-			private _msg = selectRandom _lines;
-			private _nearPlayers = _players select { _x distance _leader <= 500 };
-			if (_nearPlayers isNotEqualTo []) then {
-				[_leader, _msg] remoteExec ["globalChat", _nearPlayers];
-				_lastSpoken set [_faction, time];
-			};
-		} forEach _nearAI;
-	} forEach _players;
-
-    sleep (6 + random 1.2);
+    sleep (60 + random 120);
 };

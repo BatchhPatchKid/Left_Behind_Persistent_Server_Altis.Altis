@@ -157,23 +157,6 @@ _combatLines = createHashMapFromArray [
     ]]
 ];
 
-// Callsigns used for group IDs
-_callsigns = createHashMapFromArray [
-    ["US", ["Eagle", "Razor", "Viper"]],
-    ["RU", ["Bear", "Hammer", "Vodka"]],
-    ["TRB", ["Totem", "Spirit", "Wolf"]],
-    ["PMC", ["Mamba", "Ghost", "Raven"]],
-    ["ALF", ["Freedom", "Rebel", "Liberty"]],
-    ["Renegade", ["Rogue", "Bandit", "Outlaw"]],
-    ["BB", ["Brush", "Briar", "Camouflage"]],
-    ["SU", ["Unity", "Solidarity", "Shield"]],
-    ["Bandits", ["Skull", "Fang", "Scorpion"]],
-    ["NH", ["Dawn", "Aurora", "Horizon"]],
-    ["DT", ["Trident", "Poseidon", "Leviathan"]],
-    ["WO", ["Axis", "Vector", "Prime"]]
-];
-
 missionNamespace setVariable ["LB_spawnLines", _spawnLines];
 missionNamespace setVariable ["LB_chatterLines", _chatterLines];
 missionNamespace setVariable ["LB_combatLines", _combatLines];
-missionNamespace setVariable ["LB_callsigns", _callsigns];
