@@ -3,7 +3,7 @@
     Called once per group (e.g. when the group is created).
 
     Params: [ _grp, _faction ]
-*/
+
 params ["_grp", "_faction"];
 
 private _leader = leader _grp;

@@ -1,7 +1,7 @@
 // Configuration for AI radio chatter
 
 // Spawn lines spoken when a unit is created
-_spawnLines = createHashMapFromArray [
+/*_spawnLines = createHashMapFromArray [
     ["US", [ // United States
         "Eagle team on station.",
         "Razor squad reporting for duty."

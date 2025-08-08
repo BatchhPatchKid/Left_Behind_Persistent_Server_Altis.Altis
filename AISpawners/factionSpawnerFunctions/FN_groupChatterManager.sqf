@@ -1,4 +1,4 @@
-while { true } do {
+/*while { true } do {
 
     // Preload once
     private _players = allPlayers;

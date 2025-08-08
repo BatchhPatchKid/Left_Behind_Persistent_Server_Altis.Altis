@@ -415,5 +415,5 @@ if (isServer) then {
     [] spawn (missionNamespace getVariable "PF_init");
 };
 
-missionNamespace setVariable ["FN_groupChatterManager", compileFinal preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_groupChatterManager.sqf"];
-[] spawn (missionNamespace getVariable "FN_groupChatterManager");
+//missionNamespace setVariable ["FN_groupChatterManager", compileFinal preprocessFileLineNumbers "AISpawners\factionSpawnerFunctions\FN_groupChatterManager.sqf"];
+//[] spawn (missionNamespace getVariable "FN_groupChatterManager");

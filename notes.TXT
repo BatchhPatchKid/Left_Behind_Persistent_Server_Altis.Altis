@@ -22,6 +22,7 @@ Fixes:
 - return weapon info: fire rate, ranging
 - looting hint still doesn't display to client (hopefully fixed)
 - water objects to gain water actions at them using similar system to loot system
+- repair vehicle takes longer, but uses ace methods
 
 Notes:
 - Good animation for psionsics injury: _player playMove "AinvPknlMstpSnonWnonDnon_healed_1"; (or _2)

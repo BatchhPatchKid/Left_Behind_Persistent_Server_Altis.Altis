@@ -132,7 +132,7 @@ FN_spawnFortifications = {
 	[_grpTurret, [_turretSelected], [_newAIBodyguard, _newAI_Turret]] call (missionNamespace getVariable 'FN_enableDynamicSim');
 
     
-    [_grpTurret, _faction] call FN_ambientChatter;
+    //[_grpTurret, _faction] call FN_ambientChatter;
 };
 
 FN_spawnGroups = {
@@ -196,7 +196,7 @@ FN_spawnGroups = {
         };
     };
 
-    [_grp, _faction] call FN_ambientChatter;
+    //[_grp, _faction] call FN_ambientChatter;
 
     _stopAISpawn
 };
@@ -267,7 +267,7 @@ FN_spawnGroupsBld = {
     	};
 	};
 
-    [_grp, _faction] call FN_ambientChatter;
+    //[_grp, _faction] call FN_ambientChatter;
 
     _stopAISpawn
 };
@@ -384,7 +384,8 @@ switch (_typeOfLocationArea) do {
 
         _grpCAMP = createGroup _side;
         [_pos, 10, 25, _grpCAMP] call FN_setWaypoints;
-        [_grp1, "Renegade"] call FN_ambientChatter;
+        //[_grp1, "Renegade"] call FN_ambientChatter;
+
         _stopAISpawn = [_pos, _numUnits, _faction, _grpCAMP, 4, true] call FN_spawnGroups;
         _grpCAMP enableGunLights "ForceOn";
 
