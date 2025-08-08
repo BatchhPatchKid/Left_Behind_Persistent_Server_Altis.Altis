@@ -21,7 +21,7 @@ if (isNil { _grp getVariable "LB_chatterInit" }) then {
     private _lines = _spawnLines getOrDefault [_faction, []];
     private _msg = _faction +": ";
     if (count _lines > 0) then {
-        _msg = _msg + selectRandom _lines;
+        private _msg = _faction + ": " + selectRandom _lines;
         private _nearPlayers = allPlayers select { _x distance _leader <= 50 };
         if (count _nearPlayers > 0) then {
             [_leader, _msg] remoteExec ["globalChat", _nearPlayers];
@@ -36,7 +36,7 @@ if (isNil { _grp getVariable "LB_chatterInit" }) then {
         private _map  = missionNamespace getVariable ["LB_firedLines", createHashMapFromArray []];
         private _lines = _map getOrDefault [_faction, []];
         if (_lines isNotEqualTo []) then {
-            _msg = _msg + selectRandom _lines;
+            private _msg = _faction + ": " + selectRandom _lines;
             private _nearPlayers = allPlayers select { _x distance _unit <= 50 };
             if (_nearPlayers isNotEqualTo []) then {
                 [_unit, _msg] remoteExec ["globalChat", _nearPlayers];
@@ -52,7 +52,7 @@ if (isNil { _grp getVariable "LB_chatterInit" }) then {
         private _map = missionNamespace getVariable ["LB_hitLines", createHashMapFromArray []];
         private _lines = _map getOrDefault [_faction, []];
         if (_lines isNotEqualTo []) then {
-            _msg = _msg + selectRandom _lines;
+            private _msg = _faction + ": " + selectRandom _lines;
             private _nearPlayers = allPlayers select { _x distance _unit <= 50 };
             if (_nearPlayers isNotEqualTo []) then {
                 [_unit, _msg] remoteExec ["globalChat", _nearPlayers];
@@ -68,7 +68,7 @@ if (isNil { _grp getVariable "LB_chatterInit" }) then {
         private _map = missionNamespace getVariable ["LB_deathLines", createHashMapFromArray []];
         private _lines = _map getOrDefault [_faction, []];
         if (_lines isNotEqualTo []) then {
-            _msg = _msg + selectRandom _lines;
+            private _msg = _faction + ": " + selectRandom _lines;
             private _nearPlayers = allPlayers select { _x distance _unit <= 50 };
             if (_nearPlayers isNotEqualTo []) then {
                 [_unit, _msg] remoteExec ["globalChat", _nearPlayers];

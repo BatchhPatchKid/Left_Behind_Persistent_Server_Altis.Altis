@@ -160,3 +160,55 @@ _combatLines = createHashMapFromArray [
 missionNamespace setVariable ["LB_spawnLines", _spawnLines];
 missionNamespace setVariable ["LB_chatterLines", _chatterLines];
 missionNamespace setVariable ["LB_combatLines", _combatLines];
+
+// Lines triggered when a unit fires its weapon
+_firedLines = createHashMapFromArray [
+    ["US", ["Target spotted.", "Weapons hot."]],
+    ["RU", ["Engaging target.", "Fire at will."]],
+    ["TRB", ["Loose the arrows!", "Strike from the wilds!"]],
+    ["PMC", ["Contractor engaging.", "Opening fire."]],
+    ["ALF", ["For Altis!", "Freedom fires!"]],
+    ["Renegade", ["Make it rain!", "Unleash chaos!"]],
+    ["BB", ["From the brush!", "Let 'em fly!"]],
+    ["SU", ["Union guns hot.", "Engage!" ]],
+    ["Bandits", ["Take the shot!", "Blast 'em!" ]],
+    ["NH", ["Advancing fire!", "Push forward!" ]],
+    ["DT", ["Trident strikes!", "Fire from the deep!" ]],
+    ["WO", ["Enforce order!", "Execute protocol!" ]]
+];
+
+// Lines triggered when a unit is hit
+_hitLines = createHashMapFromArray [
+    ["US", ["I'm hit!", "Taking fire!"]],
+    ["RU", ["Contact on me!", "I'm under fire!"]],
+    ["TRB", ["The spirits shield me!", "They strike us!"]],
+    ["PMC", ["I've been hit!", "Need cover!"]],
+    ["ALF", ["Freedom bleeds!", "They got me!"]],
+    ["Renegade", ["They tagged me!", "Hit but not down!"]],
+    ["BB", ["Branches won't stop that!", "I've been spotted!"]],
+    ["SU", ["Union wounded!", "Need assist!"]],
+    ["Bandits", ["They got me!", "Cover me!"]],
+    ["NH", ["Future takes a hit!", "Under pressure!"]],
+    ["DT", ["Hull breach!", "Taking on water!"]],
+    ["WO", ["Order disrupted!", "Stabilize me!"]]
+];
+
+// Lines triggered when a unit dies
+_deathLines = createHashMapFromArray [
+    ["US", ["Eagle down!", "We've lost one!"]],
+    ["RU", ["Comrade down!", "One of ours is gone!"]],
+    ["TRB", ["A hunter falls!", "Spirits receive me!"]],
+    ["PMC", ["Contractor down!", "We lost a man!"]],
+    ["ALF", ["Freedom fighter fallen!", "Altis remembers!"]],
+    ["Renegade", ["Renegade down!", "Chaos claims another!"]],
+    ["BB", ["Boonie down!", "The bush claims one!"]],
+    ["SU", ["Union member lost!", "We've lost a comrade!"]],
+    ["Bandits", ["Bandit down!", "They got one of us!"]],
+    ["NH", ["New horizon fades!", "We lose a pioneer!"]],
+    ["DT", ["Trident snapped!", "Depths take me!"]],
+    ["WO", ["Order unit lost!", "Protocol failure!"]]
+];
+
+missionNamespace setVariable ["LB_firedLines", _firedLines];
+missionNamespace setVariable ["LB_hitLines", _hitLines];
+missionNamespace setVariable ["LB_deathLines", _deathLines];
