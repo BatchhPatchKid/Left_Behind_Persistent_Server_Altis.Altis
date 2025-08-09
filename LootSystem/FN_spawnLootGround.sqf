@@ -10,7 +10,7 @@ if (random 1 > .5) then {
 		"vestCommon", 5,
 		"backpackCommon", 4,
 		"primaryCommon", 3,
-		"randomCommon", 12,
+		"randomCommon", 24,
 		"nvgCommon", .25,
 		"waterCommon", 8,
 		"foodCommon", 8,
@@ -53,7 +53,9 @@ if (random 1 > .5) then {
 		};
 	};
 
-	[format ["<t color='#ffffffff' size='0.80'>You managed to salvage something</t>"], .8, 1, 1, .3, 0, 789] spawn BIS_fnc_dynamicText;
+	hint parseText "<t color='#ffd000' size='0.80'>You managed to salvage something</t>";
 } else {
-	[format ["<t color='#ffffffff' size='0.80'>You found nothing</t>"], .8, 1, 1, .3, 0, 789] spawn BIS_fnc_dynamicText;
+	hintSilent parseText "<t color='#ffffffff' size='0.80'>You found nothing</t>";
 };
+uiSleep 3;
+hintSilent "";

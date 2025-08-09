@@ -86,5 +86,6 @@ if(_zeusAction) then {
         waitUntil { count ( allPlayers select { alive _x } ) > 0 };
 
         call _FN_garbageCollector;
+        [] call (missionNamespace getVariable "LB_FacReg_Prune"); //removes any AI that are dead from the chatter system array
     };
 };

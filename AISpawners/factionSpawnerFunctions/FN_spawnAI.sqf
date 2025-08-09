@@ -4,6 +4,15 @@ params ["_faction", "_numUnits", "_pos", "_typeOfLocationArea", "_side", "_unit"
 // FUNCTION DECLARATIONS
 //////////////////////////////////////////////////////////////////////////////
 
+FN_createGroup = {
+    params ["side", "_faction"];
+    _grp = createGroup _side;
+
+    [_grp, _faction] call (missionNamespace getVariable "LB_FacReg_Set");
+
+    _grp
+};
+
 FN_setWaypoints = {
 	params ["_pos","_minDis","_maxDis","_grp"];
 	_posWP = [_pos, _minDis, _maxDis, 3, 0, 20, 0] call BIS_fnc_findSafePos;
@@ -189,7 +198,7 @@ FN_spawnGroups = {
             };
 
             private _tempGrp = createGroup (side _grp);
-            private _newAI   = _tempGrp createUnit ["O_soldier_Melee_RUSH", _spawnPos, [], 1, "NONE"];
+            private _newAI = _tempGrp createUnit ["O_soldier_Melee_RUSH", _spawnPos, [], 1, "NONE"];
             [_faction, _newAI, true, false, false] call (missionNamespace getVariable "FN_equipAI");
             [_newAI] joinSilent _grp;
             [_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");
@@ -382,23 +391,23 @@ switch (_typeOfLocationArea) do {
     case "Camp": {
         [_faction, _buildingMain, _pos] call (missionNamespace getVariable "FN_fortificationsMain");
 
-        _grpCAMP = createGroup _side;
+        _grpCAMP = [_side, _faction] call FN_createGroup;
         [_pos, 10, 25, _grpCAMP] call FN_setWaypoints;
         //[_grp1, "Renegade"] call FN_ambientChatter;
 
         _stopAISpawn = [_pos, _numUnits, _faction, _grpCAMP, 4, true] call FN_spawnGroups;
         _grpCAMP enableGunLights "ForceOn";
 
-		_grpBLD1 = createGroup _side;
+		_grpBLD1 = [_side, _faction] call FN_createGroup;
         _stopAISpawn = [_pos, _numUnits, _faction, _grpBLD1, (ceil(random 3)), true] call FN_spawnGroupsBld;
         _grpBLD1 enableGunLights "ForceOn";
 
-        _grp1 = createGroup _side;
+        _grp1 = [_side, _faction] call FN_createGroup;
         [_pos, 30, 60, _grp1] call FN_setWaypoints;
         if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp1, 2] call FN_spawnGroups; };
         _grp1 enableGunLights "ForceOn";
 
-		_grp1 = createGroup _side;
+		_grp1 = [_side, _faction] call FN_createGroup;
         [_pos, 30, 60, _grp1] call FN_setWaypoints;
         if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp1, _numUnits] call FN_spawnGroups; };
         _grp1 enableGunLights "ForceOn";
@@ -413,25 +422,25 @@ switch (_typeOfLocationArea) do {
     case "Patrol": {
         [_faction, _pos, _buildingMain, 0] call (missionNamespace getVariable "FN_fortificationsAux");
 
-        _grpCAMP = createGroup _side;
+        _grpCAMP = [_side, _faction] call FN_createGroup;
         [_pos, 10, 25, _grpCAMP] call FN_setWaypoints;
         _posSpawn = [_pos, 10, 25, 3, 0, 20, 0] call BIS_fnc_findSafePos;
         [_posSpawn, _numUnits, _faction, _grpCAMP, (floor(random 2) + 2), true] call FN_spawnGroups;
         _grpCAMP enableGunLights "ForceOn";
 
-        _grp1 = createGroup _side;
+        _grp1 = [_side, _faction] call FN_createGroup;
         [_pos, 100, 200, _grp1] call FN_setWaypoints;
         _posSpawn = [_pos, 30, 60, 3, 0, 20, 0] call BIS_fnc_findSafePos;
         [_posSpawn, _numUnits, _faction, _grp1, 2, true] call FN_spawnGroups;
         _grp1 enableGunLights "ForceOn";
 
-		_grp2 = createGroup _side;
+		_grp2 = [_side, _faction] call FN_createGroup;
         [_pos, 100, 200, _grp2] call FN_setWaypoints;
         _posSpawn = [_pos, 100, 200, 3, 0, 20, 0] call BIS_fnc_findSafePos;
         _stopAISpawn = [_posSpawn, _numUnits, _faction, _grp2, 2, true] call FN_spawnGroups;
         _grp2 enableGunLights "ForceOn";
 
-        _grp3 = createGroup _side;
+        _grp3 = [_side, _faction] call FN_createGroup;
         [_pos, 100, 200, _grp3] call FN_setWaypoints;
         _posSpawn = [_pos, 100, 200, 3, 0, 20, 0] call BIS_fnc_findSafePos;
         [_posSpawn, _numUnits, _faction, _grp3, 2, true] call FN_spawnGroups;
@@ -439,7 +448,7 @@ switch (_typeOfLocationArea) do {
 
         private _i = 0;
 		while {!_stopAISpawn} do {
-			private _grp = createGroup _side;
+			private _grp = [_side, _faction] call FN_createGroup;
 			[_pos, 250, 500, _grp] call FN_setWaypoints;
 			private _posSpawn = [_pos, 150, 200, 3, 0, 20, 0] call BIS_fnc_findSafePos;
 			_stopAISpawn = [_posSpawn, _numUnits, _faction, _grp, (floor(random 2) + 2)] call FN_spawnGroups;
@@ -450,20 +459,20 @@ switch (_typeOfLocationArea) do {
 
 	case "Building": {
 		
-		_grpBLD1 = createGroup _side;
+		_grpBLD1 = [_side, _faction] call FN_createGroup;
         _stopAISpawn = [_pos, _numUnits, _faction, _grpBLD1, (ceil(random 3)), true] call FN_spawnGroupsBld;
         _grpBLD1 enableGunLights "ForceOn";
 
-		_grpBLD2 = createGroup _side;
+		_grpBLD2 = [_side, _faction] call FN_createGroup;
         _stopAISpawn = [_pos, _numUnits, _faction, _grpBLD2, (ceil(random 3)), true] call FN_spawnGroupsBld;
         _grpBLD2 enableGunLights "ForceOn";
 
-		 _grp1 = createGroup _side;
+		 _grp1 = [_side, _faction] call FN_createGroup;
         [_pos, 20, 50, _grp1] call FN_setWaypoints;
         if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp1, 2, true] call FN_spawnGroups; };
         _grp1 enableGunLights "ForceOn";
 
-		_grp2 = createGroup _side;
+		_grp2 = [_side, _faction] call FN_createGroup;
         [_pos, 20, 50, _grp2] call FN_setWaypoints;
         if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp2, _numUnits] call FN_spawnGroups; };
         _grp2 enableGunLights "ForceOn";
@@ -472,17 +481,17 @@ switch (_typeOfLocationArea) do {
     case "Trucks": {
         _index = 0;
 
-        _grpCAMP = createGroup _side;
+        _grpCAMP = [_side, _faction] call FN_createGroup;
         [_pos, 10, 25, _grpCAMP] call FN_setWaypoints;
         if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grpCAMP, 4, true] call FN_spawnGroups; };
         _grpCAMP enableGunLights "ForceOn";
 
-        _grp1 = createGroup _side;
+        _grp1 = [_side, _faction] call FN_createGroup;
         [_pos, 100, 350, _grp1] call FN_setWaypoints;
         if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp1, 4, true] call FN_spawnGroups; };
         _grp1 enableGunLights "ForceOn";
 
-        _grp2 = createGroup _side;
+        _grp2 = [_side, _faction] call FN_createGroup;
         [_pos, 100, 350, _grp2] call FN_setWaypoints;
         if (!_stopAISpawn) then { _stopAISpawn = [_pos, _numUnits, _faction, _grp2, _numUnits] call FN_spawnGroups; };
         _grp2 enableGunLights "ForceOn";
@@ -495,7 +504,7 @@ switch (_typeOfLocationArea) do {
     };
 	
 	case "Squad": { //Only to be used for spawning group(s) of a certain faction
-		_grp1 = createGroup _side;
+		_grp1 = [_side, _faction] call FN_createGroup;
         [_pos, _numUnits, _faction, _grp1, _numUnits] call FN_spawnGroups;
         _grp1 enableGunLights "ForceOn";
 	};

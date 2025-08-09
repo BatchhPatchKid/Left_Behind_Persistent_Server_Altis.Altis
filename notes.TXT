@@ -20,9 +20,14 @@ Fixes:
 
 - random encounter heli flyby did not give hint
 - return weapon info: fire rate, ranging
-- looting hint still doesn't display to client (hopefully fixed)
+- looting hint still doesn't display to client (nvm)
 - water objects to gain water actions at them using similar system to loot system
 - repair vehicle takes longer, but uses ace methods
+- have player rituals to gain powers
+- spawn location on dedicated server spawned multiple loot spawns: it seems it ignores minimum spawning distance/spawns on other loot piles
+- sphere's do not delete - turn back into invisible helipad
+- ace interacts not allowing for loot piles
+- loot pool for scavenging a littl crazy
 
 Notes:
 - Good animation for psionsics injury: _player playMove "AinvPknlMstpSnonWnonDnon_healed_1"; (or _2)
