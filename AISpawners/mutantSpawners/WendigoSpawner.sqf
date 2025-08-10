@@ -1,9 +1,9 @@
 params ["_pos", "_triggerRadius", "_maxUnits"];
 	
-[_pos, _triggerRadius, _maxUnits] spawn {
-	params ["_pos", "_triggerRadius", "_maxUnits"];
-
-	[_pos, 1] call (LB_fnc_lootSpawner);
+	[_pos, _triggerRadius, _maxUnits] spawn {
+        params ["_pos", "_triggerRadius", "_maxUnits"];
+	
+	[_pos, 1] call (missionNamespace getVariable "FN_lootSpawner");
 	private _horde = createGroup east;
 	
 	for "_i" from 1 to _maxUnits do {

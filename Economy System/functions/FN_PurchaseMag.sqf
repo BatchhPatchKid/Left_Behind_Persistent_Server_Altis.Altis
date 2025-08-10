@@ -34,7 +34,7 @@ if (_bankNotesCount < (_arguments select 1) AND _bankNotesCount != 0) then {
 					_caller addItemToBackpack (_magazines select 0); 
 					hintSilent format ["Your primary magazine was successfully purchased. The magazine is in your bag %1.",(name _caller)];
 				} else {
-					[_container, _caller, _actionId, (_magazines select 0), 3, 0] call LB_fnc_ammoBoxCheck;
+					[_container, _caller, _actionId, (_magazines select 0), 3, 0] execVM "Economy System\functions\FN_ammoBoxCheck.sqf";
 				};
 			};
 		} else {
@@ -55,7 +55,7 @@ if (_bankNotesCount < (_arguments select 1) AND _bankNotesCount != 0) then {
 					_caller addItemToBackpack (_magazines select 0); 
 					hintSilent format ["Your launchers rocket was successfully purchased. The magazine is in your bag %1.",(name _caller)];
 				} else {
-					[_container, _caller, _actionId, (_magazines select 0), 3, 0] call LB_fnc_ammoBoxCheck;
+					[_container, _caller, _actionId, (_magazines select 0), 3, 0] execVM "Economy System\functions\FN_ammoBoxCheck.sqf";
 				};
 			};
 		} else {
@@ -76,7 +76,7 @@ if (_bankNotesCount < (_arguments select 1) AND _bankNotesCount != 0) then {
 					_caller addItemToBackpack (_magazines select 0); 
 					hintSilent format ["Your handguns magazine was successfully purchased. The magazine is in your bag %1.",(name _caller)];
 				} else {
-					[_container, _caller, _actionId, (_magazines select 0), 3, 0] call LB_fnc_ammoBoxCheck;
+					[_container, _caller, _actionId, (_magazines select 0), 3, 0] execVM "Economy System\functions\FN_ammoBoxCheck.sqf";
 				};
 			};
 		} else {

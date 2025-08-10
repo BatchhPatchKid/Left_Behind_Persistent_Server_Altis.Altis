@@ -57,90 +57,17 @@ class CfgSounds {
     };
 };
 
-class CfgFunctions {
-    class LB {
-        class LootSystem {
-            class attachAceLoot {file = "LootSystem/FN_attachAceLoot.sqf";};
-            class fillLootCrate {file = "LootSystem/FN_fillLootCrate.sqf";};
-            class lootSpawner {file = "LootSystem/FN_lootSpawner.sqf";};
-            class spawnLootCrate {file = "LootSystem/FN_spawnLootCrate.sqf";};
-            class spawnLootGround {file = "LootSystem/FN_spawnLootGround.sqf";};
-        };
-        class AISpawners {
-            class enableDynamicSim {file = "AISpawners/FN_enableDynamicSim.sqf";};
-            class factionSpawnerMain {file = "AISpawners/FN_factionSpawnerMain.sqf";};
-            class factionSpawnerFunctions {
-                class ambientVeh {file = "AISpawners/factionSpawnerFunctions/FN_ambientVeh.sqf";};
-                class changeGroupSide {file = "AISpawners/factionSpawnerFunctions/FN_changeGroupSide.sqf";};
-                class createAIUnit {file = "AISpawners/factionSpawnerFunctions/FN_createAIUnit.sqf";};
-                class createWaypoints {file = "AISpawners/factionSpawnerFunctions/FN_createWaypoints.sqf";};
-                class equipAI {file = "AISpawners/factionSpawnerFunctions/FN_equipAI.sqf";};
-                class factionSelector {file = "AISpawners/factionSpawnerFunctions/FN_factionSelector.sqf";};
-                class findSafePosition {file = "AISpawners/factionSpawnerFunctions/FN_findSafePosition.sqf";};
-                class getFactionSkills {file = "AISpawners/factionSpawnerFunctions/FN_getFactionSkills.sqf";};
-                class meleeChance {file = "AISpawners/factionSpawnerFunctions/FN_meleeChance.sqf";};
-                class renegadeSpawner {file = "AISpawners/factionSpawnerFunctions/FN_renegadeSpawner.sqf";};
-                class selectFaction {file = "AISpawners/factionSpawnerFunctions/FN_selectFaction.sqf";};
-                class setUnitSkills {file = "AISpawners/factionSpawnerFunctions/FN_setUnitSkills.sqf";};
-                class spawnAI {file = "AISpawners/factionSpawnerFunctions/FN_spawnAI.sqf";};
-                class spawnHuntingFaction {file = "AISpawners/factionSpawnerFunctions/FN_spawnHuntingFaction.sqf";};
-                class spawnWanderingFaction {file = "AISpawners/factionSpawnerFunctions/FN_spawnWanderingFaction.sqf";};
-
-                class campFortificationsScripts {
-                    class createObject_Fortifications {file = "AISpawners/factionSpawnerFunctions/campFortificationsScripts/FN_createObject_Fortifications.sqf";};
-                    class fortificationsAux {file = "AISpawners/factionSpawnerFunctions/campFortificationsScripts/FN_fortificationsAux.sqf";};
-                    class fortificationsMain {file = "AISpawners/factionSpawnerFunctions/campFortificationsScripts/FN_fortificationsMain.sqf";};
-                    class spawnAI_Fortifications {file = "AISpawners/factionSpawnerFunctions/campFortificationsScripts/FN_spawnAI_Fortifications.sqf";};
-                };
+class CfgFunctions
+{
+    class LB
+    {
+        tag = "LB";
+        class Loot
+        {
+            class spawnLootGround
+            {
+                file = "LootSystem\FN_spawnLootGround.sqf";
             };
-
-            class mutantSpawners {
-                class 411Spawner {file = "AISpawners/mutantSpawners/411Spawner.sqf";};
-                class AbominationSpawner {file = "AISpawners/mutantSpawners/AbominationSpawner.sqf";};
-                class ZTriggerSpawner {file = "AISpawners/mutantSpawners/FN_ZTriggerSpawner.sqf";};
-                class spawnZom {file = "AISpawners/mutantSpawners/FN_spawnZom.sqf";};
-                class GoliathSpawner {file = "AISpawners/mutantSpawners/GoliathSpawner.sqf";};
-                class HellspawnSpawner {file = "AISpawners/mutantSpawners/HellspawnSpawner.sqf";};
-                class MindflayerSpawner {file = "AISpawners/mutantSpawners/MindflayerSpawner.sqf";};
-                class RakeSpawner {file = "AISpawners/mutantSpawners/RakeSpawner.sqf";};
-                class ShadowmenSpawner {file = "AISpawners/mutantSpawners/ShadowmenSpawner.sqf";};
-                class SkullsSpawner {file = "AISpawners/mutantSpawners/SkullsSpawner.sqf";};
-                class SnatcherSpawner {file = "AISpawners/mutantSpawners/SnatcherSpawner.sqf";};
-                class StatueSpawner {file = "AISpawners/mutantSpawners/StatueSpawner.sqf";};
-                class TankSpawner {file = "AISpawners/mutantSpawners/TankSpawner.sqf";};
-                class VampireSpawner {file = "AISpawners/mutantSpawners/VampireSpawner.sqf";};
-                class VariousMutantSpawner {file = "AISpawners/mutantSpawners/VariousMutantSpawner.sqf";};
-                class WendigoSpawner {file = "AISpawners/mutantSpawners/WendigoSpawner.sqf";};
-                class mutantEffects {file = "AISpawners/mutantSpawners/mutantEffects.sqf";};
-            };
-        };
-        class Ambient {
-            class cookMeat {file = "Ambient/FN_cookMeat.sqf";};
-            class drinkWater {file = "Ambient/FN_drinkWater.sqf";};
-            class refillCanteen {file = "Ambient/FN_refillCanteen.sqf";};
-            class skinAnimal {file = "Ambient/FN_skinAnimal.sqf";};
-            class updateEatActions {file = "Ambient/FN_updateEatActions.sqf";};
-        };
-        class EconomySystem {
-            class Conversations {file = "Economy System/Conversations.sqf";};
-            class economySystem {file = "Economy System/economySystem.sqf";};
-            class economySystemCrate {file = "Economy System/economySystemCrate.sqf";};
-            class spawnStaticTrader {file = "Economy System/spawnStaticTrader.sqf";};
-            class traderTasks {file = "Economy System/traderTasks.sqf";};
-            class PurchaseItem {file = "Economy System/functions/FN_PurchaseItem.sqf";};
-            class PurchaseMag {file = "Economy System/functions/FN_PurchaseMag.sqf";};
-            class SellAction {file = "Economy System/functions/FN_SellAction.sqf";};
-            class addItemToAmmoBox {file = "Economy System/functions/FN_addItemToAmmoBox.sqf";};
-            class ammoBoxCheck {file = "Economy System/functions/FN_ammoBoxCheck.sqf";};
-        };
-        class ServerRanScripts {
-            class lootGarbageSystem {file = "Server Ran Scripts/FN_lootGarbageSystem.sqf";};
-            class convertWeightedArray {file = "Server Ran Scripts/convertWeightedArray.sqf";};
-            class garbageCollection {file = "Server Ran Scripts/garbageCollection.sqf";};
-            class sleepTime {file = "Server Ran Scripts/sleepTime.sqf";};
-        };
-        class ArrayDatabase {
-            class arrayReturn {file = "ArrayDatabase.sqf";};
         };
     };
 };

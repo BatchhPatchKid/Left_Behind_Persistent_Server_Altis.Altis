@@ -51,7 +51,7 @@ private _FN_garbageCollector={
         deleteVehicle _x;
     } forEach allDead;
 
-    private _gcClasses=["_gcClasses"]call(LB_fnc_arrayReturn);
+    private _gcClasses=["_gcClasses"]call(missionNamespace getVariable"FN_arrayReturn");
 
     private _gcObjects = [];
     {

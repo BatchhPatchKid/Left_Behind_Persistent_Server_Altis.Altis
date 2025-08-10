@@ -17,7 +17,7 @@ if (!([_player, _item] call BIS_fnc_hasItem)) exitWith {
 };
 
 // 2. Define your arrays
-private _arrayReturn = LB_fnc_arrayReturn;
+private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
 
 private _sodas = ["drinkSodas"] call _arrayReturn;
 private _waterBottles = ["drinkWaterBottles"] call _arrayReturn;

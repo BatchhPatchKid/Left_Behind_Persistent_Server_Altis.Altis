@@ -4,7 +4,7 @@ if (side player != civilian) then {
     private _banditTracker = 0;
     private _maxBanditGroups = 1;
     private _maxBandits = 1; // Bandits per group plus 1
-    private _factionArray = ["taskFactionWeights"] call (LB_fnc_arrayReturn);
+    private _factionArray = ["taskFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
     private _trader = false;
 
     null = [_maxBanditGroups, _minDist, _maxDist, _banditTracker, _maxBandits, _factionArray, _trader] spawn {
@@ -57,7 +57,7 @@ if (side player != civilian) then {
 										[_banditUnit,_aim,_aimSpeed,_spot,_courage,_aimShake,_command,_spotDist,_reload] call (missionNamespace getVariable "FN_setUnitSkills");
 
 										if (_side == WEST && (random 1) > .70) then {
-                                            [_banditUnit] call LB_fnc_economySystem;
+											[_banditUnit] execVM "Economy System\economySystem.sqf";
 										};
                                     } else {
 										_grpTemp = createGroup east;

@@ -1,8 +1,8 @@
 // Initial variable declarations
 
 radExposure = 0;
-private _cbrnSUITS = ["cbrnSuits"] call (LB_fnc_arrayReturn);
-private _gasMasks = ["gasMasks"] call (LB_fnc_arrayReturn);
+private _cbrnSUITS = ["cbrnSuits"] call (missionNamespace getVariable "FN_arrayReturn");
+private _gasMasks = ["gasMasks"] call (missionNamespace getVariable "FN_arrayReturn");
 private _playerCBRN = 1; // lower is better
 private _playerGasMask = 1; // lower is better
 private _radRain = 0; // higher is better

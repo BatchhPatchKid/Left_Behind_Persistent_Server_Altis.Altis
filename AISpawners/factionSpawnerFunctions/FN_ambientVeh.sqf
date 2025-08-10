@@ -4,8 +4,8 @@ params ["_pos", "_triggerRadius"];
     params ["_pos", "_triggerRadius"];
 
     //–– Configuration ––
-    private _vehArray         = ["defaultVeh"] call (LB_fnc_arrayReturn);
-    private _emptyVehArray    = ["emptyVeh"] call (LB_fnc_arrayReturn);
+    private _vehArray         = ["defaultVeh"] call (missionNamespace getVariable "FN_arrayReturn");
+    private _emptyVehArray    = ["emptyVeh"] call (missionNamespace getVariable "FN_arrayReturn");
     private _collisionClasses = ["car"];
     private _safeParams       = [_pos, 15, 200, 2, 0, 20, 0, [], []];
     private _maxAttempts      = 20;

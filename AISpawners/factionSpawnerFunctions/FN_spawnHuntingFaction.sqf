@@ -2,8 +2,8 @@ params ["_pos", "_faction"];
 private _posHuntingParty = [_pos, 100, 500, 250] call FN_findSafePosition;
 private _numOfHuntingParty = selectRandom  [2, 3, 5];
 
-private _mutantArray = ["mutantArray"] call (LB_fnc_arrayReturn);
-private _factionArray = ["wanderFactionWeights"] call (LB_fnc_arrayReturn);
+private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
+private _factionArray = ["wanderFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
 private _factionSelected = _factionArray call BIS_fnc_selectRandomWeighted;
 
 private _unitSkillsArray = [_factionSelected, _pos] call FN_getFactionSkills;

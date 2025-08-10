@@ -18,7 +18,64 @@ private _watch = false;
 private _radio = false;
 private _gps = false;
 
-private _arrayReturn = LB_fnc_arrayReturn;
+private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+
+//Basic Selection of gear
+_headgearArraySelection = ["headgearCommon"] call _arrayReturn;
+_facewearArraySelection = ["facewearCommon"] call _arrayReturn;
+_uniformArraySelection = ["uniformCommon"] call _arrayReturn;
+_vestArraySelection = ["vestCommon"] call _arrayReturn;
+_backpackArraySelection = ["backpackCommon"] call _arrayReturn;
+_rifleArraySelection = ["primaryCommon"] call _arrayReturn;
+_handgunArraySelection = ["handgunCommon"] call _arrayReturn;
+_launcherArraySelection = ["launcherCommon"] call _arrayReturn;
+_rndShitArraySelection = ["randomCommon"] call _arrayReturn;
+_opticsArraySelection = ["opticsCommon"] call _arrayReturn;
+_muzzleArraySelection = ["muzzleCommon"] call _arrayReturn;
+_railArraySelection = ["bipodCommon"] call _arrayReturn;
+_nvgSelection = ["nvgCommon"] call _arrayReturn;
+_waterSelection = ["waterCommon"] call _arrayReturn;
+_foodSelection = ["foodCommon"] call _arrayReturn;
+_meleeSelection = ["meleeCommon"] call _arrayReturn;
+_firstAidSelection = ["medicalCommon"] call _arrayReturn;
+_glWeapons = ["glWeapons"] call _arrayReturn;
+_grenadeItems = ["grenades"] call _arrayReturn;
+_gpsArraySelection = ["DSA_Detector",.15,"ItemGPS",1];
+_radioArraySelection = ["radios"] call _arrayReturn;
+
+//Rare Items
+_rareNVG = ["nvgRare"] call _arrayReturn;
+_headgearArraySelectionRare = ["headgearRare"] call _arrayReturn;
+_vestArraySelectionRare = ["vestRare"] call _arrayReturn;
+_backpackArraySelectionRare = ["backpackRare"] call _arrayReturn;
+_rifleArraySelectionRare = ["primaryRare"] call _arrayReturn;
+_handgunArraySelectionRare = ["handgunRare"] call _arrayReturn;
+_opticsArraySelectionRare = ["opticsRare"] call _arrayReturn;
+_muzzleArraySelectionRare = ["muzzleRare"] call _arrayReturn;
+_railArraySelectionRare = ["railRare"] call _arrayReturn;
+_uniformArraySelectionRare = ["uniformRare"] call _arrayReturn;
+
+params ["_faction","_unit","_melee","_primaryOverride", "_sfOverride"];
+
+private _money = false;
+private _nvg = false;
+private _primary = false;
+private _optics = false;
+private _muzzle = false;
+private _firstAid = false;
+private _water = false;
+private _food = false;
+private _rocket = false;
+private _rndShitAmount = 3;
+private _railAttachment = false;
+private _grenades = false;
+private _map = false;
+private _compass = false;
+private _watch = false;
+private _radio = false;
+private _gps = false;
+
+private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
 
 //Basic Selection of gear
 _headgearArraySelection = ["headgearCommon"] call _arrayReturn;

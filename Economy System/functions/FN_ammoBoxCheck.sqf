@@ -6,9 +6,9 @@ if (count _temporaryStorageArray == 0) then {
 	_temporaryStorage allowDamage false;
 	clearItemCargoGlobal _temporaryStorage;
 	clearMagazineCargoGlobal _temporaryStorage;
-	[_itemBool, _temporaryStorage, _arguments, _amountOfMoneyToBePutIntoTheAmmoBox, _caller] call LB_fnc_addItemToAmmoBox;
+	[_itemBool, _temporaryStorage, _arguments, _amountOfMoneyToBePutIntoTheAmmoBox, _caller] execVM "Economy System\functions\FN_addItemToAmmoBox.sqf";
 	
 } else {
 	_temporaryStorage = _temporaryStorageArray select 0;
-	[_itemBool, _temporaryStorage, _arguments, _amountOfMoneyToBePutIntoTheAmmoBox, _caller] call LB_fnc_addItemToAmmoBox;
+	[_itemBool, _temporaryStorage, _arguments, _amountOfMoneyToBePutIntoTheAmmoBox, _caller] execVM "Economy System\functions\FN_addItemToAmmoBox.sqf";
 };

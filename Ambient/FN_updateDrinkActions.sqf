@@ -27,7 +27,7 @@ private _categories = [
 ];
 private _masterList = [];
 {
-    _masterList append ([_x] call (LB_fnc_arrayReturn));
+    _masterList append ([_x] call (missionNamespace getVariable "FN_arrayReturn"));
 } forEach _categories;
 
 // 4. For each drinkable the player actually has, create an ACE action

@@ -16,14 +16,12 @@
 // -----------------------------------------------------------------------------
 params ["_faction", "_numUnits", "_trigger", "_typeOfLocationArea"];
 
-["hint"] remoteExec ["hintSilent"];
-
 // Trigger position and radius
 private _pos = getPos _trigger;
 private _triggerRadius = (triggerArea _trigger) select 0;
 
 // Mutant effects must come first as they are executed on client side/cannot be executed on server side
-private _mutantArray = ["mutantArray"] call (LB_fnc_arrayReturn);
+private _mutantArray = ["mutantArray"] call (missionNamespace getVariable "FN_arrayReturn");
 if (_faction in _mutantArray) then {
 
 	{
@@ -106,7 +104,7 @@ private _spawnSurvivorGroup = {
     params ["_num", "_rad", "_pos", "_rvg", "_area"];
 
     // Weighted list of survivor sub-factions and their spawn chances
-    private _survivorFactions = ["_survivorFactions"] call (LB_fnc_arrayReturn);
+    private _survivorFactions = ["_survivorFactions"] call (missionNamespace getVariable "FN_arrayReturn");
 
     // Pick a specific survivor sub-faction
     private _factionSelected = [_survivorFactions, ""] call (missionNamespace getVariable "FN_selectFaction");

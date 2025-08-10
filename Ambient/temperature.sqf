@@ -1,11 +1,11 @@
 // Initial variable declarations
 
 bodyTemp = 98.6;
-private _coldWeatherClothing = ["coldWeatherClothing"] call (LB_fnc_arrayReturn);
-private _hotWeatherClothing = ["hotWeatherClothing"] call (LB_fnc_arrayReturn);
-private _coldWeatherGoggles = ["coldWeatherGoggles"] call (LB_fnc_arrayReturn);
-private _coldWeatherHeadgear = ["coldWeatherHeadgear"] call (LB_fnc_arrayReturn);
-private _coldVests = ["coldVests"] call (LB_fnc_arrayReturn);
+private _coldWeatherClothing = ["coldWeatherClothing"] call (missionNamespace getVariable "FN_arrayReturn");
+private _hotWeatherClothing = ["hotWeatherClothing"] call (missionNamespace getVariable "FN_arrayReturn");
+private _coldWeatherGoggles = ["coldWeatherGoggles"] call (missionNamespace getVariable "FN_arrayReturn");
+private _coldWeatherHeadgear = ["coldWeatherHeadgear"] call (missionNamespace getVariable "FN_arrayReturn");
+private _coldVests = ["coldVests"] call (missionNamespace getVariable "FN_arrayReturn");
 private _coldUniform = 1; // lower is better
 private _coldRain = 0; // higher is better
 private _fireCancel = 1; // stops cold from being as brutal due to fire being close to player
@@ -17,11 +17,11 @@ player setVariable ["Temp", 98.6, true];
 FN_temperature = {
 	_handle = 0 spawn {
 		
-		private _coldWeatherClothing = ["coldWeatherClothing"] call (LB_fnc_arrayReturn);
-		private _hotWeatherClothing = ["hotWeatherClothing"] call (LB_fnc_arrayReturn);
-		private _coldWeatherGoggles = ["coldWeatherGoggles"] call (LB_fnc_arrayReturn);
-		private _coldWeatherHeadgear = ["coldWeatherHeadgear"] call (LB_fnc_arrayReturn);
-		private _coldVests = ["coldVests"] call (LB_fnc_arrayReturn);
+		private _coldWeatherClothing = ["coldWeatherClothing"] call (missionNamespace getVariable "FN_arrayReturn");
+		private _hotWeatherClothing = ["hotWeatherClothing"] call (missionNamespace getVariable "FN_arrayReturn");
+		private _coldWeatherGoggles = ["coldWeatherGoggles"] call (missionNamespace getVariable "FN_arrayReturn");
+		private _coldWeatherHeadgear = ["coldWeatherHeadgear"] call (missionNamespace getVariable "FN_arrayReturn");
+		private _coldVests = ["coldVests"] call (missionNamespace getVariable "FN_arrayReturn");
 
 		_playerUniform = uniform player;
 		_playerHeadgear = headgear player;
