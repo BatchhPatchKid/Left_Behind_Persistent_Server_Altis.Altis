@@ -139,6 +139,9 @@ class CfgFunctions {
             class garbageCollection {file = "Server Ran Scripts/garbageCollection.sqf";};
             class sleepTime {file = "Server Ran Scripts/sleepTime.sqf";};
         };
+        class ArrayDatabase {
+            class arrayReturn {file = "ArrayDatabase.sqf";};
+        };
     };
 };
 

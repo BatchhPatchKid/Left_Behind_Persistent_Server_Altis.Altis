@@ -1,6 +1,6 @@
 params ["_unit"];
 
-private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+private _arrayReturn = LB_fnc_arrayReturn;
 private _convertWeightedArray = missionNamespace getVariable "FN_convertWeightedArray";
 
 // Weighted arrays setup

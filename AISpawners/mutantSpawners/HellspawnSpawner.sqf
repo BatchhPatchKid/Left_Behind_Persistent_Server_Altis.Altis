@@ -1,6 +1,6 @@
 params ["_pos", "_triggerRadius", "_maxUnits"];
 
-private _factionArray = ["mutantFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
+private _factionArray = ["mutantFactionWeights"] call (LB_fnc_arrayReturn);
 private _factionSelected = selectRandomWeighted _factionArray;
 [_factionSelected, (round random (10)+6), _pos, "Squad", independent, "I_Survivor_F"] call (missionNamespace getVariable "FN_spawnAI");
 
@@ -14,9 +14,9 @@ private _factionSelected = selectRandomWeighted _factionArray;
 
 	params ["_pos", "_triggerRadius", "_maxUnits"];
 	
-	[_pos, 2] execVM "AISpawners\lootSpawner.sqf";
-	[_pos, 2] execVM "AISpawners\lootSpawner.sqf";
-	[_pos, 2] execVM "AISpawners\lootSpawner.sqf";
+	[_pos, 2] call LB_fnc_lootSpawner;
+	[_pos, 2] call LB_fnc_lootSpawner;
+	[_pos, 2] call LB_fnc_lootSpawner;
 	
 	private _horde = createGroup east;
 	

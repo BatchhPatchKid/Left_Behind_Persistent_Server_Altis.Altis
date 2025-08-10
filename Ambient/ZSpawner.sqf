@@ -16,7 +16,7 @@ if (side player != civilian) then {
 	"RyanZombie26walkerOpfor", .005];
 	
 	sleep 1;
-	private _zedFast = ["fastZombie"] call (missionNamespace getVariable "FN_arrayReturn");
+	private _zedFast = ["fastZombie"] call (LB_fnc_arrayReturn);
 
 	null = [_maxZedGroups, _minDist, _maxDist, _zedTracker, _ZedsSlow, _zedFast, _maxZeds] spawn {
 		params ["_maxZedGroups", "_minDist", "_maxDist", "_zedTracker", "_ZedsSlow", "_zedFast", "_maxZeds"];

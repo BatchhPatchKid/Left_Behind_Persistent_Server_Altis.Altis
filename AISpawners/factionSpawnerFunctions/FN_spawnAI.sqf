@@ -84,16 +84,16 @@ FN_lootSpawnByFaction = {
         switch (_faction) do {
             case "US";
             case "RU": {
-                [_pos, 2] call (missionNamespace getVariable "FN_lootSpawner");
+                [_pos, 2] call (LB_fnc_lootSpawner);
             };
             case "TRB";
             case "PMC";
             case "ROA";
             case "ALF": {
-                [_pos, 1] call (missionNamespace getVariable "FN_lootSpawner");
+                [_pos, 1] call (LB_fnc_lootSpawner);
             };
             default {
-                [_pos, 0] call (missionNamespace getVariable "FN_lootSpawner");
+                [_pos, 0] call (LB_fnc_lootSpawner);
             };
         };
     };
@@ -289,7 +289,7 @@ if (_typeOfLocationArea == "Rnd" OR _typeOfLocationArea == "") then {
 	_typeOfLocationArea = ["Building", .65, "Patrol", .65, "Camp", .45, "Trucks", .15] call BIS_fnc_selectRandomWeighted;
 };
 
-private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+private _arrayReturn = LB_fnc_arrayReturn;
 _vehArray = ["defaultVeh"] call _arrayReturn;
 
 // default

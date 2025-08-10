@@ -4,23 +4,23 @@ private ["_CRVest","_CRWeapon","_CRHeadgear","_CRItems","_rndNumCR","_rndNum","_
 //loot arrays
 
 //Basic Selection of gear
-private _commonHeadgearLoot = ["headgearCommon"] call (missionNamespace getVariable "FN_arrayReturn");
-private _uniforms = ["uniformCommon"] call (missionNamespace getVariable "FN_arrayReturn");
-private _commonVestLoot = ["vestCommon"] call (missionNamespace getVariable "FN_arrayReturn");
-private _backpackItems = ["backpackCommon"] call (missionNamespace getVariable "FN_arrayReturn");
-private _commonWeaponLoot = ["primaryCommon"] call (missionNamespace getVariable "FN_arrayReturn");
-private _miscItems = ["randomCommon"] call (missionNamespace getVariable "FN_arrayReturn");
-private _nvgs = ["nvgCommon"] call (missionNamespace getVariable "FN_arrayReturn");
-private _waterSelection = ["waterCommon"] call (missionNamespace getVariable "FN_arrayReturn");
-private _foodSelection = ["foodCommon"] call (missionNamespace getVariable "FN_arrayReturn");
-private _firstAidSelection = ["medicalCommon"] call (missionNamespace getVariable "FN_arrayReturn");
-private _explosives = ["explosiveCommon"] call (missionNamespace getVariable "FN_arrayReturn");
+private _commonHeadgearLoot = ["headgearCommon"] call (LB_fnc_arrayReturn);
+private _uniforms = ["uniformCommon"] call (LB_fnc_arrayReturn);
+private _commonVestLoot = ["vestCommon"] call (LB_fnc_arrayReturn);
+private _backpackItems = ["backpackCommon"] call (LB_fnc_arrayReturn);
+private _commonWeaponLoot = ["primaryCommon"] call (LB_fnc_arrayReturn);
+private _miscItems = ["randomCommon"] call (LB_fnc_arrayReturn);
+private _nvgs = ["nvgCommon"] call (LB_fnc_arrayReturn);
+private _waterSelection = ["waterCommon"] call (LB_fnc_arrayReturn);
+private _foodSelection = ["foodCommon"] call (LB_fnc_arrayReturn);
+private _firstAidSelection = ["medicalCommon"] call (LB_fnc_arrayReturn);
+private _explosives = ["explosiveCommon"] call (LB_fnc_arrayReturn);
 
 //Rare Items
-private _rareHeadgearLoot = ["headgearRare"] call (missionNamespace getVariable "FN_arrayReturn");
-private _rareVestLoot = ["vestRare"] call (missionNamespace getVariable "FN_arrayReturn");
-private _rareWeaponLoot = ["primaryRare"] call (missionNamespace getVariable "FN_arrayReturn");
-private _rareWeaponItems = ["muzzleRare"] call (missionNamespace getVariable "FN_arrayReturn");
+private _rareHeadgearLoot = ["headgearRare"] call (LB_fnc_arrayReturn);
+private _rareVestLoot = ["vestRare"] call (LB_fnc_arrayReturn);
+private _rareWeaponLoot = ["primaryRare"] call (LB_fnc_arrayReturn);
+private _rareWeaponItems = ["muzzleRare"] call (LB_fnc_arrayReturn);
 
 //Selecting how many will go into the crate and adding the items to the crate
 private _rndNum = ceil (random 3);

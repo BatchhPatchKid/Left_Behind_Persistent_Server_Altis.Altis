@@ -7,7 +7,7 @@ params ["_player"];
 
 if (random 1 > .5) then {
 	// caching database
-	private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+	private _arrayReturn = LB_fnc_arrayReturn;
 
 	private _lootArrayPool = [
 		"headgearCommon", 5,

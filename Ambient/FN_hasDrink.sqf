@@ -7,7 +7,7 @@
 */
 params ["_player"];
 
-private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+private _arrayReturn = LB_fnc_arrayReturn;
 private _sodas        = ["drinkSodas"] call _arrayReturn;
 private _waterBottles = ["drinkWaterBottles"] call _arrayReturn;
 private _canteens     = ["drinkCanteens"] call _arrayReturn;

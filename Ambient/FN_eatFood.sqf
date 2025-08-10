@@ -17,7 +17,7 @@ if (!([_player, _item] call BIS_fnc_hasItem)) exitWith {
 };
 
 // 2. Define your arrays
-private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+private _arrayReturn = LB_fnc_arrayReturn;
 private _tier1  = ["foodTier1"]  call _arrayReturn;
 private _tier2  = ["foodTier2"]  call _arrayReturn;
 private _tier3  = ["foodTier3"]  call _arrayReturn;

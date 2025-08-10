@@ -7,7 +7,7 @@ if (isNil "_spawnSleep") then {
 [_zombieGrp, _zombieArray, _numZombie, _pos, _spread, _spawnSleep] spawn {
 	params ["_zombieGrp", "_zombieArray", "_numZombie", "_pos", "_spread", "_spawnSleep"];
 
-	private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+	private _arrayReturn = LB_fnc_arrayReturn;
 
 	private _randomStuff = ["randomCommon"] call _arrayReturn;
 	private _backpackArraySelection = ["backpackCommon"] call _arrayReturn;

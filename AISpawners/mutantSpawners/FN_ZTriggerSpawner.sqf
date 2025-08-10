@@ -21,7 +21,7 @@ FN_spawnSpecialInfected = {
 		_numUnits = [_minUnits, _midUnits, _maxUnits] call FN_setNumUnits;
 	};
 	
-	[_pos, _lvl_loot] call (missionNamespace getVariable "FN_lootSpawner");
+	[_pos, _lvl_loot] call (LB_fnc_lootSpawner);
 	
 	private _horde = createGroup east;	
 			
@@ -37,16 +37,16 @@ FN_getZombieArray = {
 	_ZedArray = [];
 	switch (_type) do {
 		case 1: { // faster zombie array
-			_ZedArray = ["fastZombie"] call (missionNamespace getVariable "FN_arrayReturn");
+			_ZedArray = ["fastZombie"] call (LB_fnc_arrayReturn);
 		};
 		case 2: { // mutant array
-			_ZedArray = ["mutantZombie"] call (missionNamespace getVariable "FN_arrayReturn");
+			_ZedArray = ["mutantZombie"] call (LB_fnc_arrayReturn);
 		};
 		case 3: { //Zombies that own a location (the faction that spawns at a location)
-			_ZedArray = ["locationZombie"] call (missionNamespace getVariable "FN_arrayReturn");
+			_ZedArray = ["locationZombie"] call (LB_fnc_arrayReturn);
 		};
 		default { // default is normal slow zombie array
-			_ZedArray = ["slowZombie"] call (missionNamespace getVariable "FN_arrayReturn");
+			_ZedArray = ["slowZombie"] call (LB_fnc_arrayReturn);
 		};
 	};
 	_ZedArray;
@@ -119,8 +119,8 @@ switch (_faction) do { //Going throuigh each zombie faction to spawn the appropr
 		};
 
 		if (_numUnits > 21) then {
-			[_pos, 1] call (missionNamespace getVariable "FN_lootSpawner");
-		} else { [_pos, 0] call (missionNamespace getVariable "FN_lootSpawner"); };
+			[_pos, 1] call (LB_fnc_lootSpawner);
+		} else { [_pos, 0] call (LB_fnc_lootSpawner); };
 
 		_ZedArray = [1] call FN_getZombieArray;
 		

@@ -20,7 +20,7 @@ private _oldEntries = _player getVariable ["LB_currentEatEntries", []];
 private _categories = ["foodTier1","foodTier2","foodTier3","foodTier4","foodTier5","foodTier6","foodTier7","foodTier8","foodTier9","foodTier10","foodTier11"];
 private _masterList = [];
 {
-    _masterList append ([_x] call (missionNamespace getVariable "FN_arrayReturn"));
+    _masterList append ([_x] call (LB_fnc_arrayReturn));
 } forEach _categories;
 
 // 4. For each food the player actually has, create an ACE action

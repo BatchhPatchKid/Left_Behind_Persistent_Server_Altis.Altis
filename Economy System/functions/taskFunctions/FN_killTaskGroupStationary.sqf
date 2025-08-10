@@ -1,7 +1,7 @@
 params ["_container", "_caller", "_actionId"];
 if (isNull (currentTask _caller)) then {
 	hintSilent format ["The following group has had a bounty put on their leader. Eliminate them for a reward, %1", (name _caller)];
-	private _factionArray = ["taskFactionWeights"] call (missionNamespace getVariable "FN_arrayReturn");
+	private _factionArray = ["taskFactionWeights"] call (LB_fnc_arrayReturn);
         private _faction = _factionArray call BIS_fnc_selectRandomWeighted;
 	private _numUnits = ceil(random 7)+6;
 	private _minDist = 700;
@@ -53,7 +53,7 @@ if (isNull (currentTask _caller)) then {
 						_caller addItemToBackpack "rvg_money"; 
 						hintSilent format ["All of the amount owed to you ($%2) has been put in your backpack, %1. Good work out there.", (name _caller), 120];
 					} else {
-						[_container, _caller, _actionId, "rvg_money", 1, 1] execVM "Economy System\functions\FN_ammoBoxCheck.sqf";
+						[_container, _caller, _actionId, "rvg_money", 1, 1] call LB_fnc_ammoBoxCheck;
 						hintSilent format ["It seems your backpack was full or missing %1. The remaining or full amount has been put into a ammo box at the original assigning contractors location", (name _caller)];
 					};
 				};

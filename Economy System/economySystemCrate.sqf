@@ -78,8 +78,8 @@ FN_PurchaseMag_Crate = {
 FN_PurchaseItem_Crate = {
 	params ["_target", "_caller", "_actionId", "_args"];
 	
-	backpackSelection = ["backpack"] call (missionNamespace getVariable "FN_arrayReturn");
-	backpackSelectionRare = ["backpackExpensive"] call (missionNamespace getVariable "FN_arrayReturn");
+	backpackSelection = ["backpack"] call (LB_fnc_arrayReturn);
+	backpackSelectionRare = ["backpackExpensive"] call (LB_fnc_arrayReturn);
 
 	_itemsPlayer = itemsWithMagazines _target;
 
@@ -129,34 +129,34 @@ FN_addMoney = {
 FN_SellAction_Crate =  {
 	params ["_container", "_caller", "_actionId", "_arguments"];
 
-	headgearArraySelectionRare = ["headgearExpensive"] call (missionNamespace getVariable "FN_arrayReturn");
-	gasArraySelection = ["gas"] call (missionNamespace getVariable "FN_arrayReturn");
-	coolClothing = ["clothingExpensive"] call (missionNamespace getVariable "FN_arrayReturn");
-	monoNVG = ["monoNVG"] call (missionNamespace getVariable "FN_arrayReturn");
-	binoNVG = ["binoNVG"] call (missionNamespace getVariable "FN_arrayReturn");
-	quadNVG = ["quadNVG"] call (missionNamespace getVariable "FN_arrayReturn");
-	explosive = ["explosive"] call (missionNamespace getVariable "FN_arrayReturn");
-	thrownExplosives = ["thrownExplosives"] call (missionNamespace getVariable "FN_arrayReturn");
-	melee = ["melee"] call (missionNamespace getVariable "FN_arrayReturn");
-	pistol = ["pistol"] call (missionNamespace getVariable "FN_arrayReturn");
-	autoPistol = ["autoPistol"] call (missionNamespace getVariable "FN_arrayReturn");
-	launcherArraySelection = ["launcher"] call (missionNamespace getVariable "FN_arrayReturn");
-	smg = ["smg"] call (missionNamespace getVariable "FN_arrayReturn");
-	shotgun = ["shotgun"] call (missionNamespace getVariable "FN_arrayReturn");
-	assualtRifle = ["assualtRifle"] call (missionNamespace getVariable "FN_arrayReturn");
-	LMG = ["LMG"] call (missionNamespace getVariable "FN_arrayReturn");
-	DMR = ["DMR"] call (missionNamespace getVariable "FN_arrayReturn");
-	sniperRifle = ["sniperRifle"] call (missionNamespace getVariable "FN_arrayReturn");
-	antiMaterial = ["antiMaterial"] call (missionNamespace getVariable "FN_arrayReturn");
-	opticsArraySelection = ["optics"] call (missionNamespace getVariable "FN_arrayReturn");
-	opticsArraySelectionRare = ["opticsExpensive"] call (missionNamespace getVariable "FN_arrayReturn");
-	muzzleArraySelection = ["muzzle"] call (missionNamespace getVariable "FN_arrayReturn");
-	muzzleArraySelectionRare = ["muzzleExpensive"] call (missionNamespace getVariable "FN_arrayReturn");
-	railArraySelection = ["rail"] call (missionNamespace getVariable "FN_arrayReturn");
-	railArraySelectionRare = ["railExpensive"] call (missionNamespace getVariable "FN_arrayReturn");
-	backpackSelection = ["backpack"] call (missionNamespace getVariable "FN_arrayReturn");
-	backpackSelectionRare = ["backpackExpensive"] call (missionNamespace getVariable "FN_arrayReturn");
-	vestSelectionRare = ["vestExpensive"] call (missionNamespace getVariable "FN_arrayReturn");
+	headgearArraySelectionRare = ["headgearExpensive"] call (LB_fnc_arrayReturn);
+	gasArraySelection = ["gas"] call (LB_fnc_arrayReturn);
+	coolClothing = ["clothingExpensive"] call (LB_fnc_arrayReturn);
+	monoNVG = ["monoNVG"] call (LB_fnc_arrayReturn);
+	binoNVG = ["binoNVG"] call (LB_fnc_arrayReturn);
+	quadNVG = ["quadNVG"] call (LB_fnc_arrayReturn);
+	explosive = ["explosive"] call (LB_fnc_arrayReturn);
+	thrownExplosives = ["thrownExplosives"] call (LB_fnc_arrayReturn);
+	melee = ["melee"] call (LB_fnc_arrayReturn);
+	pistol = ["pistol"] call (LB_fnc_arrayReturn);
+	autoPistol = ["autoPistol"] call (LB_fnc_arrayReturn);
+	launcherArraySelection = ["launcher"] call (LB_fnc_arrayReturn);
+	smg = ["smg"] call (LB_fnc_arrayReturn);
+	shotgun = ["shotgun"] call (LB_fnc_arrayReturn);
+	assualtRifle = ["assualtRifle"] call (LB_fnc_arrayReturn);
+	LMG = ["LMG"] call (LB_fnc_arrayReturn);
+	DMR = ["DMR"] call (LB_fnc_arrayReturn);
+	sniperRifle = ["sniperRifle"] call (LB_fnc_arrayReturn);
+	antiMaterial = ["antiMaterial"] call (LB_fnc_arrayReturn);
+	opticsArraySelection = ["optics"] call (LB_fnc_arrayReturn);
+	opticsArraySelectionRare = ["opticsExpensive"] call (LB_fnc_arrayReturn);
+	muzzleArraySelection = ["muzzle"] call (LB_fnc_arrayReturn);
+	muzzleArraySelectionRare = ["muzzleExpensive"] call (LB_fnc_arrayReturn);
+	railArraySelection = ["rail"] call (LB_fnc_arrayReturn);
+	railArraySelectionRare = ["railExpensive"] call (LB_fnc_arrayReturn);
+	backpackSelection = ["backpack"] call (LB_fnc_arrayReturn);
+	backpackSelectionRare = ["backpackExpensive"] call (LB_fnc_arrayReturn);
+	vestSelectionRare = ["vestExpensive"] call (LB_fnc_arrayReturn);
 	mutantMeat = ["rvg_Buffalo_Meat_Cooked","rvg_Buffalo_Meat"];
 	
 	private _presetContents = [];

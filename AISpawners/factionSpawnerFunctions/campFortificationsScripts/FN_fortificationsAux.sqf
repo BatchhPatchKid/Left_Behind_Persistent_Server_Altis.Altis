@@ -9,13 +9,13 @@ _campPos = [_pos, 15, 100, 10, 0, 20, 0,[],[]] call BIS_fnc_findSafePos;
 
 if (_side != WEST) then {
 	switch (_faction) do {
-		case "US": { [_campPos, 2] call (missionNamespace getVariable "FN_lootSpawner"); }; 
-		case "RU": { [_campPos, 2] call (missionNamespace getVariable "FN_lootSpawner"); };
-		case "TRB": { [_campPos, 1] call (missionNamespace getVariable "FN_lootSpawner"); };
-		case "PMC": { [_campPos, 1] call (missionNamespace getVariable "FN_lootSpawner"); };
-		case "ROA": { [_campPos, 1] call (missionNamespace getVariable "FN_lootSpawner"); };
-		case "ALF": { [_campPos, 1] call (missionNamespace getVariable "FN_lootSpawner"); };
-		default { [_campPos, 0] call (missionNamespace getVariable "FN_lootSpawner"); };
+		case "US": { [_campPos, 2] call (LB_fnc_lootSpawner); }; 
+		case "RU": { [_campPos, 2] call (LB_fnc_lootSpawner); };
+		case "TRB": { [_campPos, 1] call (LB_fnc_lootSpawner); };
+		case "PMC": { [_campPos, 1] call (LB_fnc_lootSpawner); };
+		case "ROA": { [_campPos, 1] call (LB_fnc_lootSpawner); };
+		case "ALF": { [_campPos, 1] call (LB_fnc_lootSpawner); };
+		default { [_campPos, 0] call (LB_fnc_lootSpawner); };
 	};
 };
 

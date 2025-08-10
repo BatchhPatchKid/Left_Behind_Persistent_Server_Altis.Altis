@@ -10,8 +10,8 @@ if (isServer) then {
 		_trader disableAI "ANIM";
 		removeBackpackGlobal _trader;
 
-		[_trader] execVM "Economy System\economySystem.sqf";
-
+		[_trader] call LB_fnc_economySystem;
+		
 		_wp1 = _grpTrader addWaypoint [(getPos _trigger), 0];
 		_wp1 setWaypointType "HOLD";
 		_grpTrader enableGunLights "ForceOn";

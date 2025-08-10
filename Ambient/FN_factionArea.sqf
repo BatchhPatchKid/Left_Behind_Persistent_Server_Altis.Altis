@@ -9,7 +9,7 @@ if (isServer) then {
 		
 		_vehArray = "";
 		
-		private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
+		private _arrayReturn = LB_fnc_arrayReturn;
 		switch _faction do {
 			case "TRB": { _vehArray = ["TRBVeh"] call _arrayReturn; };
 			case "US": { _vehArray = ["USVeh"] call _arrayReturn; };
@@ -104,7 +104,7 @@ if (isServer) then {
 						[_faction, _newAI, false, false, _sfOverride] call (missionNamespace getVariable "FN_equipAI");
 						[_newAI, _aim, _aimSpeed, _spot, _courage, _aimShake, _command, _spotDist, _reload] call (missionNamespace getVariable "FN_setUnitSkills");	
 						if (_trader AND (random 1 > .75)) then {
-							[_newAI] execVM "Economy System\economySystem.sqf";
+							[_newAI] call LB_fnc_economySystem;
 						};	
 					};
 				} else {			

@@ -5,7 +5,7 @@ playSound3D [getMissionPath "sounds\blowout_siren_2.ogg", player, false, _pos, 5
 
 [_pos, _triggerRadius, _maxUnits] spawn {
 	params ["_pos", "_triggerRadius", "_maxUnits"];
-	[_pos, 2] call (missionNamespace getVariable "FN_lootSpawner");
+	[_pos, 2] call (LB_fnc_lootSpawner);
 
 	private _horde = createGroup east;
 	for "_i" from 1 to _maxUnits do {
