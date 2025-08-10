@@ -57,17 +57,43 @@ class CfgSounds {
     };
 };
 
-class CfgFunctions
-{
-    class LB
-    {
-        tag = "LB";
-        class Loot
-        {
-            class spawnLootGround
-            {
-                file = "LootSystem\FN_spawnLootGround.sqf";
-            };
+class CfgFunctions {
+    class LB {
+        class LootSystem {
+            class attachAceLoot {file = "LootSystem/FN_attachAceLoot.sqf";};
+            class fillLootCrate {file = "LootSystem/FN_fillLootCrate.sqf";};
+            class lootSpawner {file = "LootSystem/FN_lootSpawner.sqf";};
+            class spawnLootCrate {file = "LootSystem/FN_spawnLootCrate.sqf";};
+            class spawnLootGround {file = "LootSystem/FN_spawnLootGround.sqf";};
+        };
+        class AISpawners {
+            class enableDynamicSim {file = "AISpawners/FN_enableDynamicSim.sqf";};
+            class factionSpawnerMain {file = "AISpawners/FN_factionSpawnerMain.sqf";};
+        };
+        class Ambient {
+            class cookMeat {file = "Ambient/FN_cookMeat.sqf";};
+            class drinkWater {file = "Ambient/FN_drinkWater.sqf";};
+            class refillCanteen {file = "Ambient/FN_refillCanteen.sqf";};
+            class skinAnimal {file = "Ambient/FN_skinAnimal.sqf";};
+            class updateEatActions {file = "Ambient/FN_updateEatActions.sqf";};
+        };
+        class EconomySystem {
+            class Conversations {file = "Economy System/Conversations.sqf";};
+            class economySystem {file = "Economy System/economySystem.sqf";};
+            class economySystemCrate {file = "Economy System/economySystemCrate.sqf";};
+            class spawnStaticTrader {file = "Economy System/spawnStaticTrader.sqf";};
+            class traderTasks {file = "Economy System/traderTasks.sqf";};
+            class PurchaseItem {file = "Economy System/functions/FN_PurchaseItem.sqf";};
+            class PurchaseMag {file = "Economy System/functions/FN_PurchaseMag.sqf";};
+            class SellAction {file = "Economy System/functions/FN_SellAction.sqf";};
+            class addItemToAmmoBox {file = "Economy System/functions/FN_addItemToAmmoBox.sqf";};
+            class ammoBoxCheck {file = "Economy System/functions/FN_ammoBoxCheck.sqf";};
+        };
+        class ServerRanScripts {
+            class lootGarbageSystem {file = "Server Ran Scripts/FN_lootGarbageSystem.sqf";};
+            class convertWeightedArray {file = "Server Ran Scripts/convertWeightedArray.sqf";};
+            class garbageCollection {file = "Server Ran Scripts/garbageCollection.sqf";};
+            class sleepTime {file = "Server Ran Scripts/sleepTime.sqf";};
         };
     };
 };
