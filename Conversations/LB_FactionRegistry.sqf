@@ -1,7 +1,9 @@
-// LB_FactionRegistry.sqf — server-only
+/* LB_FactionRegistry.sqf — server-only
 if (!isServer) exitWith {};
 
-missionNamespace setVariable ["LB_FactionRegistry", createHashMap];
+if (isNil "LB_FactionRegistry") then {
+  missionNamespace setVariable ["LB_FactionRegistry",createHashMap];
+};
 
 // SET: (Group, Key) -> void
 missionNamespace setVariable [
@@ -9,32 +11,30 @@ missionNamespace setVariable [
   compileFinal "
     params ['_grp','_key'];
     if (isNull _grp) exitWith {};
-    private _reg = missionNamespace getVariable 'LB_FactionRegistry';
-    private _h = hashValue _grp;
-    _reg set [_h, [_grp, _key]];
+    private _reg = missionNamespace getVariable ['LB_FactionRegistry', createHashMap];
+    _reg set [netId _grp, _key];
+    missionNamespace setVariable ['LB_FactionRegistry', _reg];
   "
 ];
 
-// GET: (Group, Default) -> Key
-missionNamespace setVariable [
-  "LB_FacReg_Get",
-  compileFinal "
-    params ['_grp','_def'];
-    if (isNull _grp) exitWith { _def };
-    private _reg = missionNamespace getVariable 'LB_FactionRegistry';
-    private _rec = _reg getOrDefault [hashValue _grp, [objNull, _def]];
-    _rec select 1
-  "
-];
-
-// HAS: (Group) -> bool  | true if the group exists in the registry
+// HAS
 missionNamespace setVariable [
   "LB_FacReg_Has",
   compileFinal "
     params ['_grp'];
     if (isNull _grp) exitWith {false};
-    private _reg = missionNamespace getVariable 'LB_FactionRegistry';
-    !isNil { _reg get (hashValue _grp) }
+    private _reg = missionNamespace getVariable ['LB_FactionRegistry', createHashMap];
+    !isNil { _reg get (netId _grp) }
+  "
+];
+
+// GET
+missionNamespace setVariable [
+  "LB_FacReg_Get",
+  compileFinal "
+    params ['_grp','_default'];
+    private _reg = missionNamespace getVariable ['LB_FactionRegistry', createHashMap];
+    _reg getOrDefault [netId _grp, _default]
   "
 ];
 

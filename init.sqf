@@ -124,10 +124,6 @@ missionNamespace setVariable ["FN_lootGarbageSystem", compileFinal preprocessFil
 missionNamespace setVariable ["garbageCollection", compileFinal preprocessFileLineNumbers "Server Ran Scripts\garbageCollection.sqf"];
 missionNamespace setVariable ["sleepTime", compileFinal preprocessFileLineNumbers "Server Ran Scripts\sleepTime.sqf"];
 
-/* Conversations */
-//missionNamespace setVariable ["LB_Chatter", compileFinal preprocessFileLineNumbers "Conversations\LB_Chatter.sqf"];
-//missionNamespace setVariable ["LB_FactionRegistry", compileFinal preprocessFileLineNumbers "Conversations\LB_FactionRegistry.sqf"];
-
 /* Root / Misc */
 missionNamespace setVariable ["FN_arrayReturn", compileFinal preprocessFileLineNumbers "ArrayDatabase.sqf"];
 missionNamespace setVariable ["FN_checkFaction", compileFinal preprocessFileLineNumbers "FN_checkFaction.sqf"];
@@ -148,12 +144,16 @@ missionNamespace setVariable ["PF_init", compileFinal preprocessFileLineNumbers 
 4 enableChannel [true, false];
 5 enableChannel [true, true];
 
+/*
 //Turning on chatter system
 if (isServer) then {
-	missionNamespace setVariable ["LB_Conversations", compileFinal preprocessFileLineNumbers "Conversations\LB_Conversations.sqf"];
-	[] execVM "LB_FactionRegistry.sqf";
-	[] execVM "LB_Chatter.sqf";
-};
+	if (isNil "LB_FactionRegistry") then {
+		missionNamespace setVariable ["LB_FactionRegistry",createHashMap];
+	};
+
+	[] execVM "Conversations\LB_FactionRegistry.sqf";
+	[] execVM "Conversations\LB_Chatter.sqf";
+};*/
 
 if (!isDedicated) then {
 	waitUntil {!isNull player};
@@ -203,7 +203,7 @@ if (!isDedicated) then {
 	// Broadcast the diary entries to all clients
 	if (hasInterface) then {
 		[_diaryEntries] call addDiaryEntries;
-		[player] spawn (missionNamespace getVariable "FN_attachAceLoot");
+		player spawn (missionNamespace getVariable "FN_attachAceLoot");
 	} else {
 		[_diaryEntries] remoteExec ["addDiaryEntries", 0, true];
 	};

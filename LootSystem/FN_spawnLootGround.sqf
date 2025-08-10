@@ -1,3 +1,8 @@
+// LootSystem\FN_spawnLootGround.sqf
+// Compiled by CfgFunctions as LB_fnc_spawnLootGround
+
+if (!isServer) exitWith {};
+
 params ["_player"];
 
 if (random 1 > .5) then {
@@ -52,10 +57,9 @@ if (random 1 > .5) then {
 			_holder addItemCargoGlobal [(selectRandomWeighted _lootArray), 1];
 		};
 	};
-
-	hint parseText "<t color='#ffd000' size='0.80'>You managed to salvage something</t>";
+	["You managed to salvage something"] remoteExecCall ["hintSilent", _player];
 } else {
-	hintSilent parseText "<t color='#ffffffff' size='0.80'>You found nothing</t>";
+	["You found nothing"] remoteExecCall ["hintSilent", _player];
 };
 uiSleep 3;
 hintSilent "";

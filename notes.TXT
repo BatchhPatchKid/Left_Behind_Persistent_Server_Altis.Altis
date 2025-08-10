@@ -28,6 +28,22 @@ Fixes:
 - sphere's do not delete - turn back into invisible helipad
 - ace interacts not allowing for loot piles
 - loot pool for scavenging a littl crazy
+- Pig Flesh worship a big pig - represents limbo: Great pig
+- Ambient 
+- Abaraham the pig tenderozier needs to be mentioned - lives in the military dome in PF territory (he really hates animals)
+- Shamans - political structure: Speaker of the Great Pig
+- Emissary of the Wanderer
+- War criminals - joined Bandits
+- BB worship original two leaders
+- MAKE water and food meter go down slower
+- make water and food more likely to be found while looting
+- The betray of one founder to another BB (60 years ago)
+- Ritualistic keys for player powers - unlocked 
+- Shamans selected from birth, raised into it
+- Prophets of the trident - for Deadmans Trident
+- Children of the Dark - new name for the Raven's Cloak. They follow/worship the Wanderer
+- Faction leaders, rank structure - special clothing for leaders
+- percent to die from hunger/hydration down to 2
 
 Notes:
 - Good animation for psionsics injury: _player playMove "AinvPknlMstpSnonWnonDnon_healed_1"; (or _2)

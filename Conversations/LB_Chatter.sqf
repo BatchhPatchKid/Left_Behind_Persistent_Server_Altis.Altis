@@ -11,25 +11,25 @@
       [] execVM "LB_FactionRegistry.sqf";
       [] execVM "LB_Chatter.sqf";
     };
-*/
+
 
 if (!isServer) exitWith {};
 
 // ---------------------------
 // Config
 // ---------------------------
-private _RADIUS                = 50;     // hearing radius
-private _TICK                  = 5.0;    // scheduler cadence (single loop)
-private _AMBIENT_START_PROB    = 0.25;   // chance to start a convo when eligible
+private _RADIUS= 50;     // hearing radius
+private _TICK = 0.25;    // scheduler cadence (single loop)
+private _AMBIENT_START_PROB = 0.25;   // chance to start a convo when eligible
 private _AMBIENT_COOLDOWN_SEC  = 120;    // cooldown after a conversation ends/aborts
 private _COMBAT_SPEAK_COOLDOWN = 0;      // min seconds between combat shouts (per group)
-private _DEBUG                 = false;  // set true to spam RPT
+private _DEBUG = false;  // set true to spam RPT
 
 // Ambient/combat audience locking
 private _LOCK_SEC_PER_LINE = 0;   // estimate to size an ambient convo lock
-private _LOCK_GRACE_SEC    = 1;
-private _AMBIENT_LOCK_MIN  = 1;   // ambient must occupy audience at least this long (sec)
-private _COMBAT_LOCK_MIN   = 0;   // combat lines do not lock audience (sec)
+private _LOCK_GRACE_SEC = 1;
+private _AMBIENT_LOCK_MIN = 1;   // ambient must occupy audience at least this long (sec)
+private _COMBAT_LOCK_MIN = 0;   // combat lines do not lock audience (sec)
 
 // ---------------------------
 // Data sources
@@ -225,7 +225,6 @@ while { true } do {
         if !(_aud isEqualTo []) then {
           private _cuids = _aud apply { getPlayerUID _x };
           [_ldr, _line, _cuids] call _say;
-          // With 0s lock this is effectively a no-op; bump if you ever want serialized combat barks
           [_cuids, "combat", _COMBAT_LOCK_MIN] call _lockUIDs;
         };
 

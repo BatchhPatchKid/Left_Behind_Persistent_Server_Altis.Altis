@@ -19,7 +19,7 @@
                                Use 0,0 for no pause. The system will pick a random value in [min, max].
 
     Examples below are placeholders; replace with your content.
-*/
+
 
 private _ambient = createHashMapFromArray [
     // US-like (rename to your custom key e.g. "US" if you use LB_faction)

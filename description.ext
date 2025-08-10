@@ -57,10 +57,27 @@ class CfgSounds {
     };
 };
 
+class CfgFunctions
+{
+    class LB
+    {
+        tag = "LB";
+        class Loot
+        {
+            class spawnLootGround
+            {
+                file = "LootSystem\FN_spawnLootGround.sqf";
+            };
+        };
+    };
+};
+
 class CfgRemoteExec {
   class Functions {
-    mode = 1; jip = 1;
+    mode = 1;
+    jip = 1;
     class BIS_fnc_call { allowedTargets = 0; };
     class BIS_fnc_dynamicText { allowedTargets = 1; };
+    class LB_fnc_spawnLootGround { allowedTargets = 2; };
   };
 };
