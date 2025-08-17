@@ -11,11 +11,11 @@ FN_getScalar = {
     private _temp = [player] call FN_getTemp;
     private _scalar = 0;
     if (_temp < 98.6) then {
-        _scalar = ((98.6 - _temp) / (98.6 - 89)) * 0.18;
+        _scalar = ((98.6 - _temp) / (98.6 - 89)) * 0.12;
     } else {
-        _scalar = ((_temp - 98.6) / (108 - 98.6)) * 0.18;
+        _scalar = ((_temp - 98.6) / (108 - 98.6)) * 0.12;
     };
-    _scalar = _scalar min 0.18;
+    _scalar = _scalar min 0.12;
     _scalar = _scalar max 0;
     _scalar
 };
@@ -95,10 +95,10 @@ while {true} do {
         
         // If hydration reaches 0, check for passing out or death.
         if (_newHydration == 0) then {
-            if (random 1 < 0.1) then {
+            if (random 1 < 0.10) then {
                 [player, true, 15] call ace_medical_fnc_setUnconscious;
             };
-            if (random 1 < 0.20) then {
+            if (random 1 < 0.05) then {
                 player setDamage 1;
                 player setVariable ["hydrationLevel", 100];
                 player setVariable ["nutritionLevel", 100];
@@ -152,10 +152,10 @@ while {true} do {
         
         // If nutrition reaches 0, check for passing out or death.
         if (_newNutrition == 0) then {
-            if (random 1 < 0.1) then {
+            if (random 1 < 0.10) then {
                 [player, true, 15] call ace_medical_fnc_setUnconscious;
             };
-            if (random 1 < 0.20) then {
+            if (random 1 < 0.05) then {
                 player setDamage 1;
                 player setVariable ["hydrationLevel", 100];
                 player setVariable ["nutritionLevel", 100];

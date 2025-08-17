@@ -80,7 +80,7 @@ if (_item in _canteens) then {
     _player addItem "rvg_canteenEmpty";
 };
 
-if (_item in _waterBottles && _item in _dirty) then {
+if (_item in _waterBottles) then {
     _player addItem "rvg_plasticBottleEmpty";
 };
 

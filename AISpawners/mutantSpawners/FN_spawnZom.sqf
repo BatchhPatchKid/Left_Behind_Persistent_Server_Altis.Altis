@@ -40,6 +40,8 @@ if (isNil "_spawnSleep") then {
 		};
 		
 		private _hordeUnit = _zombieGrp createUnit [_ZedType,_spawnPos,[],20,"NONE"];
+		_hordeUnit setSpeaker "NoVoice"
+		_hordeUnit disableConversation true;
 
 		private _bpObj = unitBackpack _hordeUnit;
 		private _vestObj = vest _hordeUnit;

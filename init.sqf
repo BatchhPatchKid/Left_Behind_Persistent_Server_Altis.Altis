@@ -136,6 +136,47 @@ missionNamespace setVariable ["onPlayerRespawn", compileFinal preprocessFileLine
 missionNamespace setVariable ["teleporter", compileFinal preprocessFileLineNumbers "teleporter.sqf"];
 missionNamespace setVariable ["PF_init", compileFinal preprocessFileLineNumbers "PF\init.sqf"];
 
+//Conversations system
+missionNamespace setVariable ["LB_Chatter", compileFinal preprocessFileLineNumbers "Conversations\LB_Chatter.sqf"];
+missionNamespace setVariable ["LB_Conversations", compileFinal preprocessFileLineNumbers "Conversations\LB_Conversations.sqf"];
+
+/* Ritual system */
+missionNamespace setVariable ["FN_updateRitualActions", compileFinal preprocessFileLineNumbers "ritualPowers\FN_updateRitualActions.sqf"];
+missionNamespace setVariable ["FN_pray", compileFinal preprocessFileLineNumbers "ritualPowers\FN_pray.sqf"];
+
+//Wanderer Rituals
+missionNamespace setVariable ["FN_killGoliathShard", compileFinal preprocessFileLineNumbers "ritualPowers\FN_killGoliathShard.sqf"];
+missionNamespace setVariable ["FN_killGoliathShardEnemy", compileFinal preprocessFileLineNumbers "ritualPowers\FN_killGoliathShardEnemy.sqf"];
+missionNamespace setVariable ["FN_killGoliathShardALL", compileFinal preprocessFileLineNumbers "ritualPowers\FN_killGoliathShardALL.sqf"];
+missionNamespace setVariable ["FN_summonMutants", compileFinal preprocessFileLineNumbers "ritualPowers\FN_summonMutants.sqf"];
+missionNamespace setVariable ["FN_summonTank", compileFinal preprocessFileLineNumbers "ritualPowers\FN_summonTank.sqf"];
+missionNamespace setVariable ["FN_banishUnit", compileFinal preprocessFileLineNumbers "ritualPowers\FN_banishUnit.sqf"];
+
+//Zeus Rituals
+missionNamespace setVariable ["FN_zeusBolt", compileFinal preprocessFileLineNumbers "ritualPowers\FN_zeusBolt.sqf"];
+missionNamespace setVariable ["FN_zeusStorm", compileFinal preprocessFileLineNumbers "ritualPowers\FN_zeusStorm.sqf"];
+missionNamespace setVariable ["FN_zeusRain", compileFinal preprocessFileLineNumbers "ritualPowers\FN_zeusRain.sqf"];
+
+//Hypnos Rituals
+missionNamespace setVariable ["FN_hypnosBrainwashSingle", compileFinal preprocessFileLineNumbers "ritualPowers\FN_hypnosBrainwashSingle.sqf"];
+missionNamespace setVariable ["FN_hypnosBrainwash", compileFinal preprocessFileLineNumbers "ritualPowers\FN_hypnosBrainwash.sqf"];
+
+//Hermes Ritual 
+missionNamespace setVariable ["FN_teleportRandom", compileFinal preprocessFileLineNumbers "ritualPowers\FN_teleportRandom.sqf"];
+missionNamespace setVariable ["FN_teleportCursor", compileFinal preprocessFileLineNumbers "ritualPowers\FN_teleportCursor.sqf"];
+
+//Chronos Rituals
+missionNamespace setVariable ["FN_changeTime", compileFinal preprocessFileLineNumbers "ritualPowers\FN_changeTime.sqf"];
+
+//Apollo Rituals
+missionNamespace setVariable ["FN_healSelf", compileFinal preprocessFileLineNumbers "ritualPowers\FN_healSelf.sqf"];
+missionNamespace setVariable ["FN_healAllies", compileFinal preprocessFileLineNumbers "ritualPowers\FN_healAllies.sqf"];
+
+//Great Pig Rituals
+missionNamespace setVariable ["FN_pigExplosion", compileFinal preprocessFileLineNumbers "ritualPowers\FN_pigExplosion.sqf"];
+missionNamespace setVariable ["FN_pigWisdom", compileFinal preprocessFileLineNumbers "ritualPowers\FN_pigWisdom.sqf"];
+missionNamespace setVariable ["FN_pigFireball", compileFinal preprocessFileLineNumbers "ritualPowers\FN_pigFireball.sqf"];
+
 // Turning off VoN
 0 enableChannel [true, false];
 1 enableChannel [true, false];
@@ -143,17 +184,6 @@ missionNamespace setVariable ["PF_init", compileFinal preprocessFileLineNumbers 
 3 enableChannel [true, false];
 4 enableChannel [true, false];
 5 enableChannel [true, true];
-
-/*
-//Turning on chatter system
-if (isServer) then {
-	if (isNil "LB_FactionRegistry") then {
-		missionNamespace setVariable ["LB_FactionRegistry",createHashMap];
-	};
-
-	[] execVM "Conversations\LB_FactionRegistry.sqf";
-	[] execVM "Conversations\LB_Chatter.sqf";
-};*/
 
 if (!isDedicated) then {
 	waitUntil {!isNull player};
@@ -233,6 +263,8 @@ if (!isDedicated) then {
 		// Refresh eat menu
 		[_unit] call FN_updateEatActions;
 
+		[_unit] spawn FN_updateRitualActions;
+
 		hintSilent "";
 	}];
 
@@ -308,6 +340,8 @@ if (!isDedicated) then {
 		//–– Build “Faction” line (default size, no color) ––
 		private _factionLine = format ["<t size='1.3'>Faction: %1</t>", (_faction joinString " and ")];
 
+		private _ritualStatus = format ["<t size='1.3'>Ritual Power: %1</t>", (_unit getVariable ["ritualStatus",0])];
+
 		//–– Assemble all lines and display ––
 		private _hintText =
 			_tempLine + "<br/><br/>" +
@@ -316,7 +350,8 @@ if (!isDedicated) then {
 			_defecationLine + "<br/><br/>" +
 			_sanityLine + "<br/><br/>" +
 			(if _hasGeiger then { _radLine } else { _noRadLine }) + "<br/><br/>" +
-			_factionLine;
+			_factionLine + "<br/><br/>" +
+			_ritualStatus;
 
 		hintSilent parseText _hintText;
 	}];
@@ -331,101 +366,96 @@ if (!isDedicated) then {
 				[_unit] call FN_updateEatActions;
 				// Refresh the faction alliance check
 				[_unit] call FN_factionClothingCheck;
+				//check ritual power of the player and assigns appriorate spells to the player
+				[_unit] spawn FN_updateRitualActions;
 			}];
 		};
 	}];
 
 	//Ace organization actions
-	_actionMain = ["Scenario_Actions","Scenario Actions","",{},{true}] call ace_interact_menu_fnc_createAction;
+	private _actionMain = ["Scenario_Actions","Scenario Actions","",{},{true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions"], _actionMain] call ace_interact_menu_fnc_addActionToClass;
 
-	_survivalFolder = ["Survival_System", "Survival System", "", {}, {true}] call ace_interact_menu_fnc_createAction;
+	private _survivalFolder = ["Survival_System", "Survival System", "", {}, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions"], _survivalFolder] call ace_interact_menu_fnc_addActionToClass;
 
-	_checkInv = ["check_inv","Scenario Checks","",{},{true}] call ace_interact_menu_fnc_createAction;
+	private _checkInv = ["check_inv","Scenario Checks","",{},{true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions"], _checkInv] call ace_interact_menu_fnc_addActionToClass; 
 
+	private _ritualPowers = ["ritualPowers","Ritual Powers","",{},{true}] call ace_interact_menu_fnc_createAction;
+	[(typeOf player), 1, ["ACE_SelfActions"], _ritualPowers] call ace_interact_menu_fnc_addActionToClass; 
+
 	// Holster Weapon ACE Self-Action
-	_actionHolster = ["holster","Holster Weapon","",{player action ["SwitchWeapon",player,player,-1];}, {true}] call ace_interact_menu_fnc_createAction;
+	private _actionHolster = ["holster","Holster Weapon","",{player action ["SwitchWeapon",player,player,-1];}, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player),1,["ACE_SelfActions"],_actionHolster] call ace_interact_menu_fnc_addActionToClass;
 
 	//Ace Scenario Actions
-	_action = ["Arsenal","Open the Arsenal","",{[player, player, true] call ace_arsenal_fnc_openBox;},{true}] call ace_interact_menu_fnc_createAction;
+	private _action = ["Arsenal","Open the Arsenal","",{[player, player, true] call ace_arsenal_fnc_openBox;},{true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions","Scenario_Actions"], _action] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionSleep = ["sleep","Lay Down Sleeping Bag","",{call FN_sleep},{true}] call ace_interact_menu_fnc_createAction;
+	private _actionSleep = ["sleep","Lay Down Sleeping Bag","",{call FN_sleep},{true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions","Scenario_Actions"], _actionSleep] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionFlag = ["base","Set Down Base Flag","",{call FN_setDownBaseCache},{true}] call ace_interact_menu_fnc_createAction;
+	private _actionFlag = ["base","Set Down Base Flag","",{call FN_setDownBaseCache},{true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions","Scenario_Actions"], _actionFlag] call ace_interact_menu_fnc_addActionToClass;
 
+	private _actionTemp = ["temperature", "Check Clothing Capabilities", "", {call FN_temperature;}, {true}] call ace_interact_menu_fnc_createAction;
+	[(typeOf player), 1, ["ACE_SelfActions", "Scenario_Actions"], _actionTemp] call ace_interact_menu_fnc_addActionToClass;
+
+	private _actionPray = ["pray","Pray","",{[player spawn FN_pray]},{true}] call ace_interact_menu_fnc_createAction;
+	[(typeOf player), 1, ["ACE_SelfActions","Scenario_Actions"], _actionPray] call ace_interact_menu_fnc_addActionToClass;
+
 	//Ace Survival System
-	_actionDrinkWater = ["Drink", "Drink", "", { }, {true}] call ace_interact_menu_fnc_createAction;
+	private _actionDrinkWater = ["Drink", "Drink", "", { }, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions","Survival_System"], _actionDrinkWater] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionEatFood = ["Eat", "Eat", "", { }, {true}] call ace_interact_menu_fnc_createAction;
+	private _actionEatFood = ["Eat", "Eat", "", { }, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "Survival_System"], _actionEatFood] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionDefecate = ["Defecate", "Defecate", "", { [player] call FN_defecate; }, { true }] call ace_interact_menu_fnc_createAction;
+	private _actionDefecate = ["Defecate", "Defecate", "", { [player] call FN_defecate; }, { true }] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "Survival_System"], _actionDefecate] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionRefillCanteen = ["refill", "Refill Canteen", "", { [player] call FN_refillCanteen; }, {true}] call ace_interact_menu_fnc_createAction;
+	private _actionRefillCanteen = ["refill", "Refill Canteen", "", { [player] call FN_refillCanteen; }, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "Survival_System"], _actionRefillCanteen] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionPurifyWater = ["purify", "Purify Water", "", { [player] call FN_purifyWater; }, {true}] call ace_interact_menu_fnc_createAction;
+	private _actionPurifyWater = ["purify", "Purify Water", "", { [player] call FN_purifyWater; }, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "Survival_System"], _actionPurifyWater] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionSkinAnimal = ["skinAnimal", "Skin Animal", "", { [player] call (missionNamespace getVariable "FN_skinAnimal"); }, {true}] call ace_interact_menu_fnc_createAction;
+	private _actionSkinAnimal = ["skinAnimal", "Skin Animal", "", { [player] call (missionNamespace getVariable "FN_skinAnimal"); }, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "Survival_System"], _actionSkinAnimal] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionCookMeat = ["cookMeat", "Cook Meat", "", {[player] call (missionNamespace getVariable "FN_cookMeat");}, {true}] call ace_interact_menu_fnc_createAction;
+	private _actionCookMeat = ["cookMeat", "Cook Meat", "", {[player] call (missionNamespace getVariable "FN_cookMeat");}, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "Survival_System"], _actionCookMeat] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionCreateFire = ["createFire", "Make Fire", "", {[player] call (missionNamespace getVariable "FN_createFire");}, {true}] call ace_interact_menu_fnc_createAction;
+	private _actionCreateFire = ["createFire", "Make Fire", "", {[player] call (missionNamespace getVariable "FN_createFire");}, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions","Survival_System"], _actionCreateFire] call ace_interact_menu_fnc_addActionToClass;
 
-	//Following ace actions can be performed; however, are not needed
-
-	_actionTemp = ["temperature", "Check Clothing Capabilities", "", {call FN_temperature;}, {true}] call ace_interact_menu_fnc_createAction;
+	/*Following ace actions can be performed; however, are not needed -- removed for the time being
+	private _actionTemp = ["temperature", "Check Clothing Capabilities", "", {call FN_temperature;}, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "check_inv"], _actionTemp] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionRad = ["radiation", "Check Rad Exposure", "", {call FN_radiation;}, {true}] call ace_interact_menu_fnc_createAction;
+	private _actionRad = ["radiation", "Check Rad Exposure", "", {call FN_radiation;}, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "check_inv"], _actionRad] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionDisplayStats = ["status", "Check Hydration And Nutrition", "", {[player] call FN_displayHydrationNutrition;}, {true}] call ace_interact_menu_fnc_createAction;
+	private _actionDisplayStats = ["status", "Check Hydration And Nutrition", "", {[player] call FN_displayHydrationNutrition;}, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "check_inv"], _actionDisplayStats] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionSanity = ["sanity", "Check Sanity", "", { call FN_checkSanity; }, {true}] call ace_interact_menu_fnc_createAction;
+	private _actionSanity = ["sanity", "Check Sanity", "", { call FN_checkSanity; }, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "check_inv"], _actionSanity] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionCheckDefecation = ["Check Defecation Status", "Check Defecation Status", "", { [player, true] call FN_checkDefecationStatus }, { true }] call ace_interact_menu_fnc_createAction;
+	private _actionCheckDefecation = ["Check Defecation Status", "Check Defecation Status", "", { [player, true] call FN_checkDefecationStatus }, { true }] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "check_inv"], _actionCheckDefecation] call ace_interact_menu_fnc_addActionToClass;
 
-	_actionFaction = ["faction","Check Faction Affiliation","",{[player, true] call FN_checkFaction},{true}] call ace_interact_menu_fnc_createAction;
-	[(typeOf player), 1, ["ACE_SelfActions","check_inv"], _actionFaction] call ace_interact_menu_fnc_addActionToClass;
-
+	private _actionFaction = ["faction","Check Faction Affiliation","",{[player, true] call FN_checkFaction},{true}] call ace_interact_menu_fnc_createAction;
+	[(typeOf player), 1, ["ACE_SelfActions","Scenario_Actions"], _actionFaction] call ace_interact_menu_fnc_addActionToClass;
+	*/
+	
 	// Add zeus action to start garbage collection
-	private _gcAction = ["StartGC","Start Garbage Collection","",{ [true] spawn (missionNamespace getVariable "garbageCollection"); },{ true }] call ace_interact_menu_fnc_createAction;
+	private _gcAction = ["StartGC","Start Garbage Collection","",{ [true] spawn (missionNamespace getVariable "garbageCollection") },{ true }] call ace_interact_menu_fnc_createAction;
 	[["ACE_ZeusActions"], _gcAction] call ace_interact_menu_fnc_addActionToZeus;
 
-	player setVariable ["SU_Relation",true,true];
-	player setVariable ["BB_Relation",true,true];
-	player setVariable ["PF_Relation",false,true];
-	player setVariable ["ALF_Relation",false,true];
-	player setVariable ["WO_Relation",false,true];
-	player setVariable ["RU_Relation",false,true];
-	player setVariable ["US_Relation",false,true];
-	player setVariable ["NH_Relation",false,true];
-	player setVariable ["TRB_Relation",false,true];
-	player setVariable ["RC_Relation",false,true];
-	player setVariable ["DT_Relation",false,true];
-	player setVariable ["ROA_Relation",false,true];
-	player setVariable ["PMC_Relation",false,true];
-	player setVariable ["Bandit_Relation",false,true];
-	player setVariable ["Renegade_Relation",false,true];
-	player setVariable ["wants_to_sleep", false, true];
-	sleepRequestUpdate = time;
-	publicVariableServer "sleepRequestUpdate";
+	private _ritualAction = ["ritualGain","Give 1000 Ritual Status","",{ player setVariable ["ritualStatus", (player getVariable ["ritualStatus",0]) + 1000, true] },{ true }] call ace_interact_menu_fnc_createAction;
+	[["ACE_ZeusActions"], _ritualAction] call ace_interact_menu_fnc_addActionToZeus;
 
 	west setFriend [civilian, 0];
 	east setFriend [civilian, 0];
@@ -438,11 +468,4 @@ if (!isDedicated) then {
 	[player] call FN_updateDrinkActions;
 	[player] call FN_updateEatActions;
 	[player] call FN_factionClothingCheck;
-};
-
-if (isServer) then {
-    enableDynamicSimulationSystem true;
-    "Group" setDynamicSimulationDistance 500;
-    PFrun=false;
-    [] spawn (missionNamespace getVariable "PF_init");
 };

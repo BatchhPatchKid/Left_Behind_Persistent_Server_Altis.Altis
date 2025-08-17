@@ -11,6 +11,10 @@
 
 params ["_player"];
 
+private _objectsNearPlayer = nearestObjects [_player, ["Campfire_burning_F", "FirePlace_burning_F", "MetalBarrel_burning_F"], 5];
+
+if (count _objectsNearPlayer == 0) exitWith { hintSilent "You need to be near a fire to cook meat"; };
+
 // Define uncooked → cooked pairs
 private _meatPairs = [
     ["rvg_Rabbit_Meat",   "rvg_Rabbit_Meat_Cooked"],

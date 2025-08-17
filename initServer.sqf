@@ -48,6 +48,16 @@ waitUntil { !isNil { missionNamespace getVariable "garbageCollection" } };
 waitUntil { !isNil { missionNamespace getVariable "FN_lootGarbageSystem" } };
 [] spawn (missionNamespace getVariable "FN_lootGarbageSystem");
 
+waitUntil { !isNil { missionNamespace getVariable "PF_init" } };
+PFrun=false;
+[] spawn (missionNamespace getVariable "PF_init");
+
+waitUntil { !isNil { missionNamespace getVariable "LB_Chatter" } };
+[] spawn (missionNamespace getVariable "LB_Chatter");
+
+waitUntil { !isNil { missionNamespace getVariable "LB_Conversations" } };
+[] spawn (missionNamespace getVariable "LB_Conversations");
+
 // Set up event-driven sleep system
 sleepRequestUpdate = 0;
 "sleepRequestUpdate" addPublicVariableEventHandler { [] spawn (missionNamespace getVariable "sleepTime"); };

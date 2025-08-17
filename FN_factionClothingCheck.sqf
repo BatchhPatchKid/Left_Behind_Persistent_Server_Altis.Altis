@@ -113,7 +113,7 @@ if (!(_unit getVariable ["Renegade_Relation", false])) then {
                 _unit setVariable ["RU_Relation",false,true];
                 _unit setVariable ["US_Relation",false,true];
                 _unit setVariable ["NH_Relation",false,true];
-                _unit setVariable ["TRB_Relation",true,true];
+                _unit setVariable ["TRB_Relation",false,true];
                 _unit setVariable ["RC_Relation",true,true];
                 _unit setVariable ["DT_Relation",false,true];
                 _unit setVariable ["ROA_Relation",false,true];
@@ -131,7 +131,7 @@ if (!(_unit getVariable ["Renegade_Relation", false])) then {
                 _unit setVariable ["US_Relation",false,true];
                 _unit setVariable ["NH_Relation",false,true];
                 _unit setVariable ["TRB_Relation",true,true];
-                _unit setVariable ["RC_Relation",true,true];
+                _unit setVariable ["RC_Relation",false,true];
                 _unit setVariable ["DT_Relation",false,true];
                 _unit setVariable ["ROA_Relation",false,true];
                 _unit setVariable ["PMC_Relation",false,true];

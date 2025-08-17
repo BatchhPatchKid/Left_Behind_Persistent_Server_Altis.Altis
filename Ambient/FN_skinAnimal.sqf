@@ -99,6 +99,8 @@ if (_closestClass in _animalsToCheck) then {
             [_spawnGore] call BIS_fnc_call;
             deleteVehicle _closest;
             hintSilent "You skinned a person and got chicken meat";
+
+            _player setVariable ["ritualStatus", (_player getVariable ["ritualStatus",0]) + 3, true];
         };
     };
     _player playMove "AinvPknlMstpSnonWnonDnon_medic2";

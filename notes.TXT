@@ -1,53 +1,41 @@
 To do:
-- lower difficutly?
-- more missions at the traders
-	1) Destroy a designated vehicle
-	
-- Develop my own looting system
-- random location spawned multiple factions on each other
-- mutant effects wear off after leaving the trigger
-- trader gave an NLAW to Eli after (unable to replicate)
-- weapon holstered on back doesn't get deleted
-- When gutting, allow for a chance to obtain a bag of 250ml's of blood
-
-Fixes:
-- no animations for eating or drinkning? (Fixed hopefully)
-- restructure scenario actions (Done)
-- cook meat missing hints for no meat found in inventory (FIXED)
-- water too prevelant now (Possibly fixed)
-- geiger counter telling me I'm being irraditated despite taking no radiation - did eventually stop
-- restructure scenario actions (Done)
-
-- random encounter heli flyby did not give hint
-- return weapon info: fire rate, ranging
-- looting hint still doesn't display to client (nvm)
 - water objects to gain water actions at them using similar system to loot system
-- repair vehicle takes longer, but uses ace methods
 - have player rituals to gain powers
-- spawn location on dedicated server spawned multiple loot spawns: it seems it ignores minimum spawning distance/spawns on other loot piles
-- sphere's do not delete - turn back into invisible helipad
-- ace interacts not allowing for loot piles
 - loot pool for scavenging a littl crazy
-- Pig Flesh worship a big pig - represents limbo: Great pig
-- Ambient 
-- Abaraham the pig tenderozier needs to be mentioned - lives in the military dome in PF territory (he really hates animals)
-- Shamans - political structure: Speaker of the Great Pig
-- Emissary of the Wanderer
-- War criminals - joined Bandits
-- BB worship original two leaders
-- MAKE water and food meter go down slower
-- make water and food more likely to be found while looting
+- add artifacts to the vendors
+- add leave animation action when completing an action (cook meat)
+- tasks not assigning in dedicated server
+- Faction leaders, rank structure - special clothing for leaders
+- Animations local on dedicated server
+- wisdom does not activate on AI
+- ritual actions sometimes duplicate
+- loot system spawns too many helipads in dense cities. Great for high end rigs, but bad for bad rigs.
+maybe increase amount of space a loot pile can spawn from each other
+- have zombies be forced silent when spawned
+- Different praying for different powers
+- blinding spell
+- animations for spells to be public
+
+Notes:
+- Good animation for psionsics injury: _player playMove "AinvPknlMstpSnonWnonDnon_healed_1"; (or _2)
+- good command for playing radio transmissions: unit globalRadio radioName
 - The betray of one founder to another BB (60 years ago)
 - Ritualistic keys for player powers - unlocked 
 - Shamans selected from birth, raised into it
 - Prophets of the trident - for Deadmans Trident
 - Children of the Dark - new name for the Raven's Cloak. They follow/worship the Wanderer
-- Faction leaders, rank structure - special clothing for leaders
-- percent to die from hunger/hydration down to 2
+- Pig Flesh worship a big pig - represents limbo: Great pig
+- Abaraham the pig tenderozier needs to be mentioned - lives in the military dome in PF territory (he really hates animals)
+- Shamans - political structure: Speaker of the Great Pig
+- Emissary of the Wanderer
+- War criminals - joined Bandits
+- BB worship original two leaders
 
-Notes:
-- Good animation for psionsics injury: _player playMove "AinvPknlMstpSnonWnonDnon_healed_1"; (or _2)
-- good command for playing radio transmissions: unit globalRadio radioName
+{
+	_x setVariable ["ritualStatus",10000, true];
+	_x setVariable ["hydrationLevel", 100]; 
+	_x setVariable ["nutritionLevel", 100];
+} forEach allPlayers;
 
 Update:
 - 

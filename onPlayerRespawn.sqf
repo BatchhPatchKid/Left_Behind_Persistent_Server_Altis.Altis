@@ -1,4 +1,5 @@
 waitUntil {!isNull player};
+
 player enableStamina false;
 [player, [missionNamespace, "inventory_var"]] call BIS_fnc_loadInventory;
 
@@ -18,5 +19,12 @@ player setVariable ["PMC_Relation",false,true];
 player setVariable ["Bandit_Relation",false,true];
 player setVariable ["Renegade_Relation",false,true];
 player setVariable ["wants_to_sleep", false, true];
+
+player setVariable ["hydrationLevel", 100];
+player setVariable ["nutritionLevel", 100];
+
 sleepRequestUpdate = time;
 publicVariableServer "sleepRequestUpdate";
+
+
+player setVariable ["ritualStatus", 0, true];

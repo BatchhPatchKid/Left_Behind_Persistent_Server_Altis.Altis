@@ -54,3 +54,5 @@ if (random 1 > _meleeChance) then {
 
 [_grp, _pos, 50] call FN_createWaypoints;
 [_grp, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');
+
+[_grp, _factionSelected] call (missionNamespace getVariable "LB_FacReg_Set");

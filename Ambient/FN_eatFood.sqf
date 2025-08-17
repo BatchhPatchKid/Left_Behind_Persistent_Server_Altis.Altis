@@ -103,7 +103,8 @@ if (_new > 100) then { _new = 100; };
 _player setVariable ["nutritionLevel", _new];
 
 // 6. Apply rads
-if (_radAmount > 0 && (itemsWithMagazines player)) then {
+private _arr = (itemsWithMagazines _player) select { _x == "rvg_geiger" };
+if (_radAmount > 0 && (count _arr > 0)) then {
     [_radAmount] call FN_addRad;
     [_player, ["rvg_geiger_1", 100, 1]] remoteExec ["say3D"];
 };

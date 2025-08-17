@@ -19,27 +19,156 @@
                                Use 0,0 for no pause. The system will pick a random value in [min, max].
 
     Examples below are placeholders; replace with your content.
-
+*/
 
 private _ambient = createHashMapFromArray [
-    // US-like (rename to your custom key e.g. "US" if you use LB_faction)
+    // US
     ["US", [
         [
-            ["LEADER", "Keep your intervals.", 0.0, 0.0],
-            ["RANDOM", "Copy, holding spacing.", 1.2, 2.0],
-            ["LEADER", "Eyes open for survivors.", 1.0, 1.6]
-        ],
-        [
-            ["LEADER", "Anyone see movement?", 0.0, 0.0],
-            ["RANDOM", "Negative. Quiet out there.", 1.0, 1.8]
+            ["LEADER", "Hey private, you were supposed to be on KP this morning. I heard from SSG Kaylee you didn't show.", 5.0, 7.0],
+            ["RANDOM", "Sorry Sergeant, I forgot all about that. My patrol went long last night, and I was recovering from that.", 5.0, 7.0],
+            ["LEADER", "Hmm, no excuse then. You now have KP every day for the next five days. Your shift's are evening and morning. Be at the KP tent one hour prior", 5.0, 7.0],
+            ["RANDOM", "Roger sarnt...", 5.0, 7.0]
         ]
     ]],
 
-    // RU-like
+    // RU
     ["RU", [
         [
-            ["LEADER", "Spokoĭno. Dvizhemsya dalshe.", 0.0, 0.0],
-            ["RANDOM", "Ponial. Derzhim stroy.", 1.0, 1.6]
+            ["LEADER", "Ryadovoy, do you have your mark with you?", 5.0, 7.0],
+            ["RANDOM", "Yes Yefreytor, I would never let it be left behind", 5.0, 7.0],
+            ["LEADER", "Good, another from our team left his back at base. I haven't seen him since we left the FOB", 5.0, 7.0],
+            ["RANDOM", "Aleksandr has always been a fool. That's the last thing one of use should forget...", 5.0, 7.0]
+        ]
+    ]],
+
+    //Raven's Cloak
+	["RC", [
+        [
+            ["LEADER", "Forget not thy supplications this day, O newborn, for prayer is the surest path to please His Holiness.", 5.0, 7.0],
+            ["RANDOM", "Yea, Enlightened one, I have gathered mine offerings for this night alone. His dark Holiness shall surely be pleased with my prayers.", 5.0, 7.0],
+            ["LEADER", "Verily, thou hast done well, O newborn. Remember, the assembly of prayer is at the third hour past midnight. I comprehend thy deep devotion; yet this shall not absolve thee from the gathering...", 5.0, 7.0],
+            ["RANDOM", "Yea, Enlightened one, I would never forsake the gathering of prayer.", 5.0, 7.0],
+            ["LEADER", "It is well. I shall see thee then, O newborn; and if the Father be gracious, thou mayest partake in the holy ceremony...", 5.0, 7.0]
+        ]
+    ]],
+
+    //PMC Group Alpha
+	["PMC", [
+        [
+            ["LEADER", "Operator Gustave, I've seen your health and wellness report from yesterday for the company. Good work on it, although these findings are concerning", 5.0, 7.0],
+            ["RANDOM", "Affirmative sir, most of the team has signs of accute radiation poisoning, trench foot, minor frostbite, and vitamin D deficiency", 5.0, 7.0],
+            ["LEADER", "Yes, those were all expected, but the footnotes in the report peeked my interest Gustave. What do you mean, 'mystery illness'", 5.0, 7.0],
+            ["RANDOM", "Yes sir, all operators are also showing beginning signs of schizophrenia; however, they're all experiencing the same visions", 5.0, 7.0],
+            ["RANDOM", "For this reason sir, I believe we should exfil immediately for the wellbeing of our company. In my unoffical opinion sir, this island just isn't right", 5.0, 7.0],
+            ["LEADER", "Thank you for your opinion Gustave; however, I only want your opinion when I ask for it. You are dismissed", 5.0, 7.0],
+            ["RANDOM", "Understood sir", 5.0, 7.0]
+        ]
+    ]],
+
+    //Survivors Union
+	["SU", [
+        [
+            ["LEADER", "Hi Gerard, haven't seen you in awhile. How's life been?", 5.0, 7.0],
+            ["RANDOM", "It's been great lately. I had my checkup yesterday, and I haven't felt this great since I was eighteen!", 5.0, 7.0],
+            ["LEADER", "Oh? What'd they give ya?", 5.0, 7.0],
+            ["RANDOM", "No idea, the docs just gave me an injection, and said I was good to go. Other than my skin flaking off in some places, I feel fantastic", 5.0, 7.0],
+            ["LEADER", "Is that right? I'll have to go see the docs soon too, I've been putting off my appoitment since I'm afraid of doctors", 5.0, 7.0],
+            ["RANDOM", "Go soon, I'm sure they can't have that many injections left with the scarce supply that's on Altis", 5.0, 7.0]
+        ]
+    ]],
+
+    //The Red Bullet
+	["TRB", [
+        [
+            ["LEADER", "You're on another shift Kapitan Arytom?", 5.0, 7.0],
+            ["RANDOM", "Yup, they're working me like a dog, but I know it's been difficuly for Marshal Peter to send reinforcements", 5.0, 7.0],
+            ["LEADER", "True, World Order has been causing us some problems in eastern Europe. Makes me wonder why both sides of the war are even on this island", 5.0, 7.0],
+            ["RANDOM", "I heard it's something about how the illness started, but don't tell anyone I said that. Polkovnik Resnov had me go on a secret mission. Can't spill too much, but there's definitely a reason comrade Serzhant", 5.0, 7.0],
+            ["LEADER", "Understood comrade, glory to Peter the Great", 5.0, 7.0],
+            ["RANDOM", "Da, glory to Peter the Great", 5.0, 7.0]
+        ]
+    ]],
+
+    //Altis Liberation Front
+	["ALF", [
+        [
+            ["LEADER", "Hey Liberator John, have you ever been over to the Molos Airfield?", 5.0, 7.0],
+            ["RANDOM", "No, we've been instructed to steer clear from there. Why do you ask?", 5.0, 7.0],
+            ["LEADER", "A few buddies and I were going to head up there tonight. Supposedly, there's a working heli there right now", 5.0, 7.0],
+            ["RANDOM", "That sounds almost too good to be true. Did you see this heli with your own eyes or is this hearsay?", 5.0, 7.0],
+            ["LEADER", "My buddy Terrance said he saw it, and I trust him with my life. All I have to do is sneak in there and grab the heli. Easy peasy right?", 5.0, 7.0],
+            ["RANDOM", "Uhh, yeah... They're making you go alone?", 5.0, 7.0],
+            ["LEADER", "Yeah, it's to be more sneaky. Plus, since I need to be fast, I'm leaving my stuff with him. I wanted you to come along to make sure Terrance doesn't take anything just in-case. He has been known to be a rascal sometimes", 5.0, 7.0],
+            ["RANDOM", "I think you need better friends George, word of advice, don't go you fool", 5.0, 7.0],
+            ["LEADER", "Whatever, more money for me I guess...", 5.0, 7.0]
+        ]
+    ]],
+
+    //Pig Flesh
+	["PF", [
+        [
+            ["LEADER", "Hey Novice, want to join my raid party? We're hitting the World Order assholes later", 5.0, 7.0],
+            ["RANDOM", "Absolutely Pig Man, I'd love to show my dedication to the cause", 5.0, 7.0],
+            ["LEADER", "Good good, this mission comes straight from a Flesh Commander, so failure is not an option", 5.0, 7.0],
+            ["RANDOM", "What's so important about the mission?", 5.0, 7.0],
+            ["LEADER", "Just trust the Great Pig Novice, it's holy power will be on our side for this battle", 5.0, 7.0]
+        ]
+    ]],
+
+    //Bandits
+	["Bandit", [
+        [
+            ["LEADER", "I hear that Jan is back from the mainland?", 5.0, 7.0],
+            ["RANDOM", "Yeah, I heard he brought a shit ton of new recruits with him", 5.0, 7.0],
+            ["LEADER", "Yeah, supposedly, he's planning something big", 5.0, 7.0],
+            ["RANDOM", "Like a heist cause I'm super down for a big heist of the military base?", 5.0, 7.0],
+            ["LEADER", "I heard the lone island in the bay has a lot of treasure. Perhaps they're heading to that island", 5.0, 7.0],
+            ["RANDOM", "True, I've heard that to! We should head there first before anyone else gets there...", 5.0, 7.0]
+        ]
+    ]],
+
+    //Boonie Boys
+	["BB", [
+        [
+            ["LEADER", "Yo Bill, long time no see man! Where you've been", 5.0, 7.0],
+            ["RANDOM", "Bob... I've seen things you couldn't even comprehend. I can't get the images of dead friends ripping each other apart out of my head...", 5.0, 7.0],
+            ["LEADER", "Uhhh... sorry to hear that Bill. ", 5.0, 7.0],
+            ["RANDOM", "It's all The Lions fault. He put me on his team and we went north. The Pig Flesh aren't normal man...", 5.0, 7.0],
+            ["LEADER", "I know they eat other people, but I have a feeling that isn't what you're talking about", 5.0, 7.0],
+            ["RANDOM", "No man, we encountered one that we found praying in a church full of decomposing bodies. The sight was horrifying, but the smell was even worse", 5.0, 7.0],
+            ["LEADER", "Man, those freaks really are out of their minds", 5.0, 7.0],
+            ["RANDOM", "Bob, he started chanting something, and everything in my vision looked like a living hell. The worst things you can image came true.", 5.0, 7.0],
+            ["RANDOM", "These images lasted hours, I only came to because Lion woke me up. It seems he was fine somehow. I haven't been the same since", 5.0, 7.0],
+            ["LEADER", "Christ Bill, sorry you've been through that. Next time I see one of those freaks, I'll make sure they get what they deserve", 5.0, 7.0]
+        ]
+    ]],
+
+    //World Order
+	["WO", [
+        [
+            ["LEADER", "Hey Feldwebel, why must we occupy such deadly area of the island?", 5.0, 7.0],
+            ["RANDOM", "Unteroffizier, if I knew, I wouldn't be on the front lines of this island", 5.0, 7.0],
+            ["LEADER", "I see... May I speak freely sir?", 5.0, 7.0],
+            ["RANDOM", "Go ahead", 5.0, 7.0],
+            ["LEADER", "Why does the Furher von Bismarck even care about this island? We own most of Germany and France, is this island reall that important", 5.0, 7.0],
+            ["RANDOM", "Apologies Unteroffizier, unless if I was the Gernaloberst, then I might know. All we have are our theories", 5.0, 7.0],
+            ["RANDOM", "That being said Unteroffizier, it is odd the US Army is occupying parts of this island. There's definitely something odd happening here", 5.0, 7.0]
+        ]
+    ]],
+
+    //Deadman's Trident
+	["DT", [
+        [
+            ["LEADER", "Hey there cultist, come here.", 5.0, 7.0],
+            ["RANDOM", "Yes sir, what is it?", 5.0, 7.0],
+            ["LEADER", "It's your daily quiz, now what should it be?...", 5.0, 7.0],
+            ["LEADER", "Ah yes, what is the reason we pray to Zeus?", 5.0, 7.0],
+            ["RANDOM", "Uhhh... Because he's cool?", 5.0, 7.0],
+            ["LEADER", "I'll accept that answer since your just starting out", 5.0, 7.0],
+            ["RANDOM", "Well, what's your answer Mr. Enforcer?", 5.0, 7.0],
+            ["LEADER", "It's because he is the king of the gods, the ultimate ruler of this realm... and, just between you and me,", 5.0, 7.0],
+            ["LEADER", "if you've seen what I've seen, it's a good idea to pray to the gods. Someday, it might save your life", 5.0, 7.0]
         ]
     ]],
 
@@ -47,18 +176,18 @@ private _ambient = createHashMapFromArray [
 	["NH", [
         [
             ["LEADER", "You see that the Boonie Boys are back in town?", 0.0, 0.0],
-            ["RANDOM", "Yeah, I heard their leader comeback for some artifact.", 2, 3],
-            ["LEADER", "What a bunch of fools, but I can't blame them for being brave.", 2, 3],
-            ["RANDOM", "True, if they weren't a bunch of weirdo's, I'd respect them a bit more.", 2, 3]
+            ["RANDOM", "Yeah, I heard their leader comeback for some artifact.", 5, 7],
+            ["LEADER", "What a bunch of fools, but I can't blame them for being brave.", 5, 7],
+            ["RANDOM", "True, if they weren't a bunch of weirdo's, I'd respect them a bit more.", 5, 7]
         ],
         [
             ["LEADER", "Have you been catching up on your greek mythos recently Bob?", 0.0, 0.0],
-            ["RANDOM", "Why the fuck would I do that?", 2, 3],
-            ["LEADER", "Deadman's Trident loves asking about that stuff. Ya know they actually believe in Thor and what not.", 3, 4],
-            ["RANDOM", "That's Norse mythology you fucking idiot, and no I haven't been reading on Greek stuff.", 2, 3],
-            ["LEADER", "Why not? We are technically allied with them.", 2, 3],
-            ["RANDOM", "Because, their faction is on it's last ropes. They keep going out on these 'pilgrimages' to dangerous parts of the island. Most of their members don't even know Greek mythos anymore because of it.", 5, 6],
-            ["LEADER", "What a bunch of fools", 2, 3]
+            ["RANDOM", "Why the fuck would I do that?", 5, 7],
+            ["LEADER", "Deadman's Trident loves asking about that stuff. Ya know they actually believe in Thor and what not.", 5, 7],
+            ["RANDOM", "That's Norse mythology you fucking idiot, and no I haven't been reading on Greek stuff.", 5, 7],
+            ["LEADER", "Why not? We are technically allied with them.", 5, 7],
+            ["RANDOM", "Because, their faction is on it's last ropes. They keep going out on these 'pilgrimages' to dangerous parts of the island. Most of their experienced members are dead, so all of their newbies haven't been taught shit.", 5, 7],
+            ["LEADER", "What a bunch of fools", 3, 5]
         ]
     ]],
 
@@ -68,6 +197,264 @@ private _ambient = createHashMapFromArray [
             ["LEADER", "All quiet.", 0.0, 0.0],
             ["RANDOM", "Let’s hope it stays that way.", 1.0, 1.6]
         ]
+    ]]
+];
+
+private _allClear = createHashMapFromArray [
+    ["US", ["Bravo 6, this is Bravo 3-1, Lima Charlie, out",
+        "Bravo 6, this is Bravo 2-1, Lima Charlie, out",
+        "Bravo 6, this is Bravo 1-1, Lima Charlie, out",
+        "Bravo 6, this is Bravo 4-1, Lima Charlie, out",
+        "Charile 6, this is Charile 3-1, Lima Charlie, out",
+        "Charile 6, this is Charile 2-1, Lima Charlie, out",
+        "Charile 6, this is Charile 1-1, Lima Charlie, out",
+        "Charile 6, this is Charile 4-1, Lima Charlie, out",
+        "Alpha 6, this is Alpha 3-1, Lima Charlie, out",
+        "Alpha 6, this is Alpha 2-1, Lima Charlie, out",
+        "Alpha 6, this is Alpha 1-1, Lima Charlie, out",
+        "Alpha 6, this is Alpha 4-1, Lima Charlie, out",
+        "Bandit 6, this is Charlie 6, Lima Charlie, out",
+        "Bandit 6, this is Bravo 6, Lima Charlie, out",
+        "Bandit 6, this is Alpha 6, Lima Charlie, out"
+    ]],
+    ["RU", ["Alpha 6, eto Alpha 2-2, vyzhivshikh v rayone net, konets svyazi",
+        "Alpha 6, eto Alpha 3-2, vyzhivshikh ne obnaruzheno, konets svyazi",
+        "Bravo 6, eto Alpha 4-2, rayon chist, vyzhivshikh net, konets svyazi",
+        "Killer Actual, eto Bravo 6, status zelenyy, konets svyazi",
+        "Killer Actual, eto Alpha 6, charli zelenyy, konets svyazi",
+        "Killer Actual, eto Charlie 6, status zelenyy, konets svyazi",
+        "Charlie 6, eto Alpha 1-1, vyzhivshikh ne obnaruzheno, konets svyazi",
+        "Bravo 6, eto Bravo 3-1, po kvadratu 04-11 vyzhivshikh net, konets svyazi",
+        "Alpha 6, eto Charlie 2-1, proverka zavershena, vyzhivshikh net, konets svyazi",
+        "Killer Actual, eto Charlie 5-2, rayon chist, status zelenyy, konets svyazi"
+    ]],
+    ["RC", ["Romeo-Charlie Whiskey-Delta 1, this is Romeo-Charlie November 1-3, revel in the darkness",
+        "Romeo-Charlie Whiskey-Delta 3, this is Romeo-Charlie November 3-7, revel in the darkness",
+        "Romeo-Charlie Echo 1, this is Romeo-Charlie Whiskey-Delta 3, kids are in the hen",
+        "Romeo-Charlie Echo 2, this is Romeo-Charlie Whiskey-Delta 2, kids are in the hen",
+        "Romeo-Charlie Whiskey-Delta 7, this is Romeo-Charlie November 2-1, revel in the darkness",
+        "Romeo-Charlie Whiskey-Delta 3, this is Romeo-Charlie November 4-9, revel in the darkness",
+        "Romeo-Charlie Echo 1, this is Romeo-Charlie Whiskey-Delta 4, kids are in the hen",
+        "Romeo-Charlie Echo 2, this is Romeo-Charlie Whiskey-Delta 5, kids are in the hen",
+        "Romeo-Charlie Whiskey-Delta 1, this is Romeo-Charlie November 9-1, revel in the darkness",
+        "Romeo-Charlie Whiskey-Delta 3, this is Romeo-Charlie November 2-5, revel in the darkness",
+        "Romeo-Charlie Echo 2, this is Romeo-Charlie Whiskey-Delta 4, kids are in the hen",
+        "Romeo-Charlie Echo 3, this is Romeo-Charlie Whiskey-Delta 1, kids are in the hen"
+    ]],
+    ["ROA", ["Anthypolochagos Alpha-Alpha, edo Stratiotis 3, alpha charlie, telos",
+        "Anthypolochagos Alpha-Charlie, edo Stratiotis 2, alpha charlie, telos",
+        "Anthypolochagos Alpha-Tango, edo Stratiotis 5, alpha charlie, telos",
+        "Anthypolochagos Alpha-Delta, edo Stratiotis 4, alpha charlie, telos",
+        "Ypolochagos Alpha-1, edo Anthypolochagos Alpha-Alpha, alpha einai prasino, telos",
+        "Ypolochagos Alpha-5, edo Anthypolochagos Alpha-Charlie, alpha einai prasino, telos",
+        "Charlie Actual, edo Ypolochagos Alpha-2, sierra einai prasino, telos",
+        "Bravo Actual, edo Ypolochagos Alpha-5, sierra einai prasino, telos",
+        "Anthypolochagos Alpha-Bravo, edo Stratiotis 1, alpha charlie, telos",
+        "Anthypolochagos Alpha-Echo, edo Stratiotis 6, alpha charlie, telos",
+        "Anthypolochagos Alpha-Foxtrot, edo Stratiotis 7, alpha charlie, telos",
+        "Anthypolochagos Alpha-Golf, edo Stratiotis 8, alpha charlie, telos",
+        "Ypolochagos Alpha-2, edo Alpha-Bravo, alpha einai prasino, telos",
+        "Ypolochagos Alpha-3, edo Alpha-Delta, alpha einai prasino, telos",
+        "Ypolochagos Alpha-4, edo Alpha-Tango, alpha einai prasino, telos",
+        "Charlie Actual, edo Ypolochagos Alpha-3, sierra einai prasino, telos",
+        "Bravo Actual, edo Ypolochagos Alpha-6, sierra einai prasino, telos",
+        "Alpha Actual, edo Stratiotis 9, alpha charlie, telos"
+    ]],
+    ["PMC", ["Tango Lima Alpha-Alpha, this is Alpha-Oscar 3, alpha charlie over",
+        "Tango Lima Alpha-Charlie, this is Alpha-Oscar 2, alpha charlie over",
+        "Tango Lima Alpha-Tango, this is Alpha-Oscar 5, alpha charlie over",
+        "Tango Lima Alpha-Delta, this is Alpha-Oscar 4, alpha charlie over",
+        "Sierra Lima Alpha-1, this is Alpha-Alpha, alpha is green over",
+        "Sierra Lima Alpha-5, this is Alpha-Charlie, alpha is green over",
+        "Charlie Actual, this is Sierra Lima Alpha-2, sierra is green over",
+        "Bravo Actual, this is Sierra Lima Alpha-5, sierra is green over",
+        "Tango Lima Alpha-Bravo, this is Alpha-Oscar 1, alpha charlie over",
+        "Tango Lima Alpha-Echo, this is Alpha-Oscar 6, alpha charlie over",
+        "Tango Lima Alpha-Foxtrot, this is Alpha-Oscar 7, alpha charlie over",
+        "Tango Lima Alpha-Golf, this is Alpha-Oscar 8, alpha charlie over",
+        "Sierra Lima Alpha-2, this is Alpha-Bravo, alpha is green over",
+        "Sierra Lima Alpha-3, this is Alpha-Delta, alpha is green over",
+        "Sierra Lima Alpha-4, this is Alpha-Tango, alpha is green over",
+        "Charlie Actual, this is Sierra Lima Alpha-3, sierra is green over",
+        "Bravo Actual, this is Sierra Lima Alpha-6, sierra is green over",
+        "Alpha Actual, this is Alpha-Oscar 9, alpha charlie over"
+    ]],
+    ["SU", ["Dispatch, this is Bobby, no enemies so far",
+        "Dispatch, no contacts as of now. This is Ryan's crew by the way",
+        "Dispatch, this is Bryan, my arm is gone, but other than that, I'm good",
+        "Hey Dispatch, nothing new in the past hour",
+        "Dispatch, this is Survivor John, no contacts over",
+        "Dispatch, all good on my end",
+        "Dispatch, nothing new to report",
+        "Dispatch, my patrol has been uneventful so far",
+        "Dispatch, other than George turning inside out after those doctors gave him those injections, we're good on our end",
+        "Hey Dispatch, sector remains quiet",
+        "Dispatch, this is Survivor Leonardo, area clear, over",
+        "Dispatch, grid 04-11 all clear",
+        "Dispatch, perimeter secure, no sightings",
+        "Dispatch, still negative contact",
+        "Dispatch, patrol route clear, continuing",
+        "Hey Dispatch, status green on my end",
+        "Dispatch, no changes since last check-in",
+        "Dispatch, eyes on nothing, all quiet",
+        "Dispatch, nothing moving in my sector",
+        "Dispatch, neighborhood is calm, no hostiles",
+        "Dispatch, checkpoints 1 through 3 are clear",
+        "Dispatch, completing sweep, no anomalies",
+        "Dispatch, holding position, no contact",
+        "Hey Dispatch, routine only, nothing to report"
+    ]],
+    ["TRB", ["Medved', eto Patrul' 1-3, sektor chist.",
+        "Medved', eto Gruppa 2-1, rayon chist, kontaktov net.",
+        "Terra, eto Vzvod Al'fa, marshrut svoboden.",
+        "Terra, eto Patrul' 4, obstanovka spokoynaya, vsyo chisto.",
+        "Mat', eto Gruppa 7, sektor chist, otritsatel'nyy kontakt.",
+        "Mat', eto Patrul' 3-2, kvadrat 05-12 chist.",
+        "Otets, eto Vzvod Bravo, rayon chist, dvizheniya ne nablyudaem.",
+        "Otets, eto Gruppa 1, pozitsiya bezopasna, kontaktov net.",
+        "Matryoshka, eto Patrul' 5, uchastok chist, prodolzhaem dezhurstvo.",
+        "Matryoshka, eto Vzvod 2-3, sektor bez izmeneniy, vsyo spokoyno.",
+        "Kreml', eto Gruppa 6, perimetr chist.",
+        "Kreml', eto Patrul' 2-7, put' svoboden, protivnika ne nablyudaem.",
+        "Moskva, eto Vzvod Gamma, rayon chist, nichego podozritel'nogo.",
+        "Moskva, eto Gruppa 3-1, vsyo chisto, tsel' ne obnaruzhena.",
+        "Medved', eto Patrul' 8, sektor svoboden, prodolzhaem marshrut."
+    ]],
+    ["ALF", ["Sarge Alpha, this is Liberator John, no aliens as of now",
+        "Sarge Charlie, this is Liberator Berry, no aliens in the area",
+        "Sarge Delta, this is Liberator Corey, James went missing, but no aliens in the area",
+        "Sarge Zulu, this is Liberator Terrance, no aliens in sight",
+        "Sarge Foxtrot, this is Liberator Ted, negative aliens",
+        "Sarge Bravo, this is Liberator Max, no aliens detected",
+        "Sarge Echo, this is Liberator Vince, area clear of aliens",
+        "Sarge Hotel, this is Liberator Kevin, still no aliens",
+        "Sarge India, this is Liberator Omar, negative alien contact",
+        "Sarge Juliet, this is Liberator Nate, neighborhood is quiet, no aliens",
+        "Sarge Kilo, this is Liberator Alex, patrol complete, no aliens",
+        "Sarge Lima, this is Liberator Wyatt, grid is clear of aliens",
+        "Sarge Mike, this is Liberator Felix, eyes on nothing, no aliens",
+        "Sarge November, this is Liberator Isaac, route is clear, no aliens",
+        "Sarge Romeo, this is Liberator Quinn, standing by, no aliens",
+        "Master Alpha, this is Sarge Bravo, all troops are good and no aliens in the area",
+        "Master Bravo, this is Sarge India, no aliens"
+
+    ]],
+    ["PF", ["Disciple 1, this is Novice 1-2, no sacrifices in the area",
+        "Disciple 4, calling in to let you know area is clear. This is Novice 4-1 by the way",
+        "Disciple 3, other then eating some bad meat, Novice 3-9 is good",
+        "Pig Man, this is Disciple 4, area clear. Be advised, I'm leaving my post to get some meat since I'm hungry...",
+        "Pig Man, this is Disciple 12, other than one of my guys being struck by lightning, area is looking clear",
+        "Pig Man, this is Disciple 8, my squad is looking for meat still. Been a slow day. Bob did get ripped apart by an eldritch horror earlier, but he seems fine now",
+        "Pig Man, this is Disciple 9, no targets as of now",
+        "Pig Man, this is Disciple 7, the day's been so uneventful George is looking pretty eatable right now",
+        "Pig Man, this is Disciple 3, everything's clear right now",
+        "Pig Man, this is Disciple 5, nothing to report",
+        "Pig Cap, this is Pig Man of the Dock Area, area is good",
+        "Pig Captain, this is Pig Man of Agios, sacrifice quota a litte low today, so the men are pretty eager to do some pillaging",
+        "Pig Captain, this is Pig Man of Gerogias, other than a few men going missing last night, the area has been pretty under control",
+        "Pig Man, this is Disciple 1, sector is clear",
+        "Pig Man, this is Disciple 2, negative contact",
+        "Pig Man, this is Disciple 4, all quiet on our side",
+        "Pig Man, this is Disciple 6, patrol complete, no sightings",
+        "Pig Man, this is Disciple 7, area secure, no movement",
+        "Pig Man, this is Disciple 8, route is clear",
+        "Pig Man, this is Disciple 10, perimeter secure, nothing to report",
+        "Pig Man, this is Disciple 11, status green, no targets",
+        "Pig Man, this is Disciple 12, grid clean, no anomalies",
+        "Pig Man, this is Disciple 13, standing by, negative contact",
+        "Pig Man, this is Disciple 1, sector is clear",
+        "Pig Man, this is Disciple 2, negative contact",
+        "Pig Man, this is Disciple 4, all quiet on our side",
+        "Pig Man, this is Disciple 6, patrol complete, no sightings",
+        "Pig Man, this is Disciple 7, area secure, no movement",
+        "Pig Man, this is Disciple 8, route is clear",
+        "Pig Man, this is Disciple 10, perimeter secure, nothing to report",
+        "Pig Man, this is Disciple 11, status green, no targets",
+        "Pig Man, this is Disciple 12, grid clean, no anomalies",
+        "Pig Man, this is Disciple 13, standing by, negative contact"
+    ]],
+    ["Bandit", ["Yo Bill, it's Paul, my area is cool right now",
+        "Hey Alfy, it's George, nothing going-on on my end",
+        "I thought you said there was going to be action over here Johnny?",
+        "Yo Buddies, its clear on my end",
+        "Hey Philly, no assholes over here",
+        "Yo Mike, it's Tony, my sector's chill right now",
+        "Hey Ricky, it's Sam, nothing moving on my side",
+        "Johnny, you copy? It's Al, still quiet over here",
+        "Yo Chief, this is Dylan, field looks clean",
+        "Hey Nate, it's Chris, same story here—no action",
+        "Yo Joey, Tony again, nada on this street",
+        "Hey Vince, it's Eddie, clear on my end",
+        "Yo Marco, it's Leo, haven't seen squat",
+        "Hey Frankie, it's Tyler, no eyes on anything",
+        "Yo Ben, it's Paulie, all calm where I'm at",
+        "Hey Buddies, George here, neighborhood's dead quiet",
+        "Yo Buddy, it's Nick, still nothing to report",
+        "Hey Philly, it's Ray, same deal—no clowns here",
+        "Yo Alfy, it's Greg, area remains clear",
+        "Hey Johnny, it's Bill, still a ghost town on my side"
+    ]],
+    ["BB", ["Tree Company, this is Apples squad, area clear",
+        "Tree Company, this is Blueberry squad, sector is clear",
+        "Tree Company, this is Pear squad, all clear",
+        "Bush Company, this is Strawberry squad, no contacts as of now",
+        "Bush Company, this is Grapes squad, nothing to report",
+        "Bush Company, this is Banana squad, nothing new since last check-in",
+        "Tree Company, this is Orange squad, route clear",
+        "Tree Company, this is Peach squad, perimeter secure",
+        "Tree Company, this is Plum squad, sector remains quiet",
+        "Tree Company, this is Cherry squad, patrol complete, no sightings",
+        "Tree Company, this is Mango squad, grid is clear",
+        "Bush Company, this is Raspberry squad, holding position, negative contact",
+        "Bush Company, this is Blackberry squad, no activity to report",
+        "Vine Company, this is Pineapple squad, no change, all quiet",
+        "Vine Company, this is Kiwi squad, area secure, no contacts",
+        "Vine Company, this is Watermelon squad, route is clear",
+        "Lion, this is Vine Company, sector is looking good",
+        "Grave Digger, this is Tree Company, no contacts in the AO",
+        "Bolt, this is Bush Company, negative contact"
+    ]],
+    ["DT", ["Kiryka Kallia, edo o frouros Alfa, o tomeas katharos",
+        "Kiryka Megakli, edo o frouros Vita, o tomeas entaksei",
+        "Kiryka Nikia, edo o frouros Gamma, i periochi kathari",
+        "Kiryka Sostrate, edo o frouros Delta, i peripolos einai pros to paron kathari",
+        "Kiryka Filon, edo o frouros Epsilon, kamia anomalia",
+        "Kiryka Timokrati, edo o frouros Xenon, ola kala pros to paron",
+        "Kiryka Chrysi, edo o frouros Ny, ola kathara apo ti meria mas"
+    ]],
+    ["WO", ["Leutnant, hier ist Zug Apples, Bereich ist frei",
+        "Unteroffizier, hier ist Trupp 107, Patrouille ist derzeit ohne Feindkontakt",
+        "Unteroffizier, hier ist Trupp 207, Sektor ist frei",
+        "Leutnant, Zug Charlie steht bereit. Keine Feindkontakte",
+        "Feldwebel, Gruppe 2 steht bereit",
+        "Feldwebel, Gruppe 3, kein Feindkontakt",
+        "Leutnant, hier ist Zug Baker, keine Feindkontakte",
+        "Unteroffizier, hier ist Trupp 312, Route ist frei",
+        "Feldwebel, Gruppe 4 steht bereit, kein Feindkontakt"
+    ]],
+    ["NH", ["Squad Commander, this is team Lat-Pulldown, all clear so far",
+        "Squad Commander, this is Nikos from team Tricep-Extension, area is chill right now",
+        "Sector Leader Green Giant, this is Squad Commander Oak, sector is under control",
+        "Squad Commander, this is team Hack-Squat, no enemies at the moment",
+        "Squad Commander, team Bench-Press here, other than weird voices, area is clear",
+        "Team leader Evangelos, this is Bodie, area is clear but my teammate spontaneously exploded. Little odd but I'm good",
+        "Squad Commander, this is team Back-Squat, nothing to report",
+        "Squad Commander, this is team Front-Squat, all clear",
+        "Squad Commander, this is team Hack-Squat, no incidents to report",
+        "Squad Commander, this is team Hamstring-Extension, all quiet",
+        "Squad Commander, this is team Quad-Extension, no news",
+        "Squad Commander, this is team Bicep-Curl, situation normal",
+        "Squad Commander, this is team Preacher-Curl, no updates",
+        "Squad Commander, this is team Leg-Press, all quiet",
+        "Squad Commander, this is team Incline-Bench, no change",
+        "Squad Commander, this is team Deadlift, status quo",
+        "Squad Commander, this is team Hip-Thrust, nothing further",
+        "Squad Commander, this is team Kettlebell-Swing, all clear",
+        "Squad Commander, this is team Cable-Fly, no incidents",
+        "Squad Commander, this is team Tricep-Pushdown, negative contact",
+        "Squad Commander, this is team Over-Row, no activity observed"
+    ]],
+    ["*", ["HQ, this is patrol 1-1, all clear... out"
     ]]
 ];
 
@@ -104,44 +491,44 @@ private _combat = createHashMapFromArray [
         "Bandit 3, request route clearance to Checkpoint Delta, over",
         "Bandit 6, roger, switch to four-zero point zero zero for fires, report when up, over"
     ]],
-    ["RU", ["«Альфа», это «Альфа-1-6», контакт спереди, двести метров, открываем огонь, приём",
-        "«Альфа», «Альфа-1-6» на связи, требуются подкрепления и боеприпасы, приём",
-        "«Альфа-1-10», «1-11», «1-12», работайте по указанной цели, приём",
-        "«Альфа-1-10», запрашиваю санэвак: один тяжёлый, один лёгкий, приём",
-        "«Альфа-3», запрашиваю авиаудар по квадрату 042 087, свой маркер — красный дым, приём",
-        "«Альфа-3», разрешите огонь на поражение, приём",
-        "«Альфа-1-7», «Альфа-1-10», обойдите слева и займите фланг, приём",
-        "«Альфа», это «Альфа-1-2», ведём бой, прошу разрешение на штурм, приём",
-        "«Альфа», к сведению: задача «Браво» выполнена, организуем охранение, приём",
-        "«Альфа-1-10», выдвигайтесь на рубеж «Красный» и удерживайте позицию, приём",
-        "«Альфа-1-7», подавляю второе здание, отмечаю дымом, приём",
-        "«Альфа-3», выдвигаемся к LZ, прибытие через две минуты, приём",
-        "«Альфа-1-6», состояние зелёное, боекомплект жёлтый, продолжаем выполнение, приём",
-        "«Альфа-1-11», прекратить огонь, свои рядом, ждите указаний, приём",
-        "«Альфа», это «Альфа-1-7», по нам точный огонь, требуется дым и отход влево, приём",
-        "«Альфа-1-10», займите позицию наблюдения по сетке 042 087, доложите «в позиции», приём",
-        "«Альфа», принято, смещаю огонь на север пятьдесят метров, так точно, приём",
-        "«Альфа-1-6», требуется «девятка» по раненому, готов к передаче, приём",
-        "«Альфа», проверка связи, как слышите «один-шесть», приём",
-        "«Альфа-1-10», контроль сектора восток, возможна техника противника, приём"
+    ["RU", ["Al'fa, eto Al'fa-1-6, kontakt speredi, dvesti metrov, otkryvaem ogon', priyom",
+        "Al'fa, Al'fa-1-6 na svyazi, trebuyutsya podkrepleniya i boepripasy, priyom",
+        "Al'fa-1-10, 1-11, 1-12, rabotayte po ukazannoy tseli, priyom",
+        "Al'fa-1-10, zaprashivayu sanevak: odin tyazhelyy, odin legkiy, priyom",
+        "Al'fa-3, zaprashivayu aviaudar po kvadratu 042 087, svoy marker — krasnyy dym, priyom",
+        "Al'fa-3, razreshite ogon' na porazhenie, priyom",
+        "Al'fa-1-7, Al'fa-1-10, oboydite sleva i zaymite flank, priyom",
+        "Al'fa, eto Al'fa-1-2, vedyom boy, proshu razreshenie na shturm, priyom",
+        "Al'fa, k svedeniyu: zadacha Bravo vypolnena, organizuyem okhranenie, priyom",
+        "Al'fa-1-10, vydvigaytes' na rubezh Krasnyy i uderzhivayte pozitsiyu, priyom",
+        "Al'fa-1-7, podavlyayu vtoroe zdanie, otmechayu dymom, priyom",
+        "Al'fa-3, vydvigaemsya k LZ, pribytie cherez dve minuty, priyom",
+        "Al'fa-1-6, sostoyanie zelenoye, boekomplekt zheltyy, prodolzhaem vypolnenie, priyom",
+        "Al'fa-1-11, prekratit' ogon', svoi ryadom, zhdi ukazaniy, priyom",
+        "Al'fa, eto Al'fa-1-7, po nam tochnyy ogon', trebuyetsya dym i otkhod vlevo, priyom",
+        "Al'fa-1-10, zaymite pozitsiyu nablyudeniya po setke 042 087, dolozhite v pozitsii, priyom",
+        "Al'fa, prinyato, smeshchayu ogon' na sever pyat'desyat metrov, tak tochno, priyom",
+        "Al'fa-1-6, trebuyetsya devyatka po ranenomu, gotov k peredache, priyom",
+        "Al'fa, proverka svyazi, kak slyshite odin-shest', priyom",
+        "Al'fa-1-10, kontrol' sektora vostok, vozmozhna tekhnika protivnika, priyom"
     ]],
-    ["ROA", ["Άλφα actual, εδώ Άλφα 1-6, έχουμε εμπλακεί με τον εχθρό, τέλος",
-        "Άλφα actual, εδώ Άλφα 1-6, ζητώ ενισχύσεις, τέλος... Θετικό, τέλος",
-        "Άλφα 1-10, 1-11, 1-12, προσβάλτε εκείνον τον στόχο, τέλος",
-        "Άλφα 1-10, ζητώ 9-line, τέλος",
-        "Άλφα 3 actual, ζητώ πέρασμα με πυροβόλο, τέλος... Θετικό, τέλος",
-        "Άλφα 3 actual, ζητώ άδεια για θανατηφόρα πυρά, τέλος",
-        "Άλφα 1-10, εδώ Άλφα 1-7, παράκαμψε αριστερά με την ομάδα σου, τέλος",
-        "Άλφα actual, εδώ Άλφα 1-2, επαφή μπροστά, 200 μέτρα, ζητώ άδεια προσβολής, τέλος",
-        "Άλφα actual, προς ενημέρωση, ο στόχος Μπράβο επετεύχθη, στήνουμε ασφάλεια, τέλος",
-        "Άλφα 1-10, προωθηθείτε στη γραμμή φάσης Κόκκινο και κρατήστε θέση, τέλος",
-        "Άλφα 1-7, κατασταλτικά πυρά στο κτίριο δύο, σημειώνω με καπνό, τέλος",
-        "Άλφα 3 actual, είμαστε Όσκαρ Μάικ προς τη Ζώνη Προσγείωσης (LZ), ETA δύο λεπτά, τέλος",
-        "Άλφα 1-6, κατάσταση πράσινη, πυρομαχικά κίτρινα, συνεχίζουμε την αποστολή, τέλος",
-        "Άλφα 1-11, παύση πυρών, φίλιοι πολύ κοντά, αναμείνατε, τέλος",
-        "Άλφα actual, εδώ Άλφα 1-7, δεχόμαστε εύστοχα πυρά, ζητώ καπνό και άλματα αριστερά, τέλος",
-        "Άλφα 1-10, λάβετε θέση επιτήρησης στον κάνναβο 042 087, αναφέρατε «σε θέση», τέλος",
-        "Άλφα actual, έλαβα το τελευταίο, μετατοπίζω τα πυρά 50 μέτρα βόρεια... Θετικό, τέλος"
+    ["ROA", ["Alfa actual, edo Alfa 1-6, echoume emplakei me ton echthro, telos",
+        "Alfa actual, edo Alfa 1-6, zito enischyseis, telos... Thetiko, telos",
+        "Alfa 1-10, 1-11, 1-12, prosvalte ekeinon ton stocho, telos",
+        "Alfa 1-10, zito 9-line, telos",
+        "Alfa 3 actual, zito perasma me pyrovolo, telos... Thetiko, telos",
+        "Alfa 3 actual, zito adeia gia thanatifora pyra, telos",
+        "Alfa 1-10, edo Alfa 1-7, parakampse aristera me tin omada sou, telos",
+        "Alfa actual, edo Alfa 1-2, epafi mprosta, 200 metra, zito adeia prosvolis, telos",
+        "Alfa actual, pros enimerosi, o stochos Mpravo epetefchthi, stinoume asfaleia, telos",
+        "Alfa 1-10, proothitheite sti grammi fasis Kokkino kai kratIste thesi, telos",
+        "Alfa 1-7, katastaltika pyra sto ktirio dyo, simeiono me kapno, telos",
+        "Alfa 3 actual, eimaste Oskar Maik pros ti Zoni Prosgiosis (LZ), ETA dyo lepta, telos",
+        "Alfa 1-6, katastasi prasini, pyromachika kitrina, synechizoume tin apostoli, telos",
+        "Alfa 1-11, pafsi pyron, filioi poly konta, anameinate, telos",
+        "Alfa actual, edo Alfa 1-7, dechomaste efstocha pyra, zito kapno kai almata aristera, telos",
+        "Alfa 1-10, labete thesi epitirisis ston kannavo 042 087, anaferate se thesi, telos",
+        "Alfa actual, elava to teleftaio, metatopizo ta pyra 50 metra voreia... Thetiko, telos"
     ]],
     ["PMC", ["Alpha actual, this is Alpha 1-6, we have engaged the enemy over",
         "Alpha actual, this is Alpha 1-6, requesting backup over... Affirmative over",
@@ -192,46 +579,44 @@ private _combat = createHashMapFromArray [
         "Contact, engage Unioners!",
         "Contact, engage Unioners!"
     ]],
-    ["RC", ["Shit, we've got hostiles!",
-        "I thought Raven 2 said this area was clear?!",
-        "All Ravens, move to engage!",
-        "I'm not being paid enough for this...",
-        "Your time has come!",
-        "What made you delusional enough to fight the Raven's!",
-        "All that'll be left of you is your shadow when we're through with you!",
-        "Contact, Raven's to arms!",
-        "Raven 3-6, this is Raven 3-3, we have contact in the Charlie sector",
-        "Sector not clear, I say again, sector not clear!",
-        "Tell Raven 10-8 to pull out from sector Yankee, we need backup!",
-        "Raven 1-6, this is Raven 3-6, requesting medevac... Denied?! The fuck you mean denied?!",
-        "Time to die in obscurity mother fucker!",
-        "Raven actual, engage all targets!",
-        "Raven 2-100, engage all targets!",
-        "Raven 2-110, engage all targets!",
-        "Raven 2-111, engage all targets!",
-        "Raven 2-112, engage all targets!",
-        "Raven 2-113, engage all targets!",
-        "Raven 2-114, engage all targets!",
-        "Raven 2-115, engage all targets!",
-        "Raven 2-116, engage all targets!",
-        "Raven 2-117, engage all targets!",
-        "Raven 2-118, engage all targets!",
-        "Raven 2-119, engage all targets!",
-        "Raven 2-120, engage all targets!",
-        "Raven 2-121, engage all targets!",
-        "Raven 2-122, engage all targets!"
+    ["RC", ["Newborns, go forth and prove thine worth; smite the foe!",
+        "Perish, thou unbeliever!",
+        "I shall prove my worth unto Him by spilling thy blood!",
+        "They know not the strength of our faith!",
+        "Burn them upon the stake, as an offering!",
+        "For the Father of Shadows!",
+        "Drive them forth into the wilderness!",
+        "Strike swiftly, for I must give prayer within the tenth minute!",
+        "Send word unto the Enlightened, for the enemy is upon us!",
+        "Hinder them from departing, for they must not learn of our nature!",
+        "Sever their throats for the Father!",
+        "Tread upon the necks of the faithless!",
+        "Smite them, for they are unworthy of breath!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!",
+        "Disciple, the enemy draweth near!"
     ]],
-    ["TRB", ["Сдохните, капитулы!",
-        "Капиталистическая сволочь!",
-        "У нас есть связь!",
-        "Вызовите подкрепление!",
-        "Красная Пуля не отступит!",
-        "За матушку Россию!",
-        "Мне просто нужно было присоединиться к Медведю...",
-        "Мне просто нужно было присоединиться к группе Вагнера...",
-        "Контакт контакт контакт!",
-        "Убейте их всех!",
-        "убей убей убей!"
+    ["TRB", ["Sdokhnite, kapituly!",
+        "Kapitalisticheskaya svoloch'!",
+        "U nas yest' svyaz'!",
+        "Vyzovite podkreplenie!",
+        "Krasnaya Pulya ne otstupit!",
+        "Za matushku Rossiyu!",
+        "Mne prosto nuzhno bylo prisoyedinit'sya k Medvedyu...",
+        "Mne prosto nuzhno bylo prisoyedinit'sya k gruppe Vagnera...",
+        "Kontakt kontakt kontakt!",
+        "Ubeyte ikh vsekh!",
+        "UBEY UBEY UBEY!"
     ]],
     ["WO", ["Töte sie!",
         "Für die neue Weltordnung!",
@@ -295,11 +680,11 @@ private _combat = createHashMapFromArray [
         "AAHHHHHHHHHHHHHHH DIE ALREADY",
         "Shank em' Paul!",
         "DIE DIE DIE",
-        "No survivors!",
-        "No survivors!",
-        "No survivors!",
-        "No survivors!",
-        "No survivors!",
+        "For the Shamans!",
+        "Don't let them disgrace the Great Pig!",
+        "For the Great Pig!",
+        "For the Pigs Apostle!",
+        "Sacrifices for the Great Pig!",
         "No survivors!",
         "No survivors!",
         "No survivors!",
@@ -363,15 +748,15 @@ private _combat = createHashMapFromArray [
         "Give em' hell!",
         "Give em' hell!"
     ]],
-    ["DT", ["Για τον Δία!",
-        "Για τον Άρη!",
-        "Για τους θεούς!",
-        "είναι παντού!",
-        "Μα τους θεούς, θα πεθάνεις σήμερα!",
-        "Πού στο καλό είναι ο Νέος Ορίζοντας",
-        "Επικοινωνία, ακριβώς μπροστά!",
-        "Για τον Ποσειδώνα!",
-        "σκοτώστε τον άθεο!"
+    ["DT", ["Gia ton Dia!",
+        "Gia ton Ari!",
+        "Gia tous theous!",
+        "einai pantou!",
+        "Ma tous theous, tha pethaneis simera!",
+        "Pou sto kalo einai o Neos Orizontas",
+        "Epikoinonia, akrivos mprosta!",
+        "Gia ton Poseidona!",
+        "skotoste ton atheo!"
     ]],
 	["NH", ["Get up idiot, we got hostiles!", 
         "Shit, there's more than I thought!", 
@@ -381,30 +766,32 @@ private _combat = createHashMapFromArray [
         "Kill them quick, I want to go mutant hunting later.",
         "Where the fuck did he go?",
         "Die you idiots!",
-        "Woah, shots fired!",
-        "Where the hell is Deadman's, they were suppoed to back us up...", 
+        "Woah, shots fired! Time for some action...",
+        "Where the hell is Deadman's, they were supposed to back us up...", 
         "Only the strong will survive!",
         "Only idiots would attack us!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!",
-        "Kill those fools!"
+        "For the Green Giant of Selakano Airfield!",
+        "Kill those weeklings!",
+        "Kill those weeklings!",
+        "Kill those weeklings!",
+        "Kill those weeklings!",
+        "Kill those weeklings!",
+        "Kill those weeklings!",
+        "Purge those weeklings!",
+        "Purge those weeklings!",
+        "Purge those weeklings!",
+        "Purge those weeklings!",
+        "Purge those weeklings!",
+        "Purge those weeklings!",
+        "Purge those weeklings!",
+        "Purge those weeklings!",
+        "Purge those weeklings!"
     ]],
     ["*",   ["Taking fire!", "Return fire!"]]
 ];
 
 createHashMapFromArray [
     ["ambient", _ambient],
+    ["allClear", _allClear],
     ["combat",  _combat]
 ];

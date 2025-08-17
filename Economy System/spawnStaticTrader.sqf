@@ -22,20 +22,20 @@ if (isServer) then {
 			params ["_unit", "_killer", "_instigator"];
 			if (isPlayer _killer) then {
 			
-				_killer setVariable ["SU_Relation",FALSE,true];
-				_killer setVariable ["BB_Relation",FALSE,true];
-				_killer setVariable ["PF_Relation",FALSE,true];
-				_killer setVariable ["ALF_Relation",FALSE,true];
-				_killer setVariable ["WO_Relation",FALSE,true];
-				_killer setVariable ["RU_Relation",FALSE,true];
-				_killer setVariable ["US_Relation",FALSE,true];
-				_killer setVariable ["NH_Relation",FALSE,true];
-				_killer setVariable ["TRB_Relation",FALSE,true];
-				_killer setVariable ["RC_Relation",FALSE,true];
-				_killer setVariable ["DT_Relation",FALSE,true];
-				_killer setVariable ["ROA_Relation",FALSE,true];
-				_killer setVariable ["PMC_Relation",FALSE,true];
-				_killer setVariable ["Bandit_Relation",FALSE,true];
+				_killer setVariable ["SU_Relation",false,true];
+				_killer setVariable ["BB_Relation",false,true];
+				_killer setVariable ["PF_Relation",false,true];
+				_killer setVariable ["ALF_Relation",false,true];
+				_killer setVariable ["WO_Relation",false,true];
+				_killer setVariable ["RU_Relation",false,true];
+				_killer setVariable ["US_Relation",false,true];
+				_killer setVariable ["NH_Relation",false,true];
+				_killer setVariable ["TRB_Relation",false,true];
+				_killer setVariable ["RC_Relation",false,true];
+				_killer setVariable ["DT_Relation",false,true];
+				_killer setVariable ["ROA_Relation",false,true];
+				_killer setVariable ["PMC_Relation",false,true];
+				_killer setVariable ["Bandit_Relation",false,true];
 				_killer setVariable ["Renegade_Relation",true,true];
 			
 				hintSilent parseText format ["<t size='1.25' color='#ff0000'> *ATTENTION*<br/><br/></t><t>Trader has been killed by %1. %1 is now a renegade.</t>", (name _killer)];

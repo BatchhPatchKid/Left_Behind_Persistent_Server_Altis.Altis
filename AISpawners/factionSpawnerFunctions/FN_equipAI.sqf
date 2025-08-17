@@ -55,62 +55,7 @@ _muzzleArraySelectionRare = ["muzzleRare"] call _arrayReturn;
 _railArraySelectionRare = ["railRare"] call _arrayReturn;
 _uniformArraySelectionRare = ["uniformRare"] call _arrayReturn;
 
-params ["_faction","_unit","_melee","_primaryOverride", "_sfOverride"];
-
-private _money = false;
-private _nvg = false;
-private _primary = false;
-private _optics = false;
-private _muzzle = false;
-private _firstAid = false;
-private _water = false;
-private _food = false;
-private _rocket = false;
-private _rndShitAmount = 3;
-private _railAttachment = false;
-private _grenades = false;
-private _map = false;
-private _compass = false;
-private _watch = false;
-private _radio = false;
-private _gps = false;
-
-private _arrayReturn = missionNamespace getVariable "FN_arrayReturn";
-
-//Basic Selection of gear
-_headgearArraySelection = ["headgearCommon"] call _arrayReturn;
-_facewearArraySelection = ["facewearCommon"] call _arrayReturn;
-_uniformArraySelection = ["uniformCommon"] call _arrayReturn;
-_vestArraySelection = ["vestCommon"] call _arrayReturn;
-_backpackArraySelection = ["backpackCommon"] call _arrayReturn;
-_rifleArraySelection = ["primaryCommon"] call _arrayReturn;
-_handgunArraySelection = ["handgunCommon"] call _arrayReturn;
-_launcherArraySelection = ["launcherCommon"] call _arrayReturn;
-_rndShitArraySelection = ["randomCommon"] call _arrayReturn;
-_opticsArraySelection = ["opticsCommon"] call _arrayReturn;
-_muzzleArraySelection = ["muzzleCommon"] call _arrayReturn;
-_railArraySelection = ["bipodCommon"] call _arrayReturn;
-_nvgSelection = ["nvgCommon"] call _arrayReturn;
-_waterSelection = ["waterCommon"] call _arrayReturn;
-_foodSelection = ["foodCommon"] call _arrayReturn;
-_meleeSelection = ["meleeCommon"] call _arrayReturn;
-_firstAidSelection = ["medicalCommon"] call _arrayReturn;
-_glWeapons = ["glWeapons"] call _arrayReturn;
-_grenadeItems = ["grenades"] call _arrayReturn;
-_gpsArraySelection = ["DSA_Detector",.15,"ItemGPS",1];
-_radioArraySelection = ["radios"] call _arrayReturn;
-
-//Rare Items
-_rareNVG = ["nvgRare"] call _arrayReturn;
-_headgearArraySelectionRare = ["headgearRare"] call _arrayReturn;
-_vestArraySelectionRare = ["vestRare"] call _arrayReturn;
-_backpackArraySelectionRare = ["backpackRare"] call _arrayReturn;
-_rifleArraySelectionRare = ["primaryRare"] call _arrayReturn;
-_handgunArraySelectionRare = ["handgunRare"] call _arrayReturn;
-_opticsArraySelectionRare = ["opticsRare"] call _arrayReturn;
-_muzzleArraySelectionRare = ["muzzleRare"] call _arrayReturn;
-_railArraySelectionRare = ["railRare"] call _arrayReturn;
-_uniformArraySelectionRare = ["uniformRare"] call _arrayReturn;
+private _chosenLamp = "WBK_HeadLampItem_Double";
 
 switch _faction do {
 	case "Bandit": {
@@ -180,6 +125,8 @@ switch _faction do {
 		_grenades = (random 10 < 1);
 		_primary = TRUE;
 		
+		_chosenLamp = "WBK_LampItem_Black";
+
 		_rndShitAmount = random [1, 2, 5];
 	};
 	case "BB": {
@@ -262,6 +209,8 @@ switch _faction do {
 		_watch = (random 5 < 1);
 		_radio = (random 5 < 1);
 		_gps = (random 80 < 1);
+
+		_chosenLamp = "WBK_LampItem_Blue";
 		
 		_rndShitAmount = random [1, 2, 5];
 		if (random 600 < 1) then {_nvgSelection = _rareNVG;};
@@ -323,6 +272,8 @@ switch _faction do {
 		_watch = (random 5 < 1);
 		_radio = (random 5 < 1);
 		_gps = (random 80 < 1);
+
+		_chosenLamp = "WBK_LampItem_Green";
 		
 		_rndShitAmount = random [1, 2, 5];
 		if (random 170 < 1) then {_vestArraySelection = _vestArraySelectionRare;};
@@ -383,6 +334,8 @@ switch _faction do {
 		_watch = (random 5 < 1);
 		_radio = (random 5 < 1);
 		_gps = (random 80 < 1);
+
+		_chosenLamp = "WBK_LampItem_Red";
 		
 		_rndShitAmount = random [1, 2, 5];
 		if (random 170 < 1) then {_headgearArraySelection = _headgearArraySelectionRare;};
@@ -747,7 +700,7 @@ case "RU": {
 		_food = (random 20 < 1);
 		if (random 400 < 1) then {_nvgSelection = _rareNVG;};
 		_money = (random 4 < 1);
-		_nvg = (random 200 < 1);
+		_nvg = true;
 		_rocket = (random 200 < 1);
 		_primary = true;
 		_optics = (random 2 < 1);
@@ -759,6 +712,7 @@ case "RU": {
 		_watch = true;
 		_radio = true;
 		_gps = (random 30 < 1);
+		_chosenLamp = "";
 		
 		_rndShitAmount = random [1, 2, 5];
 		if (random 170 < 1) then {_headgearArraySelection = _headgearArraySelectionRare;};
@@ -809,7 +763,7 @@ case "RU": {
 		_food = (random 20 < 1);
 		if (random 400 < 1) then {_nvgSelection = _rareNVG;};
 		_money = (random 4 < 1);
-		_nvg = (random 200 < 1);
+		_nvg = true;
 		_rocket = (random 200 < 1);
 		_primary = true;
 		_optics = (random 2 < 1);
@@ -821,6 +775,8 @@ case "RU": {
 		_watch = true;
 		_radio = true;
 		_gps = (random 5 < 1);
+
+		_chosenLamp = "";
 		
 		_rndShitAmount = random [1, 2, 5];
 		if (random 170 < 1) then {_headgearArraySelection = _headgearArraySelectionRare;};
@@ -1008,7 +964,7 @@ if (_rocket) then {
 	_unit addBackpack _backpack;
 };
 
-_unit addItemToBackpack "WBK_HeadLampItem";
+_unit addItemToUniform _chosenLamp;
 	
 if (random 2 < 1) then {
 	for "_j" from 1 to (round (random 5)) do {

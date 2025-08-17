@@ -1,19 +1,18 @@
 /*
     FN_lootGarbageSystem.sqf
     --------------------------
-    Server-only! Ensures every valid garbage pile has a single Land_HelipadEmpty_F helper.
+    Ensures every valid garbage pile has a single Land_HelipadEmpty_F helper.
 
     Tuning:
       - _scanRadius: how far ahead of each player to prepare loot helpers.
         For 30s scan cadence and on-foot players, ~200–225m is ideal.
       - _noPopInRadius: skip spawning if someone is right on top of the pile
         to avoid visible pop-in.
-
-    NOTE: The comment previously said 3000m; keep this aligned with _scanRadius.
 */
 
 private _scanRadius = 200;  // 200–225 recommended for 30s cadence on foot
 private _noPopInRadius = 8;    // don’t spawn helpers if a player is within 8m
+private _itemRadius = 10;
 
 private _classesToScan = [
     "cashdesk_f","garbageheap_01_f","rowboat_v1_f","icebox_f","wreck_bmp2_f",
@@ -52,7 +51,7 @@ while {true} do {
             private _class = _parts select 0;
             if (!(_class in _classesToScan)) then { continue; };
 
-            private _helpers = nearestObjects [_obj, ["Land_HelipadEmpty_F"], 5];
+            private _helpers = nearestObjects [_obj, ["Land_HelipadEmpty_F"], _itemRadius];
             if (_helpers isEqualTo []) then {
                 // Place helper at top-center of the model
                 private _bb  = boundingBox _obj;
@@ -76,6 +75,5 @@ while {true} do {
         uiSleep 5;
     } forEach allPlayers;
 
-    // If your outer loop runs roughly every 30s total, _scanRadius=200 is sufficient for on-foot play.
     uiSleep 15;
 };
