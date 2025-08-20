@@ -1,6 +1,6 @@
 params ["_player", "_sub"];
 
-if ((_player getVariable ["ritualStatus",0])-_sub < 0 ) exitWith { ["You do not hold enough ritual power to cast this spell"] remoteExec ["hint", _player]; };
+if ((_player getVariable ["ritualStatusPig",0])-_sub < 0 ) exitWith { ["You do not hold enough ritual power to cast this spell"] remoteExec ["hint", _player]; };
 
 private _maxRange = 5000;
 
@@ -34,7 +34,7 @@ if (!_found) then {
 
 if (!_found) exitWith { ["No valid placement point"] remoteExec ["hint", _player]; };
 
-[_player, "starWars_lightsaber_style1_attack_push"] remoteExec ["switchMove", _player];
+[_player, "starWars_lightsaber_style1_attack_push"] remoteExec ["switchMove", 0, true];
 
 sleep 0.25;
 
@@ -43,16 +43,23 @@ private _ied = createMine ["IEDUrbanSmall_F", [0,0,0], [], 0];
 _ied setPosASL _posASL;
 _ied setVectorUp _normal;
 
-_ied setDamage 1;
+private _victims = _ied nearEntities ["Man", 3];
+{
+  if (typeOf _x == "O_soldier_Melee_RUSH") then {
+      [_x, 1] remoteExec ["setDamage", 2];
+  };
 
-//For sure killing all AI in the area around the lightning bolt
-private _victims = _ied nearEntities ["Man", 3]; 
-{ [_x, 1] remoteExec ["setDamage", 2]; } forEach _victims;
+  if (((side _player) getFriend (side _x)) > 0.6 && {!captive _x}) then {
+    _player addRating -500000;
+};
+} forEach _victims;
+
+_ied setDamage 1;
 
 sleep 1.25;
 
-[_player, ""] remoteExec ["switchMove", _player];
+[_player, ""] remoteExec ["switchMove", 0, true];
 
-_player setVariable ["ritualStatus", (_player getVariable ["ritualStatus",0]) - _sub, true];
+_player setVariable ["ritualStatusPig", (_player getVariable ["ritualStatusPig",0]) - _sub, true];
 
 [_player] spawn FN_updateRitualActions;

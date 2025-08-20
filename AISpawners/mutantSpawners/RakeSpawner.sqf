@@ -8,7 +8,7 @@ params ["_pos", "_triggerRadius", "_maxUnits"];
 	
 	for "_i" from 1 to _maxUnits do {
 		private _hordeUnit = _horde createUnit ["DSA_Rake", [_pos, 10, (_triggerRadius/4), 3, 0, 20, 0, [], []] call BIS_fnc_findSafePos, [], 1, "NONE"];
-		_hordeUnit setSpeaker "NoVoice"
+		_hordeUnit setSpeaker "NoVoice";
 		_hordeUnit disableConversation true;
 		sleep 0.5;
 	};

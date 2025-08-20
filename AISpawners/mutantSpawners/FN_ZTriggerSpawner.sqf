@@ -28,7 +28,7 @@ FN_spawnSpecialInfected = {
 	for "_i" from 1 to _numUnits do {
 		_ZedType = selectRandomWeighted _ZedArray;
 		private _hordeUnit = _horde createUnit [_ZedType, [_pos, _minDist, _maxDist, 150] call FN_findSafePosition, [], 1, "NONE"];
-		_hordeUnit setSpeaker "NoVoice"
+		_hordeUnit setSpeaker "NoVoice";
 		_hordeUnit disableConversation true;
 	};
 };

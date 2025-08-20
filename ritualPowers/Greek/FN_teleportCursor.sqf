@@ -1,6 +1,6 @@
 params ["_player", "_sub"];
 
-if ((_player getVariable ["ritualStatus",0])-_sub < 0 ) exitWith { ["You do not hold enough ritual power to cast this spell"] remoteExec ["hint", _player]; };
+if ((_player getVariable ["ritualStatusZeus",0])-_sub < 0 ) exitWith { ["You do not hold enough ritual power to cast this spell"] remoteExec ["hint", _player]; };
 
 private _maxRange = 5000;
 private _minSeparation = 5;
@@ -38,7 +38,7 @@ private _dropASL = _posASL vectorAdd [0,0,0.2];
 private _grp = group _player;
 {
 	if (isPlayer _x) then {
-		[_x, "STAR_WARS_FORCE_CHOKE_victim"] remoteExec ["switchMove", _x];
+		[_x, "STAR_WARS_FORCE_CHOKE_victim"] remoteExec ["switchMove", 0, true];
 	};
 } forEach (units _grp);
 
@@ -52,9 +52,9 @@ private _moved = [];
     if (local _obj) then { _obj setPosASL _dropASL } else { [_obj, _dropASL] remoteExec ["setPosASL", _obj] };
   };
 
-  [_x, ""] remoteExec ["switchMove", _x];
+  [_x, ""] remoteExec ["switchMove", 0, true];
 } forEach (units _grp);
 
-_player setVariable ["ritualStatus", (_player getVariable ["ritualStatus",0]) - _sub, true];
+_player setVariable ["ritualStatusZeus", (_player getVariable ["ritualStatusZeus",0]) - _sub, true];
 
 [_player] spawn FN_updateRitualActions;

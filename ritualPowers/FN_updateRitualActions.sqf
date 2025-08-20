@@ -1,8 +1,9 @@
 params ["_player"];
 
-waitUntil { sleep 0.1; !isNil { _player getVariable "ritualStatus" } };
+waitUntil { sleep 0.1; !isNil { _player getVariable "ritualStatusPig" } };
+waitUntil { sleep 0.1; !isNil { _player getVariable "ritualStatusZeus" } };
+waitUntil { sleep 0.1; !isNil { _player getVariable "ritualStatusWanderer" } };
 
-// remove previously added children (full paths), then headers (full paths)
 private _oldChildren = _player getVariable ["LB_currentRitualEntries", []];
 { [typeOf _player, 1, _x, false] call ace_interact_menu_fnc_removeActionFromClass } forEach _oldChildren;
 
@@ -18,33 +19,16 @@ private _wandererRelic = 1;
 private _pigRelic = 1;
 private _poseidonRelic = 1;
 
-//if the player does not have the relic, then they can't use certain spells
-private _zeusLock = 1000; 
-private _wandererLock = 1000; 
-private _pigLock = 1000; 
-private _poseidonLock = 1000; 
+private _zeusLock = 1000;
+private _wandererLock = 1000;
+private _pigLock = 1000;
+private _poseidonLock = 1000;
 
-if ("LB_ZeusIdol" in _itemsPlayer) then { 
-  _zeusLock = 1;
-  _zeusRelic = 0.2;
-};
+if ("LB_ZeusIdol" in _itemsPlayer) then { _zeusLock = 1; _zeusRelic = 0.2 };
+if ("LB_WandererIdol" in _itemsPlayer) then { _wandererLock = 1; _wandererRelic = 0.2 };
+if ("LB_PoseidonIdol" in _itemsPlayer) then { _poseidonLock = 1; _poseidonRelic = 0.2 };
+if ("LB_GreatPigIdol" in _itemsPlayer) then { _pigLock = 1; _pigRelic = 0.2 };
 
-if ("LB_WandererIdol" in _itemsPlayer) then { 
-  _wandererLock = 1;
-  _wandererRelic = 0.2;
-};
-
-if ("LB_PoseidonIdol" in _itemsPlayer) then { 
-  _poseidonLock = 1;
-  _poseidonRelic = 0.2;
-};
-
-if ("LB_GreatPigIdol" in _itemsPlayer) then { 
-  _pigLock = 1;
-  _pigRelic = 0.2;
-};
-
-// requirements [min, max) — your thresholds
 private _req = createHashMapFromArray [
   ["wanderer_banish",[10*_wandererRelic*_wandererLock,_INF]],
   ["chronos_day",[40*_zeusRelic,_INF]],
@@ -56,6 +40,7 @@ private _req = createHashMapFromArray [
   ["goliath_all",[25*_wandererRelic,_INF]],
   ["goliath_enemy",[15*_wandererRelic*_wandererLock,_INF]],
   ["goliath_single",[10*_wandererRelic,_INF]],
+  ["darkness_cursor",[16*_wandererRelic,_INF]],
   ["pig_explosion",[30*_pigRelic,_INF]],
   ["pig_fireball",[17*_pigRelic,_INF]],
   ["pig_wisdom",[35*_pigRelic*_pigLock,_INF]],
@@ -68,7 +53,6 @@ private _req = createHashMapFromArray [
   ["zeus_storm",[60*_zeusRelic*_zeusLock,_INF]]
 ];
 
-// DEFs: [id, title, function, extraArgsAfterReqNum]
 private _defs = [
   ["goliath_enemy","SUMMON SHARD UPON ENEMY",FN_killGoliathShardEnemy,[]],
   ["goliath_all","SUMMON SHARDS UPON ALL",FN_killGoliathShardALL,[]],
@@ -77,6 +61,8 @@ private _defs = [
   ["wanderer_mutants","SUMMON FRIENDS FROM BEYOND THIS WORLD",FN_summonMutants,[]],
   ["wanderer_tank","SUMMON A POWERFUL ALLY FROM BEYOND THIS WORLD",FN_summonTank,[]],
   ["wanderer_banish","BANISH AN ENTITY TO THE DARK WODE",FN_banishUnit,[]],
+
+  ["darkness_cursor","SUMMON WANDERER'S ORB",FN_darknessCursor,[]],
 
   ["zeus_bolt","SUMMON ZEUS'S BOLT",FN_zeusBolt,[]],
   ["zeus_storm","SUMMON ZEUS'S WRATH",FN_zeusStorm,[]],
@@ -88,7 +74,6 @@ private _defs = [
   ["hermes_random","TELEPORT ONESELF TO RANDOM LOCATION",FN_teleportRandom,[]],
   ["hermes_cursor","TELEPORT YOU AND YOUR FELLOW BELIEVERS",FN_teleportCursor,[]],
 
-  // Chronos keeps its hour, but now receives _reqNum as second param (caller, reqNum, hour)
   ["chronos_day","COMMAND TIME TO LURCH FORWARD TO DAY",FN_changeTime,[9]],
   ["chronos_night","COMMAND TIME TO LURCH FORWARD TO NIGHT",FN_changeTime,[23]],
 
@@ -97,22 +82,21 @@ private _defs = [
 
   ["pig_fireball","CAST GREAT PIG'S FIREBALL",FN_pigFireball,[]],
   ["pig_explosion","CAST GREAT PIG'S JUDGEMENT",FN_pigExplosion,[]],
-  ["pig_wisdom","CAST GREAT PIG'S WISDOM",FN_pigWisdom,[ ]]
+  ["pig_wisdom","CAST GREAT PIG'S WISDOM",FN_pigWisdom,[]]
 ];
 
-// header display names
 private _headerTitle = createHashMapFromArray [
   ["wandererPath","WANDERER POWERS"],
   ["greekPath","GREEK POWERS"],
   ["pigPath","PIG POWERS"]
 ];
 
-// map ritual id -> header key
 private _groupFor = {
   params ["_id"];
   switch (true) do {
     case ((_id find "goliath_") == 0): { "wandererPath" };
     case ((_id find "wanderer_") == 0): { "wandererPath" };
+    case ((_id find "darkness_") == 0): { "wandererPath" };
     case ((_id find "pig_") == 0): { "pigPath" };
     case ((_id find "zeus_") == 0): { "greekPath" };
     case ((_id find "hypnos_") == 0): { "greekPath" };
@@ -123,20 +107,28 @@ private _groupFor = {
   };
 };
 
-private _r = _player getVariable ["ritualStatus",0];
+private _rPig = _player getVariable ["ritualStatusPig",0];
+private _rZeus = _player getVariable ["ritualStatusZeus",0];
+private _rWanderer = _player getVariable ["ritualStatusWanderer",0];
 
-// collect eligible children per header, also compute the req number we'll pass in
-private _groups = createHashMap;   // header -> array of [id,title,fn,extra,reqNum]
+private _groups = createHashMap;
+
 {
   private _id = _x#0;
   private _bounds = _req get _id;
   if (!isNil "_bounds") then {
     private _min = _bounds select 0;
     private _max = _bounds select 1;
+    private _g = [_id] call _groupFor;
+    private _r = switch (_g) do {
+      case "pigPath": { _rPig };
+      case "greekPath": { _rZeus };
+      case "wandererPath": { _rWanderer };
+      default { 0 };
+    };
     if (_r >= _min && _r < _max) then {
-      private _g = [_id] call _groupFor;
       private _arr = _groups getOrDefault [_g, []];
-      _arr pushBack [_id, _x#1, _x#2, _x#3, _min];   // store reqNum = _min
+      _arr pushBack [_id, _x#1, _x#2, _x#3, _min];
       _groups set [_g, _arr];
     };
   };
@@ -145,7 +137,6 @@ private _groups = createHashMap;   // header -> array of [id,title,fn,extra,reqN
 private _newChildren = [];
 private _newHeaders  = [];
 
-// create headers that have kids, then add kids; each action passes (caller, reqNum, ...extra)
 {
   private _groupId = _x;
   private _kids = _groups get _groupId;
@@ -162,13 +153,11 @@ private _newHeaders  = [];
       private _id     = _x#0;
       private _name   = _x#1;
       private _fn     = _x#2;
-      private _extra  = _x#3;      // array (may be [])
-      private _reqNum = _x#4;      // from _req min
+      private _extra  = _x#3;
+      private _reqNum = _x#4;
 
-      // data we want at click-time
       private _actionParams = [_fn, _reqNum] + _extra;
 
-      // statement: (_target, _caller, _params)
       private _stmt = {
         params ["_t","_c","_p"];
         private _fn     = _p#0;

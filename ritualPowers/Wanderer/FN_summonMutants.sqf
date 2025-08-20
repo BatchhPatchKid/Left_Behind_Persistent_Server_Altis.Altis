@@ -1,6 +1,6 @@
 params ["_player", "_sub"];
 
-if ((_player getVariable ["ritualStatus",0])-_sub < 0 ) exitWith { ["You do not hold enough ritual power to cast this spell"] remoteExec ["hint", _player]; };
+if ((_player getVariable ["ritualStatusWanderer",0])-_sub < 0 ) exitWith { ["You do not hold enough ritual power to cast this spell"] remoteExec ["hint", _player]; };
 
 private _count  = (random 2) + 4;
 private _class  = "Zombie_Special_OPFOR_Leaper_1";
@@ -8,7 +8,7 @@ private _radius = 20;
 
 private _tmpGrp = createGroup (side _player);
 
-[_player, "flamethrower_burning_3"] remoteExec ["switchMove", _player];
+[_player, "flamethrower_burning_3"] remoteExec ["switchMove", 0, true];
 
 for "_i" from 1 to _count do {
 	private _a = random 360;
@@ -27,8 +27,8 @@ deleteGroup _tmpGrp;
 
 sleep 3.5;
 
-[_player, ""] remoteExec ["switchMove", _player];
+[_player, ""] remoteExec ["switchMove", 0, true];
 
-_player setVariable ["ritualStatus", (_player getVariable ["ritualStatus",0]) - _sub, true];
+_player setVariable ["ritualStatusWanderer", (_player getVariable ["ritualStatusWanderer",0]) - _sub, true];
 
 [_player] spawn FN_updateRitualActions;

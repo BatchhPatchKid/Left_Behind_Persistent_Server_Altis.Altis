@@ -29,46 +29,37 @@ private _blood = ["drinkBlood"] call _arrayReturn;
 private _value = 0;
 private _radAmount = 0;
 
-if (_item in _sodas) then {
-    _value = 20;
-    _radAmount = 5;
-} else {
-    if (_item in _waterBottles) then {
+switch (true) do {
+    case (_item in _sodas): {
+        _value = 20;
+        _radAmount = 5;
+    };
+
+    case (_item in _waterBottles): {
         _value = 35;
-    } else {
-        if (_item in _canteens) then {
-            _value = 60;
-        } else {
-            if (_item in _dirty) then {
-                _value = 25;
-                _radAmount = 15;
-            } else {
-                if (_item in _blood) then {
-                    switch (_switchItem) do {
-						case "ACE_bloodIV_250": {
-							// 250 ml blood
-							_value = 8;
-						};
-						case "ACE_bloodIV_500": {
-							// 500 ml blood
-							_value = 16;
-						};
-						case "ACE_bloodIV": {
-							// 1 L blood
-							_value = 32;
-						};
-						default {
-							// fallback if somehow another item got through
-							_value = 0;
-						};
-					};
-                    _radAmount = 0;
-                } else {
-                    // Fallback
-                    _value = 0;
-                };
-            };
+    };
+
+    case (_item in _canteens): {
+        _value = 60;
+    };
+
+    case (_item in _dirty): {
+        _value = 25;
+        _radAmount = 15;
+    };
+
+    case (_item in _blood): {
+        switch (_item) do {
+            case "ACE_bloodIV_250": { _value = 8; };
+            case "ACE_bloodIV_500": { _value = 16; };
+            case "ACE_bloodIV":     { _value = 32; };
+            default { _value = 0; };
         };
+        _radAmount = 0;
+    };
+
+    default {
+        _value = 0;
     };
 };
 
@@ -76,11 +67,11 @@ if (_item in _sodas) then {
 _player removeItem _item;
 
 // 5. Add empty canteen if applicable
-if (_item in _canteens) then {
+if (_item in _canteens || _item == "rvg_canteen") then {
     _player addItem "rvg_canteenEmpty";
 };
 
-if (_item in _waterBottles) then {
+if (_item in _waterBottles || _item == "rvg_plasticBottle") then {
     _player addItem "rvg_plasticBottleEmpty";
 };
 
@@ -92,8 +83,9 @@ _player setVariable ["hydrationLevel", _new, true];
 
 // 7. Apply radiation
 _arr = (itemsWithMagazines _player) select { _x == "rvg_geiger" };
+private _currentRad = _player getVariable ["Rad", 0];
+_player setVariable ["Rad", _currentRad + _radAmount, true];
 if ((_radAmount > 0) and ((count _arr) > 0)) then {
-    [_radAmount] call FN_addRad;
 	[_player, ["rvg_geiger_1", 100, 1]] remoteExec ["say3D"];
 };
 

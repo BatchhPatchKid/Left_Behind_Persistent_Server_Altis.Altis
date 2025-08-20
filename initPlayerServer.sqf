@@ -20,4 +20,6 @@ _player setVariable ["wants_to_sleep", false, true];
 sleepRequestUpdate = time;
 publicVariableServer "sleepRequestUpdate";
 
-_player setVariable ["ritualStatus", 0, true];
+_player setVariable ["ritualStatusPig", 0, true];
+_player setVariable ["ritualStatusZeus", 0, true];
+_player setVariable ["ritualStatusWanderer", 0, true];

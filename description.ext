@@ -69,16 +69,16 @@ class CfgFunctions
             {
                 file = "LootSystem\FN_spawnLootGround.sqf";
             };
-        };
 
-        class RogueSniper
-        {
-            file = "Economy System\functions\taskFunctions\RogueSniper";
-            class spawnRogueSniper {};
-            class createSniperTask {};
-            class updateSniperTaskState {};
-            class paySniperReward {};
-            class ammoBoxCheckBridge {};
+            class refillCanteen
+            {
+                file = "Ambient\FN_refillCanteen.sqf";
+            };
+
+            class drinkFromWaterSource
+            {
+                file = "Ambient\FN_drinkFromWaterSource.sqf";
+            };
         };
     };
 };

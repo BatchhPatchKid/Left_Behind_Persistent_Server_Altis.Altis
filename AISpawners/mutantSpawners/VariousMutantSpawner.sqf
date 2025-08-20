@@ -8,7 +8,7 @@ private _Type = ["DSA_411", .01, "DSA_Mindflayer", .01, "DSA_Rake", .05, "DSA_Sh
 
 for "_i" from 1 to _maxUnits do {
 	private _hordeUnit = _horde createUnit [(selectRandomWeighted _Type), [_pos, 20, (_triggerRadius / 4), 3, 0, 20, 0, [], []] call BIS_fnc_findSafePos, [], 1, "NONE"];
-	_hordeUnit setSpeaker "NoVoice"
+	_hordeUnit setSpeaker "NoVoice";
 	_hordeUnit disableConversation true;
 };
 [_horde, [], []] call (missionNamespace getVariable 'FN_enableDynamicSim');

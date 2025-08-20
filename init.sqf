@@ -145,37 +145,38 @@ missionNamespace setVariable ["FN_updateRitualActions", compileFinal preprocessF
 missionNamespace setVariable ["FN_pray", compileFinal preprocessFileLineNumbers "ritualPowers\FN_pray.sqf"];
 
 //Wanderer Rituals
-missionNamespace setVariable ["FN_killGoliathShard", compileFinal preprocessFileLineNumbers "ritualPowers\FN_killGoliathShard.sqf"];
-missionNamespace setVariable ["FN_killGoliathShardEnemy", compileFinal preprocessFileLineNumbers "ritualPowers\FN_killGoliathShardEnemy.sqf"];
-missionNamespace setVariable ["FN_killGoliathShardALL", compileFinal preprocessFileLineNumbers "ritualPowers\FN_killGoliathShardALL.sqf"];
-missionNamespace setVariable ["FN_summonMutants", compileFinal preprocessFileLineNumbers "ritualPowers\FN_summonMutants.sqf"];
-missionNamespace setVariable ["FN_summonTank", compileFinal preprocessFileLineNumbers "ritualPowers\FN_summonTank.sqf"];
-missionNamespace setVariable ["FN_banishUnit", compileFinal preprocessFileLineNumbers "ritualPowers\FN_banishUnit.sqf"];
+missionNamespace setVariable ["FN_killGoliathShard", compileFinal preprocessFileLineNumbers "ritualPowers\Wanderer\FN_killGoliathShard.sqf"];
+missionNamespace setVariable ["FN_killGoliathShardEnemy", compileFinal preprocessFileLineNumbers "ritualPowers\Wanderer\FN_killGoliathShardEnemy.sqf"];
+missionNamespace setVariable ["FN_killGoliathShardALL", compileFinal preprocessFileLineNumbers "ritualPowers\Wanderer\FN_killGoliathShardALL.sqf"];
+missionNamespace setVariable ["FN_summonMutants", compileFinal preprocessFileLineNumbers "ritualPowers\Wanderer\FN_summonMutants.sqf"];
+missionNamespace setVariable ["FN_summonTank", compileFinal preprocessFileLineNumbers "ritualPowers\Wanderer\FN_summonTank.sqf"];
+missionNamespace setVariable ["FN_banishUnit", compileFinal preprocessFileLineNumbers "ritualPowers\Wanderer\FN_banishUnit.sqf"];
+missionNamespace setVariable ["FN_darknessCursor", compileFinal preprocessFileLineNumbers "ritualPowers\Wanderer\FN_darknessCursor.sqf"];
 
 //Zeus Rituals
-missionNamespace setVariable ["FN_zeusBolt", compileFinal preprocessFileLineNumbers "ritualPowers\FN_zeusBolt.sqf"];
-missionNamespace setVariable ["FN_zeusStorm", compileFinal preprocessFileLineNumbers "ritualPowers\FN_zeusStorm.sqf"];
-missionNamespace setVariable ["FN_zeusRain", compileFinal preprocessFileLineNumbers "ritualPowers\FN_zeusRain.sqf"];
+missionNamespace setVariable ["FN_zeusBolt", compileFinal preprocessFileLineNumbers "ritualPowers\Greek\FN_zeusBolt.sqf"];
+missionNamespace setVariable ["FN_zeusStorm", compileFinal preprocessFileLineNumbers "ritualPowers\Greek\FN_zeusStorm.sqf"];
+missionNamespace setVariable ["FN_zeusRain", compileFinal preprocessFileLineNumbers "ritualPowers\Greek\FN_zeusRain.sqf"];
 
 //Hypnos Rituals
-missionNamespace setVariable ["FN_hypnosBrainwashSingle", compileFinal preprocessFileLineNumbers "ritualPowers\FN_hypnosBrainwashSingle.sqf"];
-missionNamespace setVariable ["FN_hypnosBrainwash", compileFinal preprocessFileLineNumbers "ritualPowers\FN_hypnosBrainwash.sqf"];
+missionNamespace setVariable ["FN_hypnosBrainwashSingle", compileFinal preprocessFileLineNumbers "ritualPowers\Greek\FN_hypnosBrainwashSingle.sqf"];
+missionNamespace setVariable ["FN_hypnosBrainwash", compileFinal preprocessFileLineNumbers "ritualPowers\Greek\FN_hypnosBrainwash.sqf"];
 
 //Hermes Ritual 
-missionNamespace setVariable ["FN_teleportRandom", compileFinal preprocessFileLineNumbers "ritualPowers\FN_teleportRandom.sqf"];
-missionNamespace setVariable ["FN_teleportCursor", compileFinal preprocessFileLineNumbers "ritualPowers\FN_teleportCursor.sqf"];
+missionNamespace setVariable ["FN_teleportRandom", compileFinal preprocessFileLineNumbers "ritualPowers\Greek\FN_teleportRandom.sqf"];
+missionNamespace setVariable ["FN_teleportCursor", compileFinal preprocessFileLineNumbers "ritualPowers\Greek\FN_teleportCursor.sqf"];
 
 //Chronos Rituals
-missionNamespace setVariable ["FN_changeTime", compileFinal preprocessFileLineNumbers "ritualPowers\FN_changeTime.sqf"];
+missionNamespace setVariable ["FN_changeTime", compileFinal preprocessFileLineNumbers "ritualPowers\Greek\FN_changeTime.sqf"];
 
 //Apollo Rituals
-missionNamespace setVariable ["FN_healSelf", compileFinal preprocessFileLineNumbers "ritualPowers\FN_healSelf.sqf"];
-missionNamespace setVariable ["FN_healAllies", compileFinal preprocessFileLineNumbers "ritualPowers\FN_healAllies.sqf"];
+missionNamespace setVariable ["FN_healSelf", compileFinal preprocessFileLineNumbers "ritualPowers\Greek\FN_healSelf.sqf"];
+missionNamespace setVariable ["FN_healAllies", compileFinal preprocessFileLineNumbers "ritualPowers\Greek\FN_healAllies.sqf"];
 
 //Great Pig Rituals
-missionNamespace setVariable ["FN_pigExplosion", compileFinal preprocessFileLineNumbers "ritualPowers\FN_pigExplosion.sqf"];
-missionNamespace setVariable ["FN_pigWisdom", compileFinal preprocessFileLineNumbers "ritualPowers\FN_pigWisdom.sqf"];
-missionNamespace setVariable ["FN_pigFireball", compileFinal preprocessFileLineNumbers "ritualPowers\FN_pigFireball.sqf"];
+missionNamespace setVariable ["FN_pigExplosion", compileFinal preprocessFileLineNumbers "ritualPowers\Pig\FN_pigExplosion.sqf"];
+missionNamespace setVariable ["FN_pigWisdom", compileFinal preprocessFileLineNumbers "ritualPowers\Pig\FN_pigWisdom.sqf"];
+missionNamespace setVariable ["FN_pigFireball", compileFinal preprocessFileLineNumbers "ritualPowers\Pig\FN_pigFireball.sqf"];
 
 // Turning off VoN
 0 enableChannel [true, false];
@@ -273,10 +274,10 @@ if (!isDedicated) then {
 
 		//–– Gather stats ––
 		private _temp = [_unit] call FN_getTemp;
-		private _hydrationNutrition = [_unit] call FN_getHydrationNutrition;  // [hydration, nutrition]
+		private _hydrationNutrition = [_unit] call FN_getHydrationNutrition;
 		private _sanity = [_unit] call FN_getSanity;
 		private _defecationStatus = [_unit, false] call FN_checkDefecationStatus;
-		private _rad = [_unit] call FN_getRadiation;
+		private _rad = _unit getVariable ["Rad", 0];
 		private _hasGeiger = ((itemsWithMagazines _unit) select { _x == "rvg_geiger" }) isNotEqualTo [];
 		private _faction = [_unit] call FN_checkFaction;
 
@@ -340,7 +341,9 @@ if (!isDedicated) then {
 		//–– Build “Faction” line (default size, no color) ––
 		private _factionLine = format ["<t size='1.3'>Faction: %1</t>", (_faction joinString " and ")];
 
-		private _ritualStatus = format ["<t size='1.3'>Ritual Power: %1</t>", (_unit getVariable ["ritualStatus",0])];
+		private _ritualStatusPig = format ["<t size='1.3'>Ritual Power (Pig): %1</t>", (_unit getVariable ["ritualStatusPig",0])];
+		private _ritualStatusZeus = format ["<t size='1.3'>Ritual Power (Greek): %1</t>", (_unit getVariable ["ritualStatusZeus",0])];
+		private _ritualStatusWanderer = format ["<t size='1.3'>Ritual Power (Wanderer): %1</t>", (_unit getVariable ["ritualStatusWanderer",0])];
 
 		//–– Assemble all lines and display ––
 		private _hintText =
@@ -351,8 +354,9 @@ if (!isDedicated) then {
 			_sanityLine + "<br/><br/>" +
 			(if _hasGeiger then { _radLine } else { _noRadLine }) + "<br/><br/>" +
 			_factionLine + "<br/><br/>" +
-			_ritualStatus;
-
+			_ritualStatusPig + "<br/>" +
+			_ritualStatusZeus + "<br/>" +
+			_ritualStatusWanderer;
 		hintSilent parseText _hintText;
 	}];
 
@@ -415,9 +419,6 @@ if (!isDedicated) then {
 	private _actionDefecate = ["Defecate", "Defecate", "", { [player] call FN_defecate; }, { true }] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "Survival_System"], _actionDefecate] call ace_interact_menu_fnc_addActionToClass;
 
-	private _actionRefillCanteen = ["refill", "Refill Canteen", "", { [player] call FN_refillCanteen; }, {true}] call ace_interact_menu_fnc_createAction;
-	[(typeOf player), 1, ["ACE_SelfActions", "Survival_System"], _actionRefillCanteen] call ace_interact_menu_fnc_addActionToClass;
-
 	private _actionPurifyWater = ["purify", "Purify Water", "", { [player] call FN_purifyWater; }, {true}] call ace_interact_menu_fnc_createAction;
 	[(typeOf player), 1, ["ACE_SelfActions", "Survival_System"], _actionPurifyWater] call ace_interact_menu_fnc_addActionToClass;
 
@@ -454,7 +455,11 @@ if (!isDedicated) then {
 	private _gcAction = ["StartGC","Start Garbage Collection","",{ [true] spawn (missionNamespace getVariable "garbageCollection") },{ true }] call ace_interact_menu_fnc_createAction;
 	[["ACE_ZeusActions"], _gcAction] call ace_interact_menu_fnc_addActionToZeus;
 
-	private _ritualAction = ["ritualGain","Give 1000 Ritual Status","",{ player setVariable ["ritualStatus", (player getVariable ["ritualStatus",0]) + 1000, true] },{ true }] call ace_interact_menu_fnc_createAction;
+	private _ritualAction = ["ritualGain","Give 1000 Ritual Status","",{ 
+		player setVariable ["ritualStatusPig", (player getVariable ["ritualStatusPig",0]) + 1000, true];
+		player setVariable ["ritualStatusZeus", (player getVariable ["ritualStatusZeus",0]) + 1000, true];
+		player setVariable ["ritualStatusWanderer", (player getVariable ["ritualStatusWanderer",0]) + 1000, true];
+		},{ true }] call ace_interact_menu_fnc_createAction;
 	[["ACE_ZeusActions"], _ritualAction] call ace_interact_menu_fnc_addActionToZeus;
 
 	west setFriend [civilian, 0];

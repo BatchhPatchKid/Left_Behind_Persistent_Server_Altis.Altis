@@ -104,8 +104,9 @@ _player setVariable ["nutritionLevel", _new];
 
 // 6. Apply rads
 private _arr = (itemsWithMagazines _player) select { _x == "rvg_geiger" };
+private _currentRad = _player getVariable ["Rad", 0];
+_player setVariable ["Rad", _currentRad + _radAmount, true];
 if (_radAmount > 0 && (count _arr > 0)) then {
-    [_radAmount] call FN_addRad;
     [_player, ["rvg_geiger_1", 100, 1]] remoteExec ["say3D"];
 };
 

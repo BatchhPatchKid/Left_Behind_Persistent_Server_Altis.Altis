@@ -1,20 +1,12 @@
 To do:
 - water objects to gain water actions at them using similar system to loot system
-- have player rituals to gain powers
 - loot pool for scavenging a littl crazy
 - add artifacts to the vendors
 - add leave animation action when completing an action (cook meat)
-- tasks not assigning in dedicated server
 - Faction leaders, rank structure - special clothing for leaders
-- Animations local on dedicated server
-- wisdom does not activate on AI
 - ritual actions sometimes duplicate
-- loot system spawns too many helipads in dense cities. Great for high end rigs, but bad for bad rigs.
-maybe increase amount of space a loot pile can spawn from each other
-- have zombies be forced silent when spawned
-- Different praying for different powers
 - blinding spell
-- animations for spells to be public
+- dead AI can still initiate conversations
 
 Notes:
 - Good animation for psionsics injury: _player playMove "AinvPknlMstpSnonWnonDnon_healed_1"; (or _2)
@@ -32,9 +24,20 @@ Notes:
 - BB worship original two leaders
 
 {
-	_x setVariable ["ritualStatus",10000, true];
+	_x setVariable ["ritualStatusWanderer", 0]; 
+	_x setVariable ["ritualStatusZeus", 0];
+	_x setVariable ["ritualStatusPig", 0];
 	_x setVariable ["hydrationLevel", 100]; 
 	_x setVariable ["nutritionLevel", 100];
+	_x setVariable ["Temp", 98.6, true];
+	_x setVariable ["Rad", 0, true];
+} forEach allPlayers;
+
+{ 
+    if (name _x == "OPR Woody") exitWith { 
+_x setVariable ["nutritionLevel", 100];
+_x setVariable ["hydrationLevel", 100, true]; 
+    }; 
 } forEach allPlayers;
 
 Update:
